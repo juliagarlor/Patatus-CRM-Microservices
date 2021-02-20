@@ -4,14 +4,17 @@ import com.example.leadservice.model.Lead;
 
 public class LeadDTO {
 
+
     // Properties
+    private Integer id;
     private String name;
     private String phoneNumber;
     private String email;
     private String companyName;
 
     // Constructor
-    public LeadDTO(String name, String phoneNumber, String email, String companyName) {
+    public LeadDTO(Integer id, String name, String phoneNumber, String email, String companyName) {
+        setId(id);
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
@@ -19,7 +22,7 @@ public class LeadDTO {
     }
 
     public LeadDTO(Lead lead) {
-
+        this.id = lead.getId();
         this.companyName = lead.getCompanyName();
         this.email = lead.getEmail();
         this.name = lead.getName();
@@ -39,6 +42,14 @@ public class LeadDTO {
     }
 
     //Getters & Setters
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
