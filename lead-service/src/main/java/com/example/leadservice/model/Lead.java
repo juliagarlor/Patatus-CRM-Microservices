@@ -17,34 +17,29 @@ public class Lead {
     // Properties
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotEmpty
-    private Long id;
 
-    @NotNull
-    @NotEmpty
+    private long id;
+
+
     private String name;
 
-    @NotNull
-    @NotEmpty
-    @Pattern(regexp = "^\\s*(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)\\s*$", message = "insert a correct phone number")
+
+
     private String phoneNumber;
 
-    @NotNull
-    @NotEmpty
-    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "insert a correct email")
+
+
     private String email;
 
-    @NotNull
-    @NotEmpty
+
     private String companyName;
 
-    @NotNull
-    @NotEmpty
-    private Long repLead;
+
+    private long repLead;
 
 
     // Constructor
-    public Lead(String name, String phoneNumber, String email, String companyName, Long repLead) {
+    public Lead(String name, String phoneNumber, String email, String companyName, long repLead) {
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
@@ -116,11 +111,11 @@ public class Lead {
     }
 
 
-    public Long getRepLead() {
+    public long getRepLead() {
         return repLead;
     }
 
-    public void setRepLead(Long repLead) {
+    public void setRepLead(long repLead) {
         this.repLead = repLead;
     }
 

@@ -11,10 +11,10 @@ public class LeadDTO {
     private String phoneNumber;
     private String email;
     private String companyName;
-    private Long repLead;
+    private long repLead;
 
     // Constructor
-    public LeadDTO(Long id, String name, String phoneNumber, String email, String companyName, Long repLead) {
+    public LeadDTO(long id, String name, String phoneNumber, String email, String companyName, long repLead) {
         setId(id);
         setName(name);
         setPhoneNumber(phoneNumber);
@@ -30,6 +30,7 @@ public class LeadDTO {
         this.email = lead.getEmail();
         this.name = lead.getName();
         this.phoneNumber = lead.getPhoneNumber();
+        this.repLead = lead.getRepLead();
 
     }
 

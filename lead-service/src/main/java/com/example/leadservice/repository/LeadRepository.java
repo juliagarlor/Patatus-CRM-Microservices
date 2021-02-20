@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface LeadRepository extends JpaRepository<Lead, Long> {
 
-    List<Lead> findByRepLead(Long id);
+    List<Lead> findByRepLead(long id);
 
 }
