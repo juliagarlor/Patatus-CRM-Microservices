@@ -36,7 +36,7 @@ public class LeadController {
 
     @GetMapping("/leads/{lead_id}")
     @ResponseStatus(HttpStatus.OK)
-    public LeadDTO findById(@PathVariable Integer lead_id) throws ResponseStatusException{
+    public LeadDTO findById(@PathVariable Long lead_id) throws ResponseStatusException{
 
         try {
 
@@ -50,13 +50,30 @@ public class LeadController {
 
     }
 
+
+    @GetMapping("/leads/salesrep/{salesrep_id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<LeadDTO> findByRepLead(@PathVariable  Long salesrep_id) throws ResponseStatusException{
+        try {
+
+            return leadService.findByRepLead(salesrep_id);
+
+        }catch (Exception e){
+
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        }
+    }
+
+
     @PostMapping("/lead")
     @ResponseStatus(HttpStatus.CREATED)
-    public LeadDTO createLead(@RequestParam String name,@RequestParam String phoneNumber,@RequestParam String email,@RequestParam String companyName) throws ResponseStatusException {
+    public LeadDTO createLead(@RequestParam  String name,@RequestParam String phoneNumber,@RequestParam String email,@RequestParam String companyName,@RequestParam Long repLead) throws ResponseStatusException {
+
 
         try {
 
-            return leadService.createLead(name, phoneNumber, email, companyName);
+            return leadService.createLead(name, phoneNumber, email, companyName, repLead);
 
         } catch (Exception exc) {
 
@@ -68,7 +85,7 @@ public class LeadController {
 
     @DeleteMapping("/lead/{lead_id}")
     @ResponseStatus(HttpStatus.OK)
-    public LeadDTO deleteLead(@PathVariable Integer lead_id) throws ResponseStatusException{
+    public LeadDTO deleteLead(@PathVariable Long lead_id) throws ResponseStatusException{
 
         try {
 
