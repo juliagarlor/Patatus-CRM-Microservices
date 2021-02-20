@@ -3,6 +3,8 @@ package com.example.leadservice.controller.impl;
 import com.example.leadservice.controller.dto.LeadDTO;
 import com.example.leadservice.model.Lead;
 import com.example.leadservice.services.impl.LeadService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,25 +20,49 @@ public class LeadController {
 
     @GetMapping("/leads")
     @ResponseStatus(HttpStatus.OK)
-    public List<Lead> findAll() {
+    public List<LeadDTO> findAll() throws ResponseStatusException {
 
-        return leadService.getAllLeads();
+        try {
+
+            return leadService.getAllLeads();
+
+        }catch (Exception exc){
+
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        }
 
     }
 
     @GetMapping("/leads/{lead_id}")
     @ResponseStatus(HttpStatus.OK)
-    public LeadDTO findById(@PathVariable Integer lead_id) {
+    public LeadDTO findById(@PathVariable Integer lead_id) throws ResponseStatusException{
 
-        return leadService.getById(lead_id);
+        try {
+
+            return leadService.getById(lead_id);
+
+        } catch (Exception exc) {
+
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        }
 
     }
 
     @PostMapping("/lead")
     @ResponseStatus(HttpStatus.CREATED)
-    public LeadDTO createLead(String name, String phoneNumber, String email, String companyName) {
+    public LeadDTO createLead(@RequestParam String name,@RequestParam String phoneNumber,@RequestParam String email,@RequestParam String companyName) throws ResponseStatusException {
 
-        return leadService.createLead(name, phoneNumber, email, companyName);
+        try {
+
+            return leadService.createLead(name, phoneNumber, email, companyName);
+
+        } catch (Exception exc) {
+
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
 
     }
 
@@ -44,11 +70,11 @@ public class LeadController {
     @ResponseStatus(HttpStatus.OK)
     public LeadDTO deleteLead(@PathVariable Integer lead_id) throws ResponseStatusException{
 
-        try{
+        try {
 
              return leadService.deleteLead(lead_id);
 
-        }catch (Exception ex){
+        } catch (Exception exc) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }

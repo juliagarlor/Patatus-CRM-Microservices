@@ -28,6 +28,8 @@ public class Lead {
         setCompanyName(companyName);
     }
 
+    public Lead(){}
+
     // -----------------Methods------------------
 
     // Override of the toString() method to display the Leads in a more friendly way.
