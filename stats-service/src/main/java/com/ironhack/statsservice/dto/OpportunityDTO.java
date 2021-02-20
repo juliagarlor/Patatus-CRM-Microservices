@@ -1,2 +1,4 @@
-package com.ironhack.statsservice.dto;public class OpportunityDTO {
+package com.ironhack.statsservice.dto;
+
+public class OpportunityDTO {
 }
