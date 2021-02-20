@@ -1,7 +1,8 @@
 package com.ironhack.opportunitiesservice.service.impl;
 
-import com.ironhack.opportunitiesservice.controller.dto.OpportunityDTO;
-import com.ironhack.opportunitiesservice.controller.dto.OpportunityStatusDTO;
+import com.ironhack.opportunitiesservice.client.AccountClient;
+import com.ironhack.opportunitiesservice.controller.dto.*;
+import com.ironhack.opportunitiesservice.enums.Industry;
 import com.ironhack.opportunitiesservice.enums.Product;
 import com.ironhack.opportunitiesservice.enums.Status;
 import com.ironhack.opportunitiesservice.model.Opportunity;
@@ -22,6 +23,8 @@ public class OpportunityService implements IOpportunityService {
 
     @Autowired
     private OpportunityRepository opportunityRepository;
+    @Autowired
+    private AccountClient accountClient;
 
 
     //===========================================
@@ -58,35 +61,141 @@ public class OpportunityService implements IOpportunityService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Any opportunity with a sales rep with id " + salesRepId + " was found");
         }
         List<OpportunityDTO> opportunityDTOList = new ArrayList<>();
-//
+
         for(Opportunity opportunity: opportunityRepository.findByRepOpportunityId(salesRepId)){
             OpportunityDTO  opportunityDTO = new OpportunityDTO(opportunity.getId(), opportunity.getQuantity(),
                                             opportunity.getDecisionMakerId(), opportunity.getStatus(),
                                             opportunity.getProduct(), opportunity.getRepOpportunityId(),
                                             opportunity.getAccountId());
-
+            opportunityDTOList.add(opportunityDTO);
         }
         return opportunityDTOList;
     }
 
     public List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(int salesRepId, Status status) {
-        return null;
+        if(opportunityRepository.findByRepOpportunityId(salesRepId).get(0) == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Any opportunity with a sales rep with id " + salesRepId + " was found");
+        }
+        List<OpportunityDTO> opportunityDTOList = new ArrayList<>();
+
+        for(Opportunity opportunity: opportunityRepository.findByRepOpportunityIdAndStatus(salesRepId, status)){
+            OpportunityDTO  opportunityDTO = new OpportunityDTO(opportunity.getId(), opportunity.getQuantity(),
+                    opportunity.getDecisionMakerId(), opportunity.getStatus(),
+                    opportunity.getProduct(), opportunity.getRepOpportunityId(),
+                    opportunity.getAccountId());
+            opportunityDTOList.add(opportunityDTO);
+        }
+        return opportunityDTOList;
     }
 
     public List<OpportunityDTO> getOpportunitiesByCountry(String country) {
-        return null;
+
+        //insert a list with the accounts by countries
+        List<CountryDTO> countryDTOList = accountClient.getAccountByCountry(country);
+
+        //Create a list of OpportunityDTO to store the result
+        List<OpportunityDTO> opportunityDTOList = new ArrayList<>();
+
+        for(CountryDTO countryDTO: countryDTOList){
+            if(opportunityRepository.findByAccountId(countryDTO.getId()).isPresent()){
+                Opportunity opportunity = opportunityRepository.findByAccountId(countryDTO.getId()).get();
+                OpportunityDTO opportunityDTO = new OpportunityDTO(opportunity.getId(), opportunity.getQuantity(), opportunity.getDecisionMakerId(), opportunity.getStatus(), opportunity.getProduct(), opportunity.getRepOpportunityId(),opportunity.getAccountId());
+                opportunityDTOList.add(opportunityDTO);
+            }
+        }
+
+        return opportunityDTOList;
     }
 
     public List<OpportunityDTO> getOpportunitiesByCountryAndStatus(String country, Status status) {
-        return null;
+
+        //insert a list with the accounts by countries
+        List<CountryDTO> countryDTOList = accountClient.getAccountByCountry(country);
+
+        //Create a list of OpportunityDTO to store the result
+        List<OpportunityDTO> opportunityDTOList = new ArrayList<>();
+
+        for(CountryDTO countryDTO: countryDTOList){
+            if(opportunityRepository.findByAccountId(countryDTO.getId()).get().getStatus().equals(status)){
+                Opportunity opportunity = opportunityRepository.findByAccountId(countryDTO.getId()).get();
+                OpportunityDTO opportunityDTO = new OpportunityDTO(opportunity.getId(), opportunity.getQuantity(), opportunity.getDecisionMakerId(), opportunity.getStatus(), opportunity.getProduct(), opportunity.getRepOpportunityId(),opportunity.getAccountId());
+                opportunityDTOList.add(opportunityDTO);
+            }
+        }
+
+        return opportunityDTOList;
     }
 
-    public List<OpportunityDTO> getOpportunitiesByIndustry(String industry) {
-        return null;
+    public List<OpportunityDTO> getOpportunitiesByCity(String city) {
+        //insert a list with the accounts by countries
+        List<CityDTO> cityDTOList = accountClient.getAccountByCity(city);
+
+        //Create a list of OpportunityDTO to store the result
+        List<OpportunityDTO> opportunityDTOList = new ArrayList<>();
+
+        for(CityDTO cityDTO: cityDTOList){
+            if(opportunityRepository.findByAccountId(cityDTO.getId()).isPresent()){
+                Opportunity opportunity = opportunityRepository.findByAccountId(cityDTO.getId()).get();
+                OpportunityDTO opportunityDTO = new OpportunityDTO(opportunity.getId(), opportunity.getQuantity(), opportunity.getDecisionMakerId(), opportunity.getStatus(), opportunity.getProduct(), opportunity.getRepOpportunityId(),opportunity.getAccountId());
+                opportunityDTOList.add(opportunityDTO);
+            }
+        }
+
+        return opportunityDTOList;
     }
 
-    public List<OpportunityDTO> getOpportunitiesByIndustryAndStatus(String industry, Status status) {
-        return null;
+    public List<OpportunityDTO> getOpportunitiesByCityAndStatus(String city, Status status) {
+        //insert a list with the accounts by countries
+        List<CityDTO> cityDTOList = accountClient.getAccountByCity(city);
+
+        //Create a list of OpportunityDTO to store the result
+        List<OpportunityDTO> opportunityDTOList = new ArrayList<>();
+
+        for(CityDTO cityDTO: cityDTOList){
+            if(opportunityRepository.findByAccountId(cityDTO.getId()).get().getStatus().equals(status)){
+                Opportunity opportunity = opportunityRepository.findByAccountId(cityDTO.getId()).get();
+                OpportunityDTO opportunityDTO = new OpportunityDTO(opportunity.getId(), opportunity.getQuantity(), opportunity.getDecisionMakerId(), opportunity.getStatus(), opportunity.getProduct(), opportunity.getRepOpportunityId(),opportunity.getAccountId());
+                opportunityDTOList.add(opportunityDTO);
+            }
+        }
+
+        return opportunityDTOList;
+    }
+
+    public List<OpportunityDTO> getOpportunitiesByIndustry(Industry industry) {
+        //insert a list with the accounts by countries
+        List<IndustryDTO> industryDTOList = accountClient.getAccountByIndustry(industry);
+
+        //Create a list of OpportunityDTO to store the result
+        List<OpportunityDTO> opportunityDTOList = new ArrayList<>();
+
+        for(IndustryDTO industryDTO: industryDTOList){
+            if(opportunityRepository.findByAccountId(industryDTO.getId()).isPresent()){
+                Opportunity opportunity = opportunityRepository.findByAccountId(industryDTO.getId()).get();
+                OpportunityDTO opportunityDTO = new OpportunityDTO(opportunity.getId(), opportunity.getQuantity(), opportunity.getDecisionMakerId(), opportunity.getStatus(), opportunity.getProduct(), opportunity.getRepOpportunityId(),opportunity.getAccountId());
+                opportunityDTOList.add(opportunityDTO);
+            }
+        }
+
+        return opportunityDTOList;
+    }
+
+    public List<OpportunityDTO> getOpportunitiesByIndustryAndStatus(Industry industry, Status status) {
+        //insert a list with the accounts by countries
+        List<IndustryDTO> industryDTOList = accountClient.getAccountByIndustry(industry);
+
+        //Create a list of OpportunityDTO to store the result
+        List<OpportunityDTO> opportunityDTOList = new ArrayList<>();
+
+        for(IndustryDTO industryDTO: industryDTOList){
+            if(opportunityRepository.findByAccountId(industryDTO.getId()).get().getStatus().equals(status)){
+                Opportunity opportunity = opportunityRepository.findByAccountId(industryDTO.getId()).get();
+                OpportunityDTO opportunityDTO = new OpportunityDTO(opportunity.getId(), opportunity.getQuantity(), opportunity.getDecisionMakerId(), opportunity.getStatus(), opportunity.getProduct(), opportunity.getRepOpportunityId(),opportunity.getAccountId());
+                opportunityDTOList.add(opportunityDTO);
+            }
+        }
+
+        return opportunityDTOList;
     }
 
     //===========================================
@@ -94,7 +203,12 @@ public class OpportunityService implements IOpportunityService {
     //===========================================
 
     public Opportunity createOpportunity(OpportunityDTO opportunityDTO) {
-        return null;
+
+        Opportunity opportunity = new Opportunity( opportunityDTO.getQuantity(), opportunityDTO.getDecisionMakerId(),
+                opportunityDTO.getStatus(), opportunityDTO.getProduct(), opportunityDTO.getRepOpportunityId(), opportunityDTO.getAccountId());
+
+
+        return opportunityRepository.save(opportunity);
     }
 
     //===========================================
@@ -102,6 +216,23 @@ public class OpportunityService implements IOpportunityService {
     //===========================================
 
     public void updateOpportunityStatus(int id, OpportunityStatusDTO opportunityStatusDTO) {
+        if(opportunityRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "opportunity with id " +id + " not found");
+        }
 
+        Opportunity opportunity =  opportunityRepository.findById(id).get();
+        opportunity.setStatus(opportunityStatusDTO.getStatus());
+        opportunityRepository.save(opportunity);
+
+    }
+
+    public void updateOpportunityAccountId(int id, AccountIdDTO accountIdDTO) {
+        if(opportunityRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "opportunity with id " +id + " not found");
+        }
+
+        Opportunity opportunity =  opportunityRepository.findById(id).get();
+        opportunity.setAccountId(accountIdDTO.getId());
+        opportunityRepository.save(opportunity);
     }
 }

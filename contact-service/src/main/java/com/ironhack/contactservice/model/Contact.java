@@ -13,7 +13,7 @@ public class Contact {
     private String email;
     private String companyName;
 
-    private Long accountId;
+    private int accountId;
 
 
     // Constructors:
@@ -27,7 +27,7 @@ public class Contact {
         setCompanyName(companyName);
     }
 
-    public Contact(String name, String phoneNumber, String email, String companyName, Long accountId) {
+    public Contact(String name, String phoneNumber, String email, String companyName, int accountId) {
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
@@ -93,11 +93,11 @@ public class Contact {
         this.id = id;
     }
 
-    public Long getAccountId() {
+    public int getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Long accountId) {
+    public void setAccountId(int accountId) {
         this.accountId = accountId;
     }
 }
