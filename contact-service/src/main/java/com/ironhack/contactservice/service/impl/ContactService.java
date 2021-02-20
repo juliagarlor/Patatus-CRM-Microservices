@@ -30,7 +30,14 @@ public class ContactService implements IContactService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact with id " + id + " not found");
         }
         Contact contact = contactRepository.findById(id).get();
-        return new ContactDTO(contact.getId(), contact.getName(), contact.getPhoneNumber(), contact.getEmail(), contact.getCompanyName(),contact.getAccountId());
+        return new ContactDTO(
+                contact.getId(),
+                contact.getName(),
+                contact.getPhoneNumber(),
+                contact.getEmail(),
+                contact.getCompanyName(),
+                contact.getAccountId()
+        );
     }
     //===========================================
     //Post methods
