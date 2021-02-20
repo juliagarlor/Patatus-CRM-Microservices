@@ -2,7 +2,6 @@ package com.ironhack.contactservice.service;
 
 import com.ironhack.contactservice.ContactServiceApplication;
 import com.ironhack.contactservice.client.LeadClient;
-import com.ironhack.contactservice.controller.dto.LeadDTO;
 import com.ironhack.contactservice.model.Contact;
 import com.ironhack.contactservice.repository.ContactRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -10,8 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Arrays;
 import java.util.List;

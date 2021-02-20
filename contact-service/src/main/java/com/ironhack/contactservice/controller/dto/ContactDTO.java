@@ -6,7 +6,7 @@ import javax.validation.constraints.Pattern;
 
 public class ContactDTO {
 
-    private int id;
+    private Long id;
     @NotEmpty
     @NotNull
     private String name;
@@ -23,7 +23,7 @@ public class ContactDTO {
     private String companyName;
 
     //TODO: este id tendria que asignarse automaticamente de alguna forma, cuando se crea un account. se me ocurre un patch o algo
-    private int accountId;
+    private Long accountId;
 
     public ContactDTO() {
     }
@@ -39,7 +39,7 @@ public class ContactDTO {
     }
 
     //Constructor without account_id
-    public ContactDTO(int id, @NotEmpty @NotNull String name, @NotEmpty @NotNull @Pattern(regexp = "^\\s*(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)\\s*$", message = "insert a correct phone number") String phoneNumber, @NotEmpty @NotNull @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "insert a correct email") String email, @NotEmpty @NotNull String companyName) {
+    public ContactDTO(Long id, @NotEmpty @NotNull String name, @NotEmpty @NotNull @Pattern(regexp = "^\\s*(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)\\s*$", message = "insert a correct phone number") String phoneNumber, @NotEmpty @NotNull @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "insert a correct email") String email, @NotEmpty @NotNull String companyName) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -50,7 +50,7 @@ public class ContactDTO {
     //Constructor with account_id
 
 
-    public ContactDTO(int id, @NotEmpty @NotNull String name, @NotEmpty @NotNull @Pattern(regexp = "^\\s*(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)\\s*$", message = "insert a correct phone number") String phoneNumber, @NotEmpty @NotNull @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "insert a correct email") String email, @NotEmpty @NotNull String companyName, int accountId) {
+    public ContactDTO(Long id, @NotEmpty @NotNull String name, @NotEmpty @NotNull @Pattern(regexp = "^\\s*(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)\\s*$", message = "insert a correct phone number") String phoneNumber, @NotEmpty @NotNull @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "insert a correct email") String email, @NotEmpty @NotNull String companyName, Long accountId) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -59,11 +59,11 @@ public class ContactDTO {
         this.accountId = accountId;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -99,11 +99,11 @@ public class ContactDTO {
         this.companyName = companyName;
     }
 
-    public int getAccountId() {
+    public Long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(int accountId) {
+    public void setAccountId(Long accountId) {
         this.accountId = accountId;
     }
 }

@@ -9,7 +9,7 @@ public class LeadDTO {
 
     @NotNull
     @NotEmpty
-    private Integer id;
+    private Long id;
     @NotNull
     @NotEmpty
     private String name;
@@ -24,13 +24,12 @@ public class LeadDTO {
     @NotNull
     @NotEmpty
     private String companyName;
-    @NotNull
-    private int salesRepId;
+    private @NotNull Long salesRepId;
 
     public LeadDTO() {
     }
 
-    public LeadDTO(@NotNull @NotEmpty Integer id, @NotNull @NotEmpty String name, @NotNull @NotEmpty @Pattern(regexp = "^\\s*(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)\\s*$", message = "insert a correct phone number") String phoneNumber, @NotNull @NotEmpty @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "insert a correct email") String email, @NotNull @NotEmpty String companyName, @NotNull int salesRepId) {
+    public LeadDTO(@NotNull @NotEmpty Long id, @NotNull @NotEmpty String name, @NotNull @NotEmpty @Pattern(regexp = "^\\s*(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)\\s*$", message = "insert a correct phone number") String phoneNumber, @NotNull @NotEmpty @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "insert a correct email") String email, @NotNull @NotEmpty String companyName, @NotNull Long salesRepId) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -39,11 +38,11 @@ public class LeadDTO {
         this.salesRepId = salesRepId;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -79,11 +78,11 @@ public class LeadDTO {
         this.companyName = companyName;
     }
 
-    public int getSalesRepId() {
+    public @NotNull Long getSalesRepId() {
         return salesRepId;
     }
 
-    public void setSalesRepId(int salesRepId) {
+    public void setSalesRepId(@NotNull Long salesRepId) {
         this.salesRepId = salesRepId;
     }
 }

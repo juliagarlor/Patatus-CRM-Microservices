@@ -7,13 +7,13 @@ public class Contact {
     // Properties:
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String name;
     private String phoneNumber;
     private String email;
     private String companyName;
 
-    private int accountId;
+    private @javax.validation.constraints.NotNull Long accountId;
 
 
     // Constructors:
@@ -27,7 +27,7 @@ public class Contact {
         setCompanyName(companyName);
     }
 
-    public Contact(String name, String phoneNumber, String email, String companyName, int accountId) {
+    public Contact(String name, String phoneNumber, String email, String companyName, @javax.validation.constraints.NotNull Long accountId) {
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
@@ -49,7 +49,7 @@ public class Contact {
     }
 
     // Getters & Setters:
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -89,15 +89,15 @@ public class Contact {
         this.companyName = companyName;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getAccountId() {
+    public @javax.validation.constraints.NotNull Long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(int accountId) {
+    public void setAccountId(@javax.validation.constraints.NotNull Long accountId) {
         this.accountId = accountId;
     }
 }
