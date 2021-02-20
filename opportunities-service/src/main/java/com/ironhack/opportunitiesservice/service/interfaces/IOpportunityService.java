@@ -3,7 +3,9 @@ package com.ironhack.opportunitiesservice.service.interfaces;
 import com.ironhack.opportunitiesservice.controller.dto.OpportunityDTO;
 import com.ironhack.opportunitiesservice.enums.Status;
 import com.ironhack.opportunitiesservice.model.Opportunity;
+import org.springframework.web.bind.annotation.*;
 
+import java.math.*;
 import java.util.List;
 
 public interface IOpportunityService {
@@ -21,5 +23,10 @@ public interface IOpportunityService {
     //Post method: create a new Opportunity
     Opportunity createOpportunity(OpportunityDTO opportunityDTO);
 
-
+    BigDecimal getMeanOpportunities(@PathVariable String data);
+    List<Object[]> getMaxOpportunities(String data);
+    int getMaxQuantity(String data);
+    List<Object[]> getMinOpportunities(String data);
+    int getMinQuantity(String data);
+    double getMedian(@PathVariable String data);
 }
