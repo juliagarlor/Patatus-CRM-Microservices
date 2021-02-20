@@ -1,59 +1,52 @@
-package com.ironhack.contactservice.model;
+package com.example.leadservice.controller.dto;
 
-import javax.persistence.*;
+import com.example.leadservice.model.Lead;
 
-@Entity
-public class Contact {
-    // Properties:
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class LeadDTO {
+
+
+    // Properties
+    private Integer id;
     private String name;
     private String phoneNumber;
     private String email;
     private String companyName;
 
-    private int accountId;
-
-
-    // Constructors:
-    public Contact() {
-    }
-
-    public Contact(String name, String phoneNumber, String email, String companyName) {
+    // Constructor
+    public LeadDTO(Integer id, String name, String phoneNumber, String email, String companyName) {
+        setId(id);
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
         setCompanyName(companyName);
     }
 
-    public Contact(String name, String phoneNumber, String email, String companyName, int accountId) {
-        setName(name);
-        setPhoneNumber(phoneNumber);
-        setEmail(email);
-        setCompanyName(companyName);
-        setAccountId(accountId);
-    }
+    public LeadDTO(Lead lead) {
+        this.id = lead.getId();
+        this.companyName = lead.getCompanyName();
+        this.email = lead.getEmail();
+        this.name = lead.getName();
+        this.phoneNumber = lead.getPhoneNumber();
 
+    }
 
     // -----------------Methods------------------
 
-    // Override of the toString() method to display the Contacts in a more friendly way.
+    // Override of the toString() method to display the Leads in a more friendly way.
     @Override
     public String toString() {
-        return "ID-" + id +
-                " | name: " + name +
+        return " name: " + name +
                 " | phoneNumber: " + phoneNumber +
                 " | email: " + email +
                 " | companyName: " + companyName;
     }
 
-    // Getters & Setters:
-    public int getId() {
+    //Getters & Setters
+    public Integer getId() {
         return id;
     }
 
-    public void setId() {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -89,15 +82,4 @@ public class Contact {
         this.companyName = companyName;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
-    }
 }

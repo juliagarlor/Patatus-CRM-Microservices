@@ -23,7 +23,7 @@ public class ContactDTO {
     private String companyName;
 
     //TODO: este id tendria que asignarse automaticamente de alguna forma, cuando se crea un account. se me ocurre un patch o algo
-    private Long accountId;
+    private int accountId;
 
     public ContactDTO() {
     }
@@ -50,7 +50,7 @@ public class ContactDTO {
     //Constructor with account_id
 
 
-    public ContactDTO(int id, @NotEmpty @NotNull String name, @NotEmpty @NotNull @Pattern(regexp = "^\\s*(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)\\s*$", message = "insert a correct phone number") String phoneNumber, @NotEmpty @NotNull @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "insert a correct email") String email, @NotEmpty @NotNull String companyName, Long accountId) {
+    public ContactDTO(int id, @NotEmpty @NotNull String name, @NotEmpty @NotNull @Pattern(regexp = "^\\s*(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)\\s*$", message = "insert a correct phone number") String phoneNumber, @NotEmpty @NotNull @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "insert a correct email") String email, @NotEmpty @NotNull String companyName, int accountId) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -99,11 +99,11 @@ public class ContactDTO {
         this.companyName = companyName;
     }
 
-    public Long getAccountId() {
+    public int getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Long accountId) {
+    public void setAccountId(int accountId) {
         this.accountId = accountId;
     }
 }

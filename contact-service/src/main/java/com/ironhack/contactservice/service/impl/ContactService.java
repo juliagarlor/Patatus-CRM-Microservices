@@ -37,11 +37,12 @@ public class ContactService implements IContactService {
     //===========================================
     public Contact createContact(int id) {
 
+        //Get a leadDTO from microservice lead, to create a new contact with the data
         LeadDTO leadDTO = leadClient.getLeadDTOById(id);
 
         Contact contact = new Contact(leadDTO.getName(),leadDTO.getPhoneNumber(),leadDTO.getEmail(),leadDTO.getCompanyName());
-        contactRepository.save(contact);
-        return contact;
+
+        return contactRepository.save(contact);
     }
     //===========================================
     //Patch methods

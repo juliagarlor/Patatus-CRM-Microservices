@@ -1,44 +1,38 @@
-package com.ironhack.contactservice.model;
+package com.example.leadservice.model;
 
-import javax.persistence.*;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
-public class Contact {
-    // Properties:
+public class Lead {
+
+    // Properties
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String name;
     private String phoneNumber;
     private String email;
     private String companyName;
 
-    private int accountId;
-
-
-    // Constructors:
-    public Contact() {
-    }
-
-    public Contact(String name, String phoneNumber, String email, String companyName) {
+    // Constructor
+    public Lead(String name, String phoneNumber, String email, String companyName) {
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
         setCompanyName(companyName);
     }
 
-    public Contact(String name, String phoneNumber, String email, String companyName, int accountId) {
-        setName(name);
-        setPhoneNumber(phoneNumber);
-        setEmail(email);
-        setCompanyName(companyName);
-        setAccountId(accountId);
-    }
-
+    public Lead(){}
 
     // -----------------Methods------------------
 
-    // Override of the toString() method to display the Contacts in a more friendly way.
+    // Override of the toString() method to display the Leads in a more friendly way.
     @Override
     public String toString() {
         return "ID-" + id +
@@ -48,12 +42,12 @@ public class Contact {
                 " | companyName: " + companyName;
     }
 
-    // Getters & Setters:
+    //Getters & Setters
     public int getId() {
         return id;
     }
 
-    public void setId() {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -89,15 +83,4 @@ public class Contact {
         this.companyName = companyName;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
-    }
 }

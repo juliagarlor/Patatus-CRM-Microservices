@@ -6,20 +6,20 @@ import javax.validation.constraints.NotNull;
 public class AccountIdDTO {
 
     @NotNull
-    private Long accountId;
+    private int accountId;
 
     public AccountIdDTO() {
     }
 
-    public AccountIdDTO(@NotNull Long accountId) {
+    public AccountIdDTO(@NotNull int accountId) {
         setAccountId(accountId);
     }
 
-    public Long getAccountId() {
+    public int getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Long accountId) {
+    public void setAccountId(int accountId) {
         this.accountId = accountId;
     }
 }
