@@ -1,7 +1,10 @@
 package com.ironhack.salesrepservice.controller.impl;
 
+import com.ironhack.salesrepservice.controller.dto.LeadDTO;
+import com.ironhack.salesrepservice.controller.dto.OpportunityDTO;
 import com.ironhack.salesrepservice.controller.dto.SalesRepDTO;
 import com.ironhack.salesrepservice.controller.interfaces.ISalesRepController;
+import com.ironhack.salesrepservice.enums.Status;
 import com.ironhack.salesrepservice.model.SalesRep;
 import com.ironhack.salesrepservice.service.interfaces.ISalesRepService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,34 @@ public class SalesRepController implements ISalesRepController {
         return salesRepService.findAll();
     }
 
+    @GetMapping("/salesreps/{sales_id}/leads")
+    @ResponseStatus(HttpStatus.OK)
+    public List<LeadDTO> getLeadsBySalesRepId(@PathVariable int id) {
+        return salesRepService.getLeadsBySalesRepId(id);
+    }
+    @GetMapping("/salesreps/{sales_id}/leads/count")
+    @ResponseStatus(HttpStatus.OK)
+    public Integer getCountOfLeadsBySalesRepId(@PathVariable int id) {
+        return salesRepService.getCountOfLeadsBySalesRepId(id);
+    }
+
+    @GetMapping("/salesreps/{sales_id}/opportunities/count")
+    @ResponseStatus(HttpStatus.OK)
+    public List<OpportunityDTO> getOpportunitiesBySalesRepId(@PathVariable int id) {
+        return salesRepService.getOpportunitiesBySalesRepId(id);
+    }
+
+    @GetMapping("/salesreps/{sales_id}/opportunities/count")
+    @ResponseStatus(HttpStatus.OK)
+    public Integer getCountOfOpportunitiesBySalesRepId(@PathVariable int id) {
+        return salesRepService.getCountOfOpportunitiesBySalesRepId(id);
+    }
+
+    @GetMapping("/salesreps/{sales_id}/opportunities")
+    @ResponseStatus(HttpStatus.OK)
+    public List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(@PathVariable int id, @RequestParam Status status) {
+        return salesRepService.getOpportunitiesBySalesRepAndStatus(id, status);
+    }
 
 
     //===========================================
