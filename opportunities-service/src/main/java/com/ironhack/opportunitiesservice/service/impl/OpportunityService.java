@@ -203,6 +203,10 @@ public class OpportunityService implements IOpportunityService {
     //===========================================
 
     public Opportunity createOpportunity(OpportunityDTO opportunityDTO) {
+        // TODO: preguntar a Xabi cómo hacer lo de las cuentas.
+        if (accountClient.getAccountById(opportunityDTO.getAccountId()) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The account with Id: " + opportunityDTO.getAccountId() + "doesn't exist.");
+        }
 
         Opportunity opportunity = new Opportunity( opportunityDTO.getQuantity(), opportunityDTO.getDecisionMakerId(),
                 opportunityDTO.getStatus(), opportunityDTO.getProduct(), opportunityDTO.getRepOpportunityId(), opportunityDTO.getAccountId());
