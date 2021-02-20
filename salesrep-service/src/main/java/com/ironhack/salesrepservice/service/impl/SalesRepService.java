@@ -55,7 +55,7 @@ public class SalesRepService implements ISalesRepService {
         List<LeadDTO> newLeadDTOList = new ArrayList<>();
 
         for(LeadDTO leadDTO: leadDTOList){
-            if (salesRep.getId().equals(leadDTO.getSalesRep().getId())){
+            if (salesRep.getId().equals(leadDTO.getSalesRepId())){
                 newLeadDTOList.add(leadDTO);
             }
         }
@@ -74,7 +74,7 @@ public class SalesRepService implements ISalesRepService {
         Integer count = 0;
 
         for(LeadDTO leadDTO: leadDTOList){
-            if (salesRep.getId().equals(leadDTO.getSalesRep().getId())){
+            if (salesRep.getId().equals(leadDTO.getSalesRepId())){
                 count += 1;
             }
         }

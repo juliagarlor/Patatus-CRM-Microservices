@@ -1,6 +1,5 @@
-package com.ironhack.salesrepservice.controller.dto;
+package com.ironhack.contactservice.controller.dto;
 
-import com.ironhack.salesrepservice.model.SalesRep;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -26,13 +25,12 @@ public class LeadDTO {
     @NotEmpty
     private String companyName;
     @NotNull
-    @NotEmpty
     private int salesRepId;
 
     public LeadDTO() {
     }
 
-    public LeadDTO(@NotNull @NotEmpty Integer id, @NotNull @NotEmpty String name, @NotNull @NotEmpty @Pattern(regexp = "^\\s*(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)\\s*$", message = "insert a correct phone number") String phoneNumber, @NotNull @NotEmpty @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "insert a correct email") String email, @NotNull @NotEmpty String companyName, @NotNull @NotEmpty int salesRepId) {
+    public LeadDTO(@NotNull @NotEmpty Integer id, @NotNull @NotEmpty String name, @NotNull @NotEmpty @Pattern(regexp = "^\\s*(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)\\s*$", message = "insert a correct phone number") String phoneNumber, @NotNull @NotEmpty @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "insert a correct email") String email, @NotNull @NotEmpty String companyName, @NotNull int salesRepId) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;

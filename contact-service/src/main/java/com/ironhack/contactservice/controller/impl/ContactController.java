@@ -2,6 +2,7 @@ package com.ironhack.contactservice.controller.impl;
 
 import com.ironhack.contactservice.controller.dto.AccountIdDTO;
 import com.ironhack.contactservice.controller.dto.ContactDTO;
+import com.ironhack.contactservice.controller.dto.LeadDTO;
 import com.ironhack.contactservice.controller.interfaces.IContactController;
 import com.ironhack.contactservice.model.Contact;
 import com.ironhack.contactservice.service.interfaces.IContactService;
@@ -31,10 +32,10 @@ public class ContactController implements IContactController {
     //Post methods
     //===========================================
 
-    @PostMapping("/contact")
+    @PostMapping("/contact/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Contact createContact(@RequestBody @Valid ContactDTO contactDTO) {
-        return contactService.createContact(contactDTO);
+    public Contact createContact(@PathVariable int id) {
+        return contactService.createContact(id);
     }
 
     //===========================================

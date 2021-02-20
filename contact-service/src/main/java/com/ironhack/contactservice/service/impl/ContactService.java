@@ -1,7 +1,9 @@
 package com.ironhack.contactservice.service.impl;
 
+import com.ironhack.contactservice.client.LeadClient;
 import com.ironhack.contactservice.controller.dto.AccountIdDTO;
 import com.ironhack.contactservice.controller.dto.ContactDTO;
+import com.ironhack.contactservice.controller.dto.LeadDTO;
 import com.ironhack.contactservice.model.Contact;
 import com.ironhack.contactservice.repository.ContactRepository;
 import com.ironhack.contactservice.service.interfaces.IContactService;
@@ -15,6 +17,8 @@ public class ContactService implements IContactService {
 
     @Autowired
     private ContactRepository contactRepository;
+    @Autowired
+    private LeadClient leadClient;
 
 
     //===========================================
@@ -31,9 +35,11 @@ public class ContactService implements IContactService {
     //===========================================
     //Post methods
     //===========================================
-    public Contact createContact(ContactDTO contactDTO) {
+    public Contact createContact(int id) {
 
-        Contact contact = new Contact(contactDTO.getName(),contactDTO.getPhoneNumber(),contactDTO.getEmail(),contactDTO.getCompanyName());
+        LeadDTO leadDTO = leadClient.getLeadDTOById(id);
+
+        Contact contact = new Contact(leadDTO.getName(),leadDTO.getPhoneNumber(),leadDTO.getEmail(),leadDTO.getCompanyName());
         contactRepository.save(contact);
         return contact;
     }
