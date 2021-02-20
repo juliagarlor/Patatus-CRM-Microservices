@@ -14,12 +14,11 @@ public interface AccountClient {
     //This method return an acount
     @GetMapping("/account/{accountId}")
     AccountDTO getAccountById(@PathVariable int accountId);
-    //TODO: metodos que devuelvan un id y un country, un id y un pais y un id y una industria
-    @GetMapping("/accounts")
-    List<Long> getAccountByCountry(String country);
-    @GetMapping("/accounts")
-    List<Long>getAccountByCity(String city);
-    @GetMapping("/accounts")
-    List<Long> getAccountByIndustry(Industry industry);
+    @GetMapping("/accounts/country/{country}")
+    List<Long> getAccountByCountry(@PathVariable String country);
+    @GetMapping("/accounts/city/{city}")
+    List<Long>getAccountByCity(@PathVariable String city);
+    @GetMapping("/accounts/industry/{industry}")
+    List<Long> getAccountByIndustry(@PathVariable Industry industry);
 
 }

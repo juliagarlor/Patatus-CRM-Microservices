@@ -1,5 +1,6 @@
 package com.ironhack.contactservice.service.impl;
 
+import com.ironhack.contactservice.client.AccountClient;
 import com.ironhack.contactservice.client.LeadClient;
 import com.ironhack.contactservice.controller.dto.AccountIdDTO;
 import com.ironhack.contactservice.controller.dto.ContactDTO;
@@ -19,6 +20,8 @@ public class ContactService implements IContactService {
     private ContactRepository contactRepository;
     @Autowired
     private LeadClient leadClient;
+    @Autowired
+    private AccountClient accountClient;
 
 
     //===========================================
@@ -43,7 +46,7 @@ public class ContactService implements IContactService {
     //Post methods
     //===========================================
     public Contact createContact(Long id) {
-
+        //TODO: pensar como meter de alguna manera el accountId, quizas mandandole 2 parametros, o un body o algo
         //Get a leadDTO from microservice lead, to create a new contact with the data
         LeadDTO leadDTO = leadClient.getLeadDTOById(id);
 
