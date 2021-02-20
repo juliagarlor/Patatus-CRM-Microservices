@@ -103,5 +103,5 @@ class ContactControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Sonia"));    }
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Karla"));    }
 }
