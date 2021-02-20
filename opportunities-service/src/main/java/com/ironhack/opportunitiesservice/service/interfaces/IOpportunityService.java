@@ -1,6 +1,7 @@
 package com.ironhack.opportunitiesservice.service.interfaces;
 
 import com.ironhack.opportunitiesservice.controller.dto.OpportunityDTO;
+import com.ironhack.opportunitiesservice.controller.dto.OpportunityStatusDTO;
 import com.ironhack.opportunitiesservice.enums.Status;
 import com.ironhack.opportunitiesservice.model.Opportunity;
 
@@ -12,14 +13,22 @@ public interface IOpportunityService {
     List<OpportunityDTO> getAllOpportunities();
     //Get method: get an Opportunity by id
     OpportunityDTO getOpportunityById(int id);
-    //Get method: get an opportunity list by sales rep, status or both
+    //Get method: get an opportunity list by sales rep
+    List<OpportunityDTO> getOpportunitiesBySalesRep(int salesRepId);
+    //Get method: get an opportunity list by sales rep and status
     List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(int salesRepId, Status status);
-    //Get method:get an opportunity list by country and status by country
+    //Get method:get an opportunity list by country
+    List<OpportunityDTO> getOpportunitiesByCountry(String country);
+    //Get method:get an opportunity list by country and status
     List<OpportunityDTO> getOpportunitiesByCountryAndStatus(String country, Status status);
-    //Get method: get and opportunity list by industry and status or industry
+    //Get method: get and opportunity list by industry
+    List<OpportunityDTO> getOpportunitiesByIndustry(String industry);
+    //Get method: get and opportunity list by industry and status
     List<OpportunityDTO> getOpportunitiesByIndustryAndStatus(String industry, Status status);
     //Post method: create a new Opportunity
     Opportunity createOpportunity(OpportunityDTO opportunityDTO);
+    //Patch method: modify the status of the opportunity
+    void updateOpportunityStatus(int id, OpportunityStatusDTO opportunityStatusDTO);
 
 
 }
