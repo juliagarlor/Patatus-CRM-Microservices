@@ -1,15 +1,12 @@
 package com.ironhack.opportunitiesservice.repository;
 
-import com.ironhack.opportunitiesservice.model.Opportunity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.ironhack.opportunitiesservice.enums.*;
+import com.ironhack.opportunitiesservice.model.*;
+import org.springframework.data.jpa.repository.*;
+import org.springframework.stereotype.*;
 
 import java.math.*;
 import java.util.*;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.Stack;
 
 @Repository
 public interface OpportunityRepository extends JpaRepository<Opportunity, Integer> {
@@ -43,7 +40,7 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Intege
     Integer findMaxQuantityFromOpportunities();
 
 //    Median quantity
-    @Query ("SELECT o.quantity FROM Opportunity o ORDER BY o.quantity")
+    @Query("SELECT o.quantity FROM Opportunity o ORDER BY o.quantity")
     List<Integer[]> orderOpportunities();
 
 

@@ -40,10 +40,10 @@ public interface IOpportunityService {
     //Patch method: modify the accountId of the opportunity
     void updateOpportunityAccountId(int id, AccountIdDTO accountIdDTO);
 
-    BigDecimal getMeanOpportunities(@PathVariable String data);
-    List<Object[]> getMaxOpportunities(String data);
-    int getMaxQuantity(String data);
-    List<Object[]> getMinOpportunities(String data);
-    int getMinQuantity(String data);
-    double getMedian(@PathVariable String data);
+    BigDecimal getMean(String data);
+    List<Object[]> getMaxOpportunities();
+    int getMaxQuantity();
+    List<Object[]> getMinOpportunities();
+    int getMinQuantity();
+    double getMedian(String data);
 }

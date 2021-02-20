@@ -93,7 +93,6 @@ public class OpportunityController implements IOpportunityController {
      public void updateOpportunityAccountId(@PathVariable int opportunityId,@RequestBody AccountIdDTO accountIdDTO) {
         opportunityService.updateOpportunityAccountId(opportunityId, accountIdDTO);
      }
-    private OpportunityService opportunityService;
 
     @GetMapping("/stats/mean/{data}")
     @ResponseStatus(HttpStatus.OK)

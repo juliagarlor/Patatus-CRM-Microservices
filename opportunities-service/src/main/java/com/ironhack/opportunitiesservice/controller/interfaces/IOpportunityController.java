@@ -6,8 +6,9 @@ import com.ironhack.opportunitiesservice.controller.dto.OpportunityStatusDTO;
 import com.ironhack.opportunitiesservice.enums.Industry;
 import com.ironhack.opportunitiesservice.enums.Status;
 import com.ironhack.opportunitiesservice.model.Opportunity;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.math.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,4 +26,11 @@ public interface IOpportunityController {
     void updateOpportunityStatus(int id, OpportunityStatusDTO opportunityStatusDTO);
     //Patch method: update the accountId of a opportunity
     void updateOpportunityAccountId(int id, AccountIdDTO accountIdDTO);
+
+    BigDecimal getMeanOpportunities(String data);
+    List<Object[]> getMaxOpportunities();
+    int getMaxQuantity();
+    List<Object[]> getMinOpportunities();
+    int getMinQuantity();
+    double getMedian(String data);
 }

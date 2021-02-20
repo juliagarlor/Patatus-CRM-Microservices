@@ -1,22 +1,17 @@
 package com.ironhack.opportunitiesservice.service.impl;
 
-import com.ironhack.opportunitiesservice.client.AccountClient;
 import com.ironhack.opportunitiesservice.controller.dto.*;
-import com.ironhack.opportunitiesservice.enums.Industry;
-import com.ironhack.opportunitiesservice.enums.Product;
-import com.ironhack.opportunitiesservice.enums.Status;
-import com.ironhack.opportunitiesservice.model.Opportunity;
-import com.ironhack.opportunitiesservice.repository.OpportunityRepository;
-import com.ironhack.opportunitiesservice.service.interfaces.IOpportunityService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import com.ironhack.opportunitiesservice.enums.*;
+import com.ironhack.opportunitiesservice.model.*;
+import com.ironhack.opportunitiesservice.repository.*;
+import com.ironhack.opportunitiesservice.service.interfaces.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.http.*;
+import org.springframework.stereotype.*;
+import org.springframework.web.server.*;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import java.util.ArrayList;
-import java.util.List;
+import java.math.*;
+import java.util.*;
 
 @Service
 public class OpportunityService implements IOpportunityService {
@@ -25,7 +20,6 @@ public class OpportunityService implements IOpportunityService {
     private OpportunityRepository opportunityRepository;
     @Autowired
     private AccountClient accountClient;
-
 
     //===========================================
     //Get methods
@@ -198,60 +192,6 @@ public class OpportunityService implements IOpportunityService {
         return opportunityDTOList;
     }
 
-    //===========================================
-    //Post methods
-    //===========================================
-
-    public Opportunity createOpportunity(OpportunityDTO opportunityDTO) {
-        // TODO: preguntar a Xabi cómo hacer lo de las cuentas.
-        if (accountClient.getAccountById(opportunityDTO.getAccountId()) == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The account with Id: " + opportunityDTO.getAccountId() + "doesn't exist.");
-        }
-
-        Opportunity opportunity = new Opportunity( opportunityDTO.getQuantity(), opportunityDTO.getDecisionMakerId(),
-                opportunityDTO.getStatus(), opportunityDTO.getProduct(), opportunityDTO.getRepOpportunityId(), opportunityDTO.getAccountId());
-
-
-        return opportunityRepository.save(opportunity);
-    }
-
-    //===========================================
-    //Patch methods
-    //===========================================
-
-    public void updateOpportunityStatus(int id, OpportunityStatusDTO opportunityStatusDTO) {
-        if(opportunityRepository.findById(id).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "opportunity with id " +id + " not found");
-        }
-
-        Opportunity opportunity =  opportunityRepository.findById(id).get();
-        opportunity.setStatus(opportunityStatusDTO.getStatus());
-        opportunityRepository.save(opportunity);
-
-    }
-
-    public void updateOpportunityAccountId(int id, AccountIdDTO accountIdDTO) {
-        if(opportunityRepository.findById(id).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "opportunity with id " +id + " not found");
-        }
-
-        Opportunity opportunity =  opportunityRepository.findById(id).get();
-        opportunity.setAccountId(accountIdDTO.getId());
-        opportunityRepository.save(opportunity);
-import com.ironhack.opportunitiesservice.repository.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.http.*;
-import org.springframework.stereotype.*;
-import org.springframework.web.server.*;
-
-import java.math.*;
-import java.util.*;
-
-@Service
-public class OpportunityService {
-    @Autowired
-    private OpportunityRepository opportunityRepository;
-
     public BigDecimal getMean(String data) {
         switch (data.toLowerCase()){
             case "quantity":
@@ -317,6 +257,48 @@ public class OpportunityService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please, introduce a valid data parameter: " +
                         "quantity or opportunities");
         }
+    }
+
+    //===========================================
+    //Post methods
+    //===========================================
+
+    public Opportunity createOpportunity(OpportunityDTO opportunityDTO) {
+        // TODO: preguntar a Xabi cómo hacer lo de las cuentas.
+        if (accountClient.getAccountById(opportunityDTO.getAccountId()) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The account with Id: " + opportunityDTO.getAccountId() + "doesn't exist.");
+        }
+
+        Opportunity opportunity = new Opportunity( opportunityDTO.getQuantity(), opportunityDTO.getDecisionMakerId(),
+                opportunityDTO.getStatus(), opportunityDTO.getProduct(), opportunityDTO.getRepOpportunityId(), opportunityDTO.getAccountId());
+
+
+        return opportunityRepository.save(opportunity);
+    }
+
+    //===========================================
+    //Patch methods
+    //===========================================
+
+    public void updateOpportunityStatus(int id, OpportunityStatusDTO opportunityStatusDTO) {
+        if(opportunityRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "opportunity with id " +id + " not found");
+        }
+
+        Opportunity opportunity =  opportunityRepository.findById(id).get();
+        opportunity.setStatus(opportunityStatusDTO.getStatus());
+        opportunityRepository.save(opportunity);
+
+    }
+
+    public void updateOpportunityAccountId(int id, AccountIdDTO accountIdDTO) {
+        if (opportunityRepository.findById(id).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "opportunity with id " + id + " not found");
+        }
+
+        Opportunity opportunity = opportunityRepository.findById(id).get();
+        opportunity.setAccountId(accountIdDTO.getId());
+        opportunityRepository.save(opportunity);
     }
 
     // List MUST de previously ordered
