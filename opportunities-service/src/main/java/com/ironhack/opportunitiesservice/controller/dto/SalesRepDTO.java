@@ -2,13 +2,13 @@ package com.ironhack.opportunitiesservice.controller.dto;
 
 public class SalesRepDTO {
 
-    private int id;
+    private Long id;
     private String name;
 
     public SalesRepDTO() {
     }
 
-    public SalesRepDTO(int id, String name) {
+    public SalesRepDTO(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -17,11 +17,11 @@ public class SalesRepDTO {
         setName(name);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

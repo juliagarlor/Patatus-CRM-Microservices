@@ -30,7 +30,7 @@ public class OpportunityController implements IOpportunityController {
     //By country and status
     @GetMapping("/opportunities")
     @ResponseStatus(HttpStatus.OK)
-    public List<OpportunityDTO> getOpportunitiesBy(@RequestParam(name = "salesrep-id") Optional<Integer> salesRepId,
+    public List<OpportunityDTO> getOpportunitiesBy(@RequestParam(name = "salesrep-id") Optional<Long> salesRepId,
                                                    @RequestParam(name = "status") Optional<Status> status,
                                                    @RequestParam(name = "country") Optional<String> country,
                                                    @RequestParam(name = "city") Optional<String> city,
@@ -39,6 +39,8 @@ public class OpportunityController implements IOpportunityController {
             return opportunityService.getAllOpportunities();
         }else if(salesRepId.isPresent() && status.isEmpty() && country.isEmpty() && city.isEmpty() && industry.isEmpty()){
             return opportunityService.getOpportunitiesBySalesRep(salesRepId.get());
+        } else if(salesRepId.isPresent() && status.isPresent() && country.isEmpty() && city.isEmpty() && industry.isEmpty()){
+            return opportunityService.getOpportunitiesBySalesRepAndStatus(salesRepId.get(), status.get());
         }else if(salesRepId.isEmpty() && status.isEmpty() && country.isPresent() && city.isEmpty() && industry.isEmpty()){
             return opportunityService.getOpportunitiesByCountry(country.get());
         }else if(salesRepId.isEmpty() && status.isPresent() && country.isPresent() && city.isEmpty() && industry.isEmpty()){
@@ -57,7 +59,7 @@ public class OpportunityController implements IOpportunityController {
     }
 
     @GetMapping("/opportunity/{id}")
-    public OpportunityDTO getOpportunityDTOById(@PathVariable int id) {
+    public OpportunityDTO getOpportunityDTOById(@PathVariable Long id) {
         return opportunityService.getOpportunityById(id);
     }
 
@@ -77,12 +79,12 @@ public class OpportunityController implements IOpportunityController {
 
     //TODO: juntar las dos rutas en una
     @PatchMapping("/opportunity/{opportunityId}/status")
-     public void updateOpportunityStatus(@PathVariable int opportunityId, @RequestBody OpportunityStatusDTO opportunityStatusDTO) {
+     public void updateOpportunityStatus(@PathVariable Long opportunityId, @RequestBody OpportunityStatusDTO opportunityStatusDTO) {
         opportunityService.updateOpportunityStatus(opportunityId, opportunityStatusDTO);
     }
 
     @PatchMapping("/opportunity/{opportunityId}/account-id")
-     public void updateOpportunityAccountId(@PathVariable int opportunityId,@RequestBody AccountIdDTO accountIdDTO) {
+     public void updateOpportunityAccountId(@PathVariable Long opportunityId,@RequestBody AccountIdDTO accountIdDTO) {
         opportunityService.updateOpportunityAccountId(opportunityId, accountIdDTO);
      }
 }

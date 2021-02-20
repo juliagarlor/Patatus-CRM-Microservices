@@ -10,12 +10,12 @@ import java.util.Optional;
 import java.util.Stack;
 
 @Repository
-public interface OpportunityRepository extends JpaRepository<Opportunity, Integer> {
+public interface OpportunityRepository extends JpaRepository<Opportunity, Long> {
 
     //method to get an opportunity list with an specific sales rep
-    List<Opportunity> findByRepOpportunityId(int id);
+    List<Opportunity> findByRepOpportunityId(Long id);
     //method to get an opportunity list with an specific sales rep and an specific status
-    List<Opportunity> findByRepOpportunityIdAndStatus(int id, Status status);
+    List<Opportunity> findByRepOpportunityIdAndStatus(Long id, Status status);
     //method to get an opportunity by accountId
-    Optional<Opportunity> findByAccountId(int id);
+    Optional<Opportunity> findByAccountId(Long id);
 }

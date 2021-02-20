@@ -3,13 +3,13 @@ create schema opportunity_crm;
 use opportunity_crm;
 
 create table opportunity(
-id int auto_increment,
+id bigint auto_increment,
 quantity int,
-decision_maker_id int,
+decision_maker_id bigint,
 status varchar(255),
 product varchar(255),
-rep_opportunity_id int,
-account_id int,
+rep_opportunity_id bigint,
+account_id bigint,
 primary key(id)
 );
 
