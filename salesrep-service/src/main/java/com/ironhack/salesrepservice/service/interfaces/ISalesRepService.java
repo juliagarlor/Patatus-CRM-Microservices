@@ -15,19 +15,19 @@ public interface ISalesRepService {
     List<SalesRepDTO> findAll();
 
     //Get method: get a list with the leads of a sales rep
-    List<LeadDTO> getLeadsBySalesRepId(int id);
+    List<LeadDTO> getLeadsBySalesRepId(Long id);
 
     //Get method: get the number of leads by sales rep
-    Integer getCountOfLeadsBySalesRepId(int id);
+    Integer getCountOfLeadsBySalesRepId(Long id);
 
     //Get method: get a list with the opportunities of a sales rep
-    List<OpportunityDTO> getOpportunitiesBySalesRepId(int id);
+    List<OpportunityDTO> getOpportunitiesBySalesRepId(Long id);
 
     //Get method: get the number of opportunities by sales rep
-    Integer getCountOfOpportunitiesBySalesRepId(int id);
+    Integer getCountOfOpportunitiesBySalesRepId(Long id);
 
     //Get method: get a list with the opportunities of a sales rep, ordered by status, closed-won or closed-lost
-    List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(int id, Status status);
+    List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(Long id, Status status);
 
     //Post method: Create a new sales rep
     SalesRep createSalesRep(SalesRepDTO salesRepDTO);
