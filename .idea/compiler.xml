@@ -11,8 +11,8 @@
         <module name="contact-service" />
         <module name="stats-service" />
         <module name="account-service" />
-        <module name="eureka-server" />
         <module name="salesrep-service" />
+        <module name="eureka-server" />
         <module name="opportunities-service" />
       </profile>
     </annotationProcessing>
@@ -23,7 +23,7 @@
       <module name="eureka-server" target="15" />
       <module name="lead-service" target="15" />
       <module name="opportunities-service" target="15" />
-      <module name="salesrep-service" target="15" />
+      <module name="salesrep-service" target="11" />
       <module name="stats-service" target="15" />
     </bytecodeTargetLevel>
   </component>
