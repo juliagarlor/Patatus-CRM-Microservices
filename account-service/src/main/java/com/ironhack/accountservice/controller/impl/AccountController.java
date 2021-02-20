@@ -56,13 +56,6 @@ public class AccountController implements IAccountController {
         return accountService.findMinEmployeeCount();
     }
 
-//    Esta la podemos cambiar para que devuelva solo la mediana:
-//    @GetMapping("/stats/ordered-list-of-employee-count")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<Integer[]> findEmployeesByAccountOrdered() {
-//        return accountService.findEmployeesByAccountOrdered();
-//    }
-
     @GetMapping("/stats/median/employee-count")
     @ResponseStatus(HttpStatus.OK)
     public double findMedianEmployeeCount() {
