@@ -1,15 +1,10 @@
 package com.ironhack.leadservice.model;
 
 
-import com.ironhack.leadservice.controller.dto.LeadDTO;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 @Entity
 public class Lead {
@@ -17,21 +12,21 @@ public class Lead {
     // Properties
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
     private String phoneNumber;
     private String email;
     private String companyName;
-    private long repLead;
+    private Long salesrepId;
 
 
     // Constructor
-    public Lead(String name, String phoneNumber, String email, String companyName, long repLead) {
+    public Lead(String name, String phoneNumber, String email, String companyName, Long salesrepId) {
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
         setCompanyName(companyName);
-        setRepLead(repLead);
+        setSalesrepId(salesrepId);
     }
 
 //    public Lead(LeadDTO lead){
@@ -57,12 +52,14 @@ public class Lead {
     }
 
     //Getters & Setters
-    public void setId(Long id) {
-        this.id = id;
-    }
+
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -97,15 +94,11 @@ public class Lead {
         this.companyName = companyName;
     }
 
-
-    public long getRepLead() {
-        return repLead;
+    public Long getSalesrepId() {
+        return salesrepId;
     }
 
-    public void setRepLead(long repLead) {
-        this.repLead = repLead;
+    public void setSalesrepId(Long salesrepId) {
+        this.salesrepId = salesrepId;
     }
-
-
-
 }
