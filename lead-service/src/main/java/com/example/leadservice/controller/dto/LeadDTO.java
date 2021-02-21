@@ -6,19 +6,22 @@ public class LeadDTO {
 
 
     // Properties
-    private Integer id;
+    private Long id;
     private String name;
     private String phoneNumber;
     private String email;
     private String companyName;
+    private long repLead;
 
     // Constructor
-    public LeadDTO(Integer id, String name, String phoneNumber, String email, String companyName) {
+    public LeadDTO(long id, String name, String phoneNumber, String email, String companyName, long repLead) {
         setId(id);
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
         setCompanyName(companyName);
+        setRepLead(repLead);
+
     }
 
     public LeadDTO(Lead lead) {
@@ -27,6 +30,7 @@ public class LeadDTO {
         this.email = lead.getEmail();
         this.name = lead.getName();
         this.phoneNumber = lead.getPhoneNumber();
+        this.repLead = lead.getRepLead();
 
     }
 
@@ -35,18 +39,26 @@ public class LeadDTO {
     // Override of the toString() method to display the Leads in a more friendly way.
     @Override
     public String toString() {
-        return " name: " + name +
+        return "id: " + id + " name: " + name +
                 " | phoneNumber: " + phoneNumber +
                 " | email: " + email +
                 " | companyName: " + companyName;
     }
 
     //Getters & Setters
-    public Integer getId() {
+    public Long getRepLead() {
+        return repLead;
+    }
+
+    public void setRepLead(Long repLead) {
+        this.repLead = repLead;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -6,9 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface LeadRepository extends JpaRepository<Lead, Integer> {
+public interface LeadRepository extends JpaRepository<Lead, Long> {
 
-    //method that return a list of Leads by sales rep
-    List<LeadDTO> findBy
+    List<Lead> findByRepLead(long id);
 
 }

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class LeadService {
 
@@ -37,7 +38,7 @@ public class LeadService {
 
     }
 
-    public LeadDTO getById(Integer id) throws NotFoundException {
+    public LeadDTO getById(Long id) throws NotFoundException {
 
         Optional<Lead> lead = leadRepository.findById(id);
 
@@ -51,11 +52,29 @@ public class LeadService {
 
     }
 
-    public LeadDTO createLead(String name, String phoneNumber, String email, String companyName) throws Exception {
+    public List<LeadDTO> findByRepLead(Long repleadId) throws NotFoundException{
+        List<Lead> leads = leadRepository.findByRepLead(repleadId);
+
+        if (leads.isEmpty()){
+            throw new NotFoundException("NOT_FOUND");
+        }
+
+        List<LeadDTO> leadDTOs = new ArrayList<LeadDTO>();
+
+        for(Lead lead : leads){
+            leadDTOs.add(new LeadDTO(lead));
+        }
+
+        return leadDTOs;
+
+    }
+
+    public LeadDTO createLead(LeadDTO leadDTO) throws Exception {
+
 
         try {
 
-            return new LeadDTO(leadRepository.save(new Lead(name, phoneNumber, email, companyName)));
+            return new LeadDTO(leadRepository.save(new Lead(leadDTO)));
 
         } catch (Exception exc) {
 
@@ -67,7 +86,7 @@ public class LeadService {
 
     }
 
-    public LeadDTO deleteLead(Integer id) throws Exception {
+    public LeadDTO deleteLead(Long id) throws Exception {
 
         Optional<Lead> lead = leadRepository.findById(id);
 
