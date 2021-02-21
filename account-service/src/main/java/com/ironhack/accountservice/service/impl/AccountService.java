@@ -97,14 +97,6 @@ public class AccountService implements IAccountService {
         return minEmployeeCount;
     }
 
-//    public List<Integer[]> findEmployeesByAccountOrdered() {
-//        List<Integer[]> employeesByAccountOrdered = accountRepository.findEmployeesByAccountOrdered();
-//        if (employeesByAccountOrdered.size() == 0){
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no accounts yet.");
-//        }
-//        return employeesByAccountOrdered;
-//    }
-
     public double findMedianEmployeeCount() {
         List<Integer[]> employeesByAccountOrdered = accountRepository.findEmployeesByAccountOrdered();
 

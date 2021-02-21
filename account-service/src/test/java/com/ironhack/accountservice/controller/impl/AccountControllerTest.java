@@ -51,7 +51,7 @@ class AccountControllerTest {
     }
 
     @Test
-    void postAccount() throws Exception {
+    void postAccount_ValidDTO_NewAccount() throws Exception {
         AccountDTO accountDTO = new AccountDTO("MEDICAL", 56, "Paris", "France");
         String body = objectMapper.writeValueAsString(accountDTO);
         MvcResult result = mockMvc.perform(
@@ -66,7 +66,7 @@ class AccountControllerTest {
     }
 
     @Test
-    void getAllAccounts() throws Exception  {
+    void getAllAccounts_nothing_AllAccounts() throws Exception  {
         MvcResult result = mockMvc.perform(get("/accounts")).andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("12"));
         assertTrue(result.getResponse().getContentAsString().contains("7"));
@@ -75,7 +75,7 @@ class AccountControllerTest {
     }
 
     @Test
-    void getAccountById() throws Exception  {
+    void getAccountById_ValidId_RightAccount() throws Exception  {
         List<Account> accounts = accountRepository.findAll();  // This is used to avoid problems with auto_increment ids.
         MvcResult result = mockMvc.perform(get("/account/"+accounts.get(0).getId())).andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("12"));
@@ -83,7 +83,7 @@ class AccountControllerTest {
     }
 
     @Test
-    void getAccountsByCountry() throws Exception  {
+    void getAccountsByCountry_ValidCountry_RightListOfAccounts() throws Exception  {
         List<Account> accounts = accountRepository.findAll();  // This is used to avoid problems with auto_increment ids.
         MvcResult result = mockMvc.perform(get("/accounts/country/Spain")).andReturn();
         assertTrue(result.getResponse().getContentAsString().contains(accounts.get(0).getId().toString()));
@@ -92,44 +92,41 @@ class AccountControllerTest {
     }
 
     @Test
-    void getAccountsByCity() throws Exception  {
+    void getAccountsByCity_ValidCity_RightListOfAccounts() throws Exception  {
         List<Account> accounts = accountRepository.findAll();  // This is used to avoid problems with auto_increment ids.
         MvcResult result = mockMvc.perform(get("/accounts/city/Roma")).andReturn();
         assertTrue(result.getResponse().getContentAsString().contains(accounts.get(3).getId().toString()));
     }
 
     @Test
-    void getAccountsByIndustry() throws Exception  {
+    void getAccountsByIndustry_ValidIndustry_RightListOfAccounts() throws Exception  {
         List<Account> accounts = accountRepository.findAll();  // This is used to avoid problems with auto_increment ids.
         MvcResult result = mockMvc.perform(get("/accounts/industry/produce")).andReturn();
         assertTrue(result.getResponse().getContentAsString().contains(accounts.get(2).getId().toString()));
     }
 
     @Test
-    void findMeanEmployeeCount() throws Exception  {
+    void findMeanEmployeeCount_Nothing_RightMean() throws Exception  {
         MvcResult result = mockMvc.perform(get("/stats/mean/employee-count")).andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("92.75"));
     }
 
     @Test
-    void findMaxEmployeeCount() throws Exception  {
+    void findMaxEmployeeCount_Nothing_RightMax() throws Exception  {
         MvcResult result = mockMvc.perform(get("/stats/max/employee-count")).andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("218"));
     }
 
     @Test
-    void findMinEmployeeCount() throws Exception  {
+    void findMinEmployeeCount_Nothing_RightMin() throws Exception  {
         MvcResult result = mockMvc.perform(get("/stats/min/employee-count")).andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("7"));
     }
 
     @Test
-    void findEmployeesByAccountOrdered() throws Exception  {
-        MvcResult result = mockMvc.perform(get("/stats/ordered-list-of-employee-count")).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains("7"));
-        assertTrue(result.getResponse().getContentAsString().contains("12"));
-        assertTrue(result.getResponse().getContentAsString().contains("134"));
-        assertTrue(result.getResponse().getContentAsString().contains("218"));
-
+    void findMedianEmployeeCount_Nothing_RightMean() throws Exception  {
+        MvcResult result = mockMvc.perform(get("/stats/median/employee-count")).andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+        assertTrue(result.getResponse().getContentAsString().contains("73"));
     }
 }

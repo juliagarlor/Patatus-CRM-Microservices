@@ -24,7 +24,6 @@ public interface IAccountController {
     BigDecimal findMeanEmployeeCount();
     List<Object[]> findMaxEmployeeCount();
     List<Object[]> findMinEmployeeCount();
-//    List<Integer[]> findEmployeesByAccountOrdered();
 
     double findMedianEmployeeCount();
 
