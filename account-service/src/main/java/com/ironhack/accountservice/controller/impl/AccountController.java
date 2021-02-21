@@ -36,8 +36,34 @@ public class AccountController implements IAccountController {
         return accountService.getAccountById(id);
     }
 
+    @GetMapping("/accounts/country/{country}")
+    public List<Long> getAccountsByCountry(@PathVariable String country) {
+        return accountService.getAccountsByCountry(country);
+    }
+
+    @GetMapping("/accounts/city/{city}")
+    public List<Long> getAccountsByCity(@PathVariable String city) {
+        return accountService.getAccountsByCity(city);
+    }
+
+    @GetMapping("/accounts/industry/{industry}")
+    public List<Long> getAccountsByIndustry(@PathVariable String industry) {
+        return accountService.getAccountsByIndustry(industry);
+    }
+
 
     // Routes for stats:
+    @GetMapping("/cities")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> getCities(){
+        return accountService.getCities();
+    }
+
+    @GetMapping("/countries")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> getCountries(){
+        return accountService.getCountries();
+    }
 
     @GetMapping("/stats/mean/employee-count")
     @ResponseStatus(HttpStatus.OK)
@@ -57,9 +83,10 @@ public class AccountController implements IAccountController {
         return accountService.findMinEmployeeCount();
     }
 
-    @GetMapping("/stats/ordered-list-of-employee-count")
+    @GetMapping("/stats/median/employee-count")
     @ResponseStatus(HttpStatus.OK)
-    public List<Integer[]> findEmployeesByAccountOrdered() {
-        return accountService.findEmployeesByAccountOrdered();
+    public double findMedianEmployeeCount() {
+        return accountService.findMedianEmployeeCount();
     }
+
 }

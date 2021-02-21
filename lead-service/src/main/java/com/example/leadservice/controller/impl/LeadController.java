@@ -2,6 +2,7 @@ package com.example.leadservice.controller.impl;
 
 import com.example.leadservice.controller.dto.LeadDTO;
 import com.example.leadservice.model.Lead;
+import com.example.leadservice.repository.*;
 import com.example.leadservice.services.impl.LeadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,9 @@ public class LeadController {
 
     @Autowired
     private LeadService leadService;
+
+    @Autowired
+    private LeadRepository leadRepository;
 
     @GetMapping("/leads")
     @ResponseStatus(HttpStatus.OK)
@@ -36,7 +40,7 @@ public class LeadController {
 
     @GetMapping("/leads/{lead_id}")
     @ResponseStatus(HttpStatus.OK)
-    public LeadDTO findById(@PathVariable Long lead_id) throws ResponseStatusException{
+    public LeadDTO findById(@PathVariable Integer lead_id) throws ResponseStatusException{
 
         try {
 
@@ -50,30 +54,20 @@ public class LeadController {
 
     }
 
-
-    @GetMapping("/leads/salesrep/{salesrep_id}")
+    @GetMapping("/leads/count/{salesRepId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<LeadDTO> findByRepLead(@PathVariable  Long salesrep_id) throws ResponseStatusException{
-        try {
-
-            return leadService.findByRepLead(salesrep_id);
-
-        }catch (Exception e){
-
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-
-        }
+    public String findLeadCountBySalesRep() {
+        List<Object[]> result = leadRepository.findLeadCountBySalesRep();
+        return printTwoResults(result);
     }
-
 
     @PostMapping("/lead")
     @ResponseStatus(HttpStatus.CREATED)
-    public LeadDTO createLead(@RequestBody LeadDTO leadDTO) throws ResponseStatusException {
-
+    public LeadDTO createLead(@RequestParam String name,@RequestParam String phoneNumber,@RequestParam String email,@RequestParam String companyName, @RequestParam int salesRepId) throws ResponseStatusException {
 
         try {
 
-            return leadService.createLead(leadDTO);
+            return leadService.createLead(name, phoneNumber, email, companyName, salesRepId);
 
         } catch (Exception exc) {
 
@@ -85,7 +79,7 @@ public class LeadController {
 
     @DeleteMapping("/lead/{lead_id}")
     @ResponseStatus(HttpStatus.OK)
-    public LeadDTO deleteLead(@PathVariable Long lead_id) throws ResponseStatusException{
+    public LeadDTO deleteLead(@PathVariable Integer lead_id) throws ResponseStatusException{
 
         try {
 
@@ -96,4 +90,13 @@ public class LeadController {
         }
     }
 
+    // REPORTING:
+
+    public String printTwoResults(List<Object[]> result){
+        StringBuilder string = new StringBuilder();
+        for (Object[] row : result){
+            string.append(row[0].toString()).append(": ").append((row[1]).toString()).append("\n");
+        }
+        return string.toString();
+    }
 }

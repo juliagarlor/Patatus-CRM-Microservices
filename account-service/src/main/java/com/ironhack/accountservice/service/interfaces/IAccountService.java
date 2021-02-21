@@ -11,10 +11,19 @@ public interface IAccountService {
     List<Account> getAllAccounts();
     Account getAccountById(Long id);
 
+    List<Long> getAccountsByCountry(String country);
+    List<Long> getAccountsByCity(String city);
+    List<Long> getAccountsByIndustry(String industry);
+
     // Routes for the stats:
+
+    List<String> getCities();
+    List<String> getCountries();
 
     BigDecimal findMeanEmployeeCount();
     List<Object[]> findMaxEmployeeCount();
     List<Object[]> findMinEmployeeCount();
-    List<Integer[]> findEmployeesByAccountOrdered();
+//    List<Integer[]> findEmployeesByAccountOrdered();
+
+    double findMedianEmployeeCount();
 }

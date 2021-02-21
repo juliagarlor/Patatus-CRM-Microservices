@@ -47,6 +47,31 @@ public class AccountService implements IAccountService {
         }
     }
 
+    @Override
+    public List<Long> getAccountsByCountry(String country) {
+        return accountRepository.getAccountsByCountry(country);
+    }
+
+    @Override
+    public List<Long> getAccountsByCity(String city) {
+        return accountRepository.getAccountsByCity(city);
+    }
+
+    @Override
+    public List<Long> getAccountsByIndustry(String industry) {
+        return accountRepository.getAccountsByIndustry(industry);
+    }
+
+    @Override
+    public List<String> getCities() {
+        return accountRepository.getAllCities();
+    }
+
+    @Override
+    public List<String> getCountries() {
+        return accountRepository.getAllCountries();
+    }
+
     public BigDecimal findMeanEmployeeCount() {
         BigDecimal meanEmployeeCount = accountRepository.findMeanEmployeeCount();
         return meanEmployeeCount == null ? BigDecimal.ZERO : meanEmployeeCount;
@@ -68,11 +93,33 @@ public class AccountService implements IAccountService {
         return minEmployeeCount;
     }
 
-    public List<Integer[]> findEmployeesByAccountOrdered() {
+//    public List<Integer[]> findEmployeesByAccountOrdered() {
+//        List<Integer[]> employeesByAccountOrdered = accountRepository.findEmployeesByAccountOrdered();
+//        if (employeesByAccountOrdered.size() == 0){
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no accounts yet.");
+//        }
+//        return employeesByAccountOrdered;
+//    }
+
+    public double findMedianEmployeeCount() {
         List<Integer[]> employeesByAccountOrdered = accountRepository.findEmployeesByAccountOrdered();
+
         if (employeesByAccountOrdered.size() == 0){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no accounts yet.");
         }
-        return employeesByAccountOrdered;
+        return findMedian(employeesByAccountOrdered);
+    }
+
+    public double findMedian(List<Integer[]> objects){
+        double median;
+        int medianPosition = objects.size()/2;
+        if(objects.size() % 2 != 0 ){
+            median = objects.get(medianPosition)[0];
+        } else {
+            double firstHalf = (double) objects.get((objects.size()/2)-1)[0];
+            double secondHalf = (double) objects.get(medianPosition)[0];
+            median = (firstHalf + secondHalf)/2;
+        }
+        return median;
     }
 }
