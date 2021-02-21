@@ -54,7 +54,7 @@ public class LeadController {
 
     }
 
-    @GetMapping("/leads/count/{salesRepId}")
+    @GetMapping("/leads/count/bySalesRep")
     @ResponseStatus(HttpStatus.OK)
     public String findLeadCountBySalesRep() {
         List<Object[]> result = leadRepository.findLeadCountBySalesRep();
