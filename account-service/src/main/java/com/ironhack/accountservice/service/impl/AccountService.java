@@ -57,7 +57,7 @@ public class AccountService implements IAccountService {
         return accountRepository.getAccountsByCity(city);
     }
 
-    @Override
+
     public List<Long> getAccountsByIndustry(String industry) {
         return accountRepository.getAccountsByIndustry(industry);
     }
