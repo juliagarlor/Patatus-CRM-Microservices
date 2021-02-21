@@ -68,12 +68,12 @@ public class LeadController {
 
     @PostMapping("/lead")
     @ResponseStatus(HttpStatus.CREATED)
-    public LeadDTO createLead(@RequestParam  String name,@RequestParam String phoneNumber,@RequestParam String email,@RequestParam String companyName,@RequestParam long repLead) throws ResponseStatusException {
+    public LeadDTO createLead(@RequestBody LeadDTO leadDTO) throws ResponseStatusException {
 
 
         try {
 
-            return leadService.createLead(name, phoneNumber, email, companyName, repLead);
+            return leadService.createLead(leadDTO);
 
         } catch (Exception exc) {
 

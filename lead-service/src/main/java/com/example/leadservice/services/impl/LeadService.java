@@ -4,8 +4,6 @@ import com.example.leadservice.controller.dto.LeadDTO;
 import com.example.leadservice.model.Lead;
 import com.example.leadservice.repository.LeadRepository;
 import javassist.NotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +14,6 @@ import java.util.Optional;
 
 @Service
 public class LeadService {
-
-    public Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private LeadRepository leadRepository;
@@ -73,13 +69,12 @@ public class LeadService {
 
     }
 
-    public LeadDTO createLead(String name, String phoneNumber, String email, String companyName, long repLead) throws Exception {
+    public LeadDTO createLead(LeadDTO leadDTO) throws Exception {
 
-        logger.info(Long.toString(repLead));
 
         try {
 
-            return new LeadDTO(leadRepository.save(new Lead(name, phoneNumber, email, companyName, repLead)));
+            return new LeadDTO(leadRepository.save(new Lead(leadDTO)));
 
         } catch (Exception exc) {
 

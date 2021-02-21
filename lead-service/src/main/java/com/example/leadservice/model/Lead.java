@@ -17,24 +17,28 @@ public class Lead {
     // Properties
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @NotNull
     private long id;
 
-
+    @NotNull
+    @NotEmpty
     private String name;
 
-
-
+    @NotNull
+    @NotEmpty
+    @Pattern(regexp = "^\\s*(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)\\s*$", message = "insert a correct phone number")
     private String phoneNumber;
 
-
-
+    @NotNull
+    @NotEmpty
+    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "insert a correct email")
     private String email;
 
-
+    @NotNull
+    @NotEmpty
     private String companyName;
 
-
+    @NotNull
     private long repLead;
 
 
