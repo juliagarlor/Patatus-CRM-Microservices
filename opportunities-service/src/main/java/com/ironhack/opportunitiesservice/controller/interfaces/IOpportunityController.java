@@ -6,7 +6,11 @@ import com.ironhack.opportunitiesservice.controller.dto.OpportunityStatusDTO;
 import com.ironhack.opportunitiesservice.enums.Industry;
 import com.ironhack.opportunitiesservice.enums.Status;
 import com.ironhack.opportunitiesservice.model.Opportunity;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -40,4 +44,5 @@ public interface IOpportunityController {
     List<Object[]> getMinOpportunities();
     int getMinQuantity();
     double getMedian(String data);
+    public String findOpportunityCountBySalesRep(@PathVariable Long salesRepId);
 }

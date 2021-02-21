@@ -128,7 +128,7 @@ public class OpportunityController implements IOpportunityController {
 
     @GetMapping("/opportunities/count/by-salesRep")
     @ResponseStatus(HttpStatus.OK)
-    public String findOpportunityCountBySalesRep(@PathVariable int salesRepId) {
+    public String findOpportunityCountBySalesRep(@PathVariable Long salesRepId) {
         return opportunityService.findOpportunityCountBySalesRep(salesRepId);
     }
 
