@@ -125,5 +125,11 @@ class AccountControllerTest {
 
     @Test
     void findEmployeesByAccountOrdered() throws Exception  {
+        MvcResult result = mockMvc.perform(get("/stats/ordered-list-of-employee-count")).andReturn();
+        assertTrue(result.getResponse().getContentAsString().contains("7"));
+        assertTrue(result.getResponse().getContentAsString().contains("12"));
+        assertTrue(result.getResponse().getContentAsString().contains("134"));
+        assertTrue(result.getResponse().getContentAsString().contains("218"));
+
     }
 }
