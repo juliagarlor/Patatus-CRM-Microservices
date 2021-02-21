@@ -25,4 +25,5 @@ public interface IAccountService {
     List<Object[]> findMinEmployeeCount();
 
     double findMedianEmployeeCount();
+
 }
