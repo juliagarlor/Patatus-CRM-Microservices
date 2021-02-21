@@ -62,6 +62,16 @@ public class AccountService implements IAccountService {
         return accountRepository.getAccountsByIndustry(industry);
     }
 
+    @Override
+    public List<String> getCities() {
+        return accountRepository.getAllCities();
+    }
+
+    @Override
+    public List<String> getCountries() {
+        return accountRepository.getAllCountries();
+    }
+
     public BigDecimal findMeanEmployeeCount() {
         BigDecimal meanEmployeeCount = accountRepository.findMeanEmployeeCount();
         return meanEmployeeCount == null ? BigDecimal.ZERO : meanEmployeeCount;

@@ -53,6 +53,17 @@ public class AccountController implements IAccountController {
 
 
     // Routes for stats:
+    @GetMapping("/cities")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> getCities(){
+        return accountService.getCities();
+    }
+
+    @GetMapping("/countries")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> getCountries(){
+        return accountService.getCountries();
+    }
 
     @GetMapping("/stats/mean/employee-count")
     @ResponseStatus(HttpStatus.OK)

@@ -27,6 +27,12 @@ public interface IOpportunityController {
     //Patch method: update the accountId of a opportunity
     void updateOpportunityAccountId(int id, AccountIdDTO accountIdDTO);
 
+    String findOpportunityCountByIndustry();
+    String findOpportunityByStatusCountByIndustry(Status status);
+    String findOpportunityCountByCity();
+    String findOpportunityByStatusCountByCity(Status status);
+    String findOpportunityCountByCountry();
+    String findOpportunityByStatusCountByCountry(Status status);
     BigDecimal getMeanOpportunities(String data);
     List<Object[]> getMaxOpportunities();
     int getMaxQuantity();

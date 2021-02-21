@@ -6,8 +6,8 @@ import com.ironhack.opportunitiesservice.controller.dto.CountryDTO;
 import com.ironhack.opportunitiesservice.controller.dto.IndustryDTO;
 import com.ironhack.opportunitiesservice.enums.Industry;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +24,11 @@ public interface AccountClient {
     <CityDTO>List getAccountByCity(String city);
     @GetMapping("/accounts")
     List<IndustryDTO> getAccountByIndustry(Industry industry);
+
+    @GetMapping("/cities")
+    List<String> getCities();
+
+    @GetMapping("/countries")
+    List<String> getCountries();
 
 }

@@ -148,6 +148,42 @@ public class OpportunityController implements IOpportunityController {
         return printTwoResults(result);
     }
 
+    @GetMapping("/opportunities/count/by-industry")
+    @ResponseStatus(HttpStatus.OK)
+    public String findOpportunityCountByIndustry() {
+        return opportunityService.findOpportunityCountByIndustry();
+    }
+
+    @GetMapping("/opportunities/count/by-industry/{status}")
+    @ResponseStatus(HttpStatus.OK)
+    public String findOpportunityByStatusCountByIndustry(@PathVariable Status status) {
+        return opportunityService.findOpportunityByStatusCountByIndustry(status);
+    }
+
+    @GetMapping("/opportunities/count/by-city/{city}")
+    @ResponseStatus(HttpStatus.OK)
+    public String findOpportunityCountByCity() {
+        return opportunityService.findOpportunityCountByCity();
+    }
+
+    @GetMapping("/opportunities/count/by-city/{status}")
+    @ResponseStatus(HttpStatus.OK)
+    public String findOpportunityByStatusCountByCity(@PathVariable Status status) {
+        return opportunityService.findOpportunityByStatusCountByCity(status);
+    }
+
+    @GetMapping("/opportunities/count/by-country")
+    @ResponseStatus(HttpStatus.OK)
+    public String findOpportunityCountByCountry() {
+        return opportunityService.findOpportunityCountByCountry();
+    }
+
+    @GetMapping("/opportunities/count/by-country/{status}")
+    @ResponseStatus(HttpStatus.OK)
+    public String findOpportunityByStatusCountByCountry(@PathVariable Status status) {
+        return opportunityService.findOpportunityByStatusCountByCountry(status);
+    }
+
     // REPORTING:
 
     public String printTwoResults(List<Object[]> result){

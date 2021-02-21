@@ -1,5 +1,6 @@
 package com.ironhack.opportunitiesservice.service.impl;
 
+import com.ironhack.opportunitiesservice.client.*;
 import com.ironhack.opportunitiesservice.controller.dto.*;
 import com.ironhack.opportunitiesservice.enums.*;
 import com.ironhack.opportunitiesservice.model.*;
@@ -8,6 +9,7 @@ import com.ironhack.opportunitiesservice.service.interfaces.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
 import org.springframework.stereotype.*;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.*;
 
 import java.math.*;
@@ -156,6 +158,8 @@ public class OpportunityService implements IOpportunityService {
         return opportunityDTOList;
     }
 
+
+
     public List<OpportunityDTO> getOpportunitiesByIndustry(Industry industry) {
         //insert a list with the accounts by countries
         List<IndustryDTO> industryDTOList = accountClient.getAccountByIndustry(industry);
@@ -172,6 +176,66 @@ public class OpportunityService implements IOpportunityService {
         }
 
         return opportunityDTOList;
+    }
+
+    public String findOpportunityCountByIndustry(){
+        String output1 = "Produce: " + getOpportunitiesByIndustry(Industry.PRODUCE).size() + " opportunities";
+        String output2 = "\ne-Commerce: " + getOpportunitiesByIndustry(Industry.ECOMMERCE).size() + " opportunities";
+        String output3 = "\nManufacturing: " + getOpportunitiesByIndustry(Industry.MANUFACTURING).size() + " opportunities";
+        String output4 = "\nMedical: " + getOpportunitiesByIndustry(Industry.MEDICAL).size() + " opportunities";
+        String output5 = "\nOther: " + getOpportunitiesByIndustry(Industry.OTHER).size() + " opportunities";
+
+        return output1 + output2 + output3 + output4 + output5;
+    }
+
+    public String findOpportunityByStatusCountByIndustry(Status status){
+        String output1 = "Produce: " + getOpportunitiesByIndustryAndStatus(Industry.PRODUCE, status).size() + " opportunities";
+        String output2 = "\ne-Commerce: " + getOpportunitiesByIndustryAndStatus(Industry.ECOMMERCE, status).size() + " opportunities";
+        String output3 = "\nManufacturing: " + getOpportunitiesByIndustryAndStatus(Industry.MANUFACTURING, status).size() + " opportunities";
+        String output4 = "\nMedical: " + getOpportunitiesByIndustryAndStatus(Industry.MEDICAL, status).size() + " opportunities";
+        String output5 = "\nOther: " + getOpportunitiesByIndustryAndStatus(Industry.OTHER, status).size() + " opportunities";
+
+        return output1 + output2 + output3 + output4 + output5;
+    }
+
+    public String findOpportunityCountByCity() {
+        List<String> cities = accountClient.getCities();
+        String output = "";
+        for (String c : cities){
+            output += "\n" + c + ": " + getOpportunitiesByCity(c).size() + " opportunities";
+        }
+
+        return output;
+    }
+
+    public String findOpportunityByStatusCountByCity(Status status) {
+        List<String> cities = accountClient.getCities();
+        String output = "";
+        for (String c : cities){
+            output += "\n" + c + ": " + getOpportunitiesByCityAndStatus(c, status).size() + " opportunities";
+        }
+
+        return output;
+    }
+
+    public String findOpportunityCountByCountry() {
+        List<String> countries = accountClient.getCountries();
+        String output = "";
+        for (String c : countries){
+            output += "\n" + c + ": " + getOpportunitiesByCountry(c).size() + " opportunities";
+        }
+
+        return output;
+    }
+
+    public String findOpportunityByStatusCountByCountry(Status status) {
+        List<String> countries = accountClient.getCountries();
+        String output = "";
+        for (String c : countries){
+            output += "\n" + c + ": " + getOpportunitiesByCountryAndStatus(c, status).size() + " opportunities";
+        }
+
+        return output;
     }
 
     public List<OpportunityDTO> getOpportunitiesByIndustryAndStatus(Industry industry, Status status) {

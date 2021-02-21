@@ -17,6 +17,9 @@ public interface IAccountService {
 
     // Routes for the stats:
 
+    List<String> getCities();
+    List<String> getCountries();
+
     BigDecimal findMeanEmployeeCount();
     List<Object[]> findMaxEmployeeCount();
     List<Object[]> findMinEmployeeCount();

@@ -40,6 +40,14 @@ public interface IOpportunityService {
     //Patch method: modify the accountId of the opportunity
     void updateOpportunityAccountId(int id, AccountIdDTO accountIdDTO);
 
+
+    String findOpportunityCountByIndustry();
+    String findOpportunityByStatusCountByIndustry(Status status);
+    String findOpportunityCountByCity();
+    String findOpportunityByStatusCountByCity(Status status);
+    String findOpportunityCountByCountry();
+    String findOpportunityByStatusCountByCountry(Status status);
+
     BigDecimal getMean(String data);
     List<Object[]> getMaxOpportunities();
     int getMaxQuantity();

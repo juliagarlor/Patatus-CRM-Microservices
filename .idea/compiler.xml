@@ -19,7 +19,7 @@
     <bytecodeTargetLevel>
       <module name="account-service" target="15" />
       <module name="config-server" target="1.5" />
-      <module name="contact-service" target="1.5" />
+      <module name="contact-service" target="15" />
       <module name="eureka-server" target="1.5" />
       <module name="lead-service" target="11" />
       <module name="opportunities-service" target="15" />
