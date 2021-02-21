@@ -1,5 +1,6 @@
 package com.ironhack.accountservice.repository;
 
+import com.ironhack.accountservice.enums.Industry;
 import com.ironhack.accountservice.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -32,6 +33,16 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query("SELECT country FROM Account GROUP BY country")
     List<String> getAllCountries();
+
+    @Query("SELECT id FROM Account WHERE country = :country")
+    List<Long> getAccountsByCountry(@Param("country") String country);
+
+    @Query("SELECT id FROM Account WHERE city = :city")
+    List<Long> getAccountsByCity(@Param("city") String city);
+
+    @Query("SELECT id FROM Account WHERE industry = :industry")
+    List<Long> getAccountsByIndustry(@Param("industry") Enum industry);
+
 
     // STATS:
 
