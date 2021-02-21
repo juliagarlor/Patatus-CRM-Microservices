@@ -31,31 +31,31 @@ public class SalesRepController implements ISalesRepController {
 
     @GetMapping("/salesreps/{sales_id}/leads")
     @ResponseStatus(HttpStatus.OK)
-    public List<LeadDTO> getLeadsBySalesRepId(@PathVariable int id) {
+    public List<LeadDTO> getLeadsBySalesRepId(@PathVariable Long id) {
         return salesRepService.getLeadsBySalesRepId(id);
     }
     @GetMapping("/salesreps/{sales_id}/leads/count")
     @ResponseStatus(HttpStatus.OK)
-    public Integer getCountOfLeadsBySalesRepId(@PathVariable int id) {
+    public Integer getCountOfLeadsBySalesRepId(@PathVariable Long id) {
         return salesRepService.getCountOfLeadsBySalesRepId(id);
     }
 
     @GetMapping("/salesreps/{sales_id}/opportunities")
     @ResponseStatus(HttpStatus.OK)
-    public List<OpportunityDTO> getOpportunitiesBySalesRepId(@PathVariable int id) {
+    public List<OpportunityDTO> getOpportunitiesBySalesRepId(@PathVariable Long id) {
         return salesRepService.getOpportunitiesBySalesRepId(id);
     }
 
     @GetMapping("/salesreps/{sales_id}/opportunities/count")
     @ResponseStatus(HttpStatus.OK)
-    public Integer getCountOfOpportunitiesBySalesRepId(@PathVariable int id) {
+    public Integer getCountOfOpportunitiesBySalesRepId(@PathVariable Long id) {
         return salesRepService.getCountOfOpportunitiesBySalesRepId(id);
     }
 
     //TODO: o dejarlo asi, o meter en la ruta de pillar las oportunidades por sales rep y hacer unos cuantos if
     @GetMapping("/salesreps/{sales_id}/opportunities/{status}")
     @ResponseStatus(HttpStatus.OK)
-    public List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(@PathVariable int id, @PathVariable Status status) {
+    public List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(@PathVariable Long id, @PathVariable Status status) {
         return salesRepService.getOpportunitiesBySalesRepAndStatus(id, status);
     }
 

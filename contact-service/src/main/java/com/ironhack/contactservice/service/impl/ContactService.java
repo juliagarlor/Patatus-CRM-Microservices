@@ -24,18 +24,25 @@ public class ContactService implements IContactService {
     //===========================================
     //Get methods
     //===========================================
-    public ContactDTO getContactById(int id) {
+    public ContactDTO getContactById(Long id) {
 
         if(contactRepository.findById(id).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact with id " + id + " not found");
         }
         Contact contact = contactRepository.findById(id).get();
-        return new ContactDTO(contact.getId(), contact.getName(), contact.getPhoneNumber(), contact.getEmail(), contact.getCompanyName(),contact.getAccountId());
+        return new ContactDTO(
+                contact.getId(),
+                contact.getName(),
+                contact.getPhoneNumber(),
+                contact.getEmail(),
+                contact.getCompanyName(),
+                contact.getAccountId()
+        );
     }
     //===========================================
     //Post methods
     //===========================================
-    public Contact createContact(int id) {
+    public Contact createContact(Long id) {
 
         //Get a leadDTO from microservice lead, to create a new contact with the data
         LeadDTO leadDTO = leadClient.getLeadDTOById(id);
@@ -47,7 +54,7 @@ public class ContactService implements IContactService {
     //===========================================
     //Patch methods
     //===========================================
-    public void updateContact(int id, AccountIdDTO accountIdDTO) {
+    public void updateContact(Long id, AccountIdDTO accountIdDTO) {
 
         if(contactRepository.findById(id).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact with id " + id + " not found");

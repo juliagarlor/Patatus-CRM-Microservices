@@ -1,15 +1,8 @@
 package com.ironhack.opportunitiesservice.controller.dto;
 
-import com.ironhack.opportunitiesservice.enums.Industry;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import javax.persistence.*;
-import java.util.List;
-
 public class AccountDTO {
 
-    private int id;
+    private Long id;
     private String industry;
     private int employeeCount;
     private String city;
@@ -18,7 +11,7 @@ public class AccountDTO {
     public AccountDTO() {
     }
 
-    public AccountDTO(int id, String industry, int employeeCount, String city, String country) {
+    public AccountDTO(Long id, String industry, int employeeCount, String city, String country) {
         this.id = id;
         this.industry = industry;
         this.employeeCount = employeeCount;
@@ -33,11 +26,11 @@ public class AccountDTO {
         this.country = country;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

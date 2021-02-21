@@ -1,6 +1,5 @@
-package com.example.leadservice.model;
+package com.ironhack.leadservice.model;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,22 +12,30 @@ public class Lead {
     // Properties
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+    private Long id;
     private String name;
     private String phoneNumber;
     private String email;
     private String companyName;
-    private int salesRepId;
+    private Long salesrepId;
+
 
     // Constructor
-    public Lead(String name, String phoneNumber, String email, String companyName, int salesRepId) {
+    public Lead(String name, String phoneNumber, String email, String companyName, Long salesrepId) {
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
         setCompanyName(companyName);
-        setSalesRepId(salesRepId);
+        setSalesrepId(salesrepId);
     }
+
+//    public Lead(LeadDTO lead){
+//        setName(lead.getName());
+//        setPhoneNumber(lead.getPhoneNumber());
+//        setEmail(lead.getEmail());
+//        setCompanyName(lead.getCompanyName());
+//        setRepLead(lead.getRepLead());
+//    }
 
     public Lead(){}
 
@@ -45,11 +52,13 @@ public class Lead {
     }
 
     //Getters & Setters
-    public int getId() {
+
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -85,11 +94,11 @@ public class Lead {
         this.companyName = companyName;
     }
 
-    public int getSalesRepId() {
-        return salesRepId;
+    public Long getSalesrepId() {
+        return salesrepId;
     }
 
-    public void setSalesRepId(int salesRepId) {
-        this.salesRepId = salesRepId;
+    public void setSalesrepId(Long salesrepId) {
+        this.salesrepId = salesrepId;
     }
 }

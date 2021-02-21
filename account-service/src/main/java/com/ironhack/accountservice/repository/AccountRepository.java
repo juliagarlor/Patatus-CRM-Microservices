@@ -1,5 +1,6 @@
 package com.ironhack.accountservice.repository;
 
+import com.ironhack.accountservice.enums.Industry;
 import com.ironhack.accountservice.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,7 +25,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     List<Long> getAccountsByCity(@Param("city") String city);
 
     @Query("SELECT id FROM Account WHERE industry = :industry")
-    List<Long> getAccountsByIndustry(@Param("industry") String industry);
+    List<Long> getAccountsByIndustry(@Param("industry") Enum industry);
 
     // Lists of cities and countries in String:
     @Query("SELECT city FROM Account GROUP BY city")
@@ -32,6 +33,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query("SELECT country FROM Account GROUP BY country")
     List<String> getAllCountries();
+
 
     // STATS:
 

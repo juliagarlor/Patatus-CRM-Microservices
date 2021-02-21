@@ -1,32 +1,24 @@
 package com.ironhack.opportunitiesservice.controller.dto;
 
-import com.ironhack.opportunitiesservice.enums.Industry;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 public class AccountIdDTO {
 
-    @NotNull
-    @NotEmpty
-    private int id;
+    private @NotNull @NotEmpty Long id;
 
     public AccountIdDTO() {
     }
 
-    public AccountIdDTO(@NotNull @NotEmpty int id) {
+    public AccountIdDTO(@NotNull @NotEmpty Long id) {
         setId(id);
     }
 
-    public int getId() {
+    public @NotNull @NotEmpty Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(@NotNull @NotEmpty Long id) {
         this.id = id;
     }
 }

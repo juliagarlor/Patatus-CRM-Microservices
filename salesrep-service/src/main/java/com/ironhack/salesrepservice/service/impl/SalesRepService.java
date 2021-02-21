@@ -1,7 +1,6 @@
 package com.ironhack.salesrepservice.service.impl;
 
 import com.ironhack.salesrepservice.Repository.SalesRepRepository;
-import com.ironhack.salesrepservice.client.LeadClient;
 import com.ironhack.salesrepservice.client.OpportunityClient;
 import com.ironhack.salesrepservice.controller.dto.LeadDTO;
 import com.ironhack.salesrepservice.controller.dto.OpportunityDTO;
@@ -43,7 +42,7 @@ public class SalesRepService implements ISalesRepService {
         return salesRepDTOS;
     }
 
-    public List<LeadDTO> getLeadsBySalesRepId(int id) {
+    public List<LeadDTO> getLeadsBySalesRepId(Long id) {
 
         if(salesRepRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
@@ -62,7 +61,7 @@ public class SalesRepService implements ISalesRepService {
         return newLeadDTOList;
     }
 
-    public Integer getCountOfLeadsBySalesRepId(int id){
+    public Integer getCountOfLeadsBySalesRepId(Long id){
 
         if(salesRepRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
@@ -81,7 +80,7 @@ public class SalesRepService implements ISalesRepService {
         return count;
     }
 
-    public List<OpportunityDTO> getOpportunitiesBySalesRepId(int id) {
+    public List<OpportunityDTO> getOpportunitiesBySalesRepId(Long id) {
 
         if(salesRepRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
@@ -90,7 +89,7 @@ public class SalesRepService implements ISalesRepService {
         return opportunityClient.getOpportunitiesBySalesRep(id);
     }
 
-    public Integer getCountOfOpportunitiesBySalesRepId(int id){
+    public Integer getCountOfOpportunitiesBySalesRepId(Long id){
 
         if(salesRepRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
@@ -105,7 +104,7 @@ public class SalesRepService implements ISalesRepService {
         return count;
     }
 
-    public List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(int id, Status status) {
+    public List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(Long id, Status status) {
 
         if(salesRepRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");

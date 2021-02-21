@@ -12,22 +12,22 @@ public class Opportunity {
     // Properties
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private int quantity;
-    private int decisionMakerId;
+    private Long decisionMakerId;
     @Enumerated(EnumType.STRING)
     private Status status;
     @Enumerated(EnumType.STRING)
     private Product product;
 
-    private int repOpportunityId;
-    private int accountId;
+    private Long repOpportunityId;
+    private Long accountId;
 
     // Constructors:
     public Opportunity() {
     }
 
-    public Opportunity(int quantity, int decisionMakerId, Status status, Product product, int repOpportunityId, int accountId) {
+    public Opportunity(int quantity, Long decisionMakerId, Status status, Product product, Long repOpportunityId, @javax.validation.constraints.NotNull @javax.validation.constraints.NotEmpty Long accountId) {
         setQuantity(quantity);
         setDecisionMakerId(decisionMakerId);
         setStatus(status);
@@ -36,7 +36,7 @@ public class Opportunity {
         setAccountId(accountId);
     }
 
-    public Opportunity(int quantity, int decisionMakerId, Status status, Product product, int repOpportunityId) {
+    public Opportunity(int quantity, Long decisionMakerId, Status status, Product product, Long repOpportunityId) {
         setQuantity(quantity);
         setDecisionMakerId(decisionMakerId);
         setStatus(status);
@@ -44,11 +44,11 @@ public class Opportunity {
         setRepOpportunityId(repOpportunityId);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -60,11 +60,11 @@ public class Opportunity {
         this.quantity = quantity;
     }
 
-    public int getDecisionMakerId() {
+    public Long getDecisionMakerId() {
         return decisionMakerId;
     }
 
-    public void setDecisionMakerId(int decisionMakerId) {
+    public void setDecisionMakerId(Long decisionMakerId) {
         this.decisionMakerId = decisionMakerId;
     }
 
@@ -84,19 +84,19 @@ public class Opportunity {
         this.product = product;
     }
 
-    public int getRepOpportunityId() {
+    public Long getRepOpportunityId() {
         return repOpportunityId;
     }
 
-    public void setRepOpportunityId(int repOpportunityId) {
+    public void setRepOpportunityId(Long repOpportunityId) {
         this.repOpportunityId = repOpportunityId;
     }
 
-    public int getAccountId() {
+    public Long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(int accountId) {
+    public void setAccountId(Long accountId) {
         this.accountId = accountId;
     }
 }

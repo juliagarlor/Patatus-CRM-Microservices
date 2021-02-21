@@ -2,7 +2,6 @@ package com.ironhack.contactservice.controller.impl;
 
 import com.ironhack.contactservice.controller.dto.AccountIdDTO;
 import com.ironhack.contactservice.controller.dto.ContactDTO;
-import com.ironhack.contactservice.controller.dto.LeadDTO;
 import com.ironhack.contactservice.controller.interfaces.IContactController;
 import com.ironhack.contactservice.model.Contact;
 import com.ironhack.contactservice.service.interfaces.IContactService;
@@ -24,7 +23,7 @@ public class ContactController implements IContactController {
 
     @GetMapping("/contact/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ContactDTO getContactDTOById(@PathVariable int id) {
+    public ContactDTO getContactDTOById(@PathVariable Long id) {
         return contactService.getContactById(id);
     }
 
@@ -34,7 +33,7 @@ public class ContactController implements IContactController {
 
     @PostMapping("/contact/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Contact createContact(@PathVariable int id) {
+    public Contact createContact(@PathVariable Long id) {
         return contactService.createContact(id);
     }
 
@@ -43,7 +42,7 @@ public class ContactController implements IContactController {
     //===========================================
 
     @PatchMapping("/contact/{id}/account-id")
-    public void updateContactAccountId(@PathVariable int id, @RequestBody @Valid AccountIdDTO accountIdDTO) {
+    public void updateContactAccountId(@PathVariable Long id, @RequestBody @Valid AccountIdDTO accountIdDTO) {
         contactService.updateContact(id,accountIdDTO);
     }
 }

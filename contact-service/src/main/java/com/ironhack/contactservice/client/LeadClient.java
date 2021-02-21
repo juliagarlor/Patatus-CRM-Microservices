@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface LeadClient {
 
     @GetMapping("/lead/{leadId}")
-    LeadDTO getLeadDTOById(@PathVariable int leadId);
+    LeadDTO getLeadDTOById(@PathVariable Long leadId);
 
 }

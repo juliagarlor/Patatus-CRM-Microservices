@@ -1,11 +1,10 @@
 package com.ironhack.statsservice.service.impl;
 
 import com.ironhack.statsservice.clients.*;
+import com.ironhack.statsservice.enums.*;
 import com.ironhack.statsservice.service.interfaces.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.http.*;
 import org.springframework.stereotype.*;
-import org.springframework.web.server.*;
 
 import java.math.*;
 import java.util.*;
@@ -15,79 +14,85 @@ public class StatsService implements IStatsService {
     @Autowired
     private AccountClient accountClient;
 
-//    EmployeeCount, quantity and opportunities
+    @Autowired
+    private LeadClient leadClient;
 
-    public BigDecimal getMean(String data) {
-        switch (data.toLowerCase()){
-            case "employeecount":
-                return accountClient.findMeanEmployeeCount();
-                break;
-            case "quantity":
-                break;
-            case "opportunities":
-                break;
-            default:
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please, introduce a valid data parameter: " +
-                        "employeeCount, quantity or opportunities");
-        }
+    @Autowired
+    private OpportunityClient opportunityClient;
+
+    public String findLeadCountBySalesRep() {
+        return leadClient.findLeadCountBySalesRep();
     }
 
-    public List<Object[]> getMax(String data) {
-        switch (data.toLowerCase()){
-            case "employeecount":
-                return accountClient.findMaxEmployeeCount();
-                break;
-            case "quantity":
-                break;
-            case "opportunities":
-                break;
-            default:
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please, introduce a valid data parameter: " +
-                        "employeeCount, quantity or opportunities");
-        }
+    public String findOpportunityCountBySalesRep() {
+        return opportunityClient.findOpportunityCountBySalesRep();
     }
 
-    public List<Object[]> getMin(String data) {
-        switch (data.toLowerCase()){
-            case "employeecount":
-                return accountClient.findMinEmployeeCount();
-                break;
-            case "quantity":
-                break;
-            case "opportunities":
-                break;
-            default:
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please, introduce a valid data parameter: " +
-                        "employeeCount, quantity or opportunities");
-        }
+    public String findOpportunityByStatusCountBySalesRep(Status status) {
+        return opportunityClient.findOpportunityByStatusCountBySalesRep(status);
+    }
+
+    public String findOpportunityCountByCountry() {
+        return opportunityClient.findOpportunityCountByCountry();
+    }
+
+    public String findOpportunityByStatusCountByCountry(Status status) {
+        return opportunityClient.findOpportunityByStatusCountByCountry(status);
+    }
+
+    public String findOpportunityCountByCity() {
+        return opportunityClient.findOpportunityCountByCity();
+    }
+
+    public String findOpportunityByStatusCountByCity(Status status) {
+        return opportunityClient.findOpportunityByStatusCountByCity(status);
+    }
+
+    public String findOpportunityCountByIndustry() {
+        return opportunityClient.findOpportunityCountByIndustry();
+    }
+
+    public String findOpportunityByStatusCountByIndustry(Status status) {
+        return opportunityClient.findOpportunityByStatusCountByIndustry(status);
+    }
+
+    public BigDecimal findMeanEmployeeCount() {
+        return accountClient.findMeanEmployeeCount();
+    }
+
+    public double findMedianEmployeeCount() {
+        return accountClient.findMedianEmployeeCount();
+    }
+
+    public List<Object[]> findMaxEmployeeCount() {
+        return accountClient.findMaxEmployeeCount();
+    }
+
+    public List<Object[]> findMinEmployeeCount() {
+        return accountClient.findMinEmployeeCount();
+    }
+
+    public BigDecimal getMeanOpportunities(String data) {
+        return opportunityClient.getMeanOpportunities(data);
     }
 
     public double getMedian(String data) {
-        switch (data.toLowerCase()){
-            case "employeecount":
-                return findMedian(accountClient.findEmployeesByAccountOrdered());
-                break;
-            case "quantity":
-                break;
-            case "opportunities":
-                break;
-            default:
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please, introduce a valid data parameter: " +
-                        "employeeCount, quantity or opportunities");
-        }
+        return opportunityClient.getMedian(data);
     }
 
-    // Lis MUST de previously ordered
-    public double findMedian(List<Integer[]> objects){
-        double median;
-        int medianPosition = objects.size()/2;
-        if(objects.size() % 2 != 0 ){
-            median = objects.get(medianPosition)[0];
-        } else {
-            double firstHalf = (double) objects.get((objects.size()/2)-1)[0];
-            double secondHalf = (double) objects.get(medianPosition)[0];
-            median = (firstHalf + secondHalf)/2;
-        }
-        return median;
+    public int getMaxQuantity() {
+        return opportunityClient.getMaxQuantity();
+    }
+
+    public int getMinQuantity() {
+        return opportunityClient.getMinQuantity();
+    }
+
+    public List<Object[]> getMaxOpportunities() {
+        return null;
+    }
+
+    public List<Object[]> getMinOpportunities() {
+        return null;
     }
 }

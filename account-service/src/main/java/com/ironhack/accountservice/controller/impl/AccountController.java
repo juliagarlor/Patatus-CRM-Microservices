@@ -52,6 +52,7 @@ public class AccountController implements IAccountController {
     }
 
 
+
     // Routes for stats:
     @GetMapping("/cities")
     @ResponseStatus(HttpStatus.OK)
@@ -88,5 +89,6 @@ public class AccountController implements IAccountController {
     public double findMedianEmployeeCount() {
         return accountService.findMedianEmployeeCount();
     }
+
 
 }

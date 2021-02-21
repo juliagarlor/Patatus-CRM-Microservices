@@ -2,7 +2,7 @@ package com.ironhack.opportunitiesservice.controller.dto;
 
 public class ContactDTO {
 
-    private int id;
+    private Long id;
     private String name;
     private String phoneNumber;
     private String email;
@@ -11,7 +11,7 @@ public class ContactDTO {
     public ContactDTO() {
     }
 
-    public ContactDTO(int id, String name, String phoneNumber, String email, String companyName) {
+    public ContactDTO(Long id, String name, String phoneNumber, String email, String companyName) {
         setId(id);
         setName(name);
         setPhoneNumber(phoneNumber);
@@ -19,11 +19,11 @@ public class ContactDTO {
         setCompanyName(companyName);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

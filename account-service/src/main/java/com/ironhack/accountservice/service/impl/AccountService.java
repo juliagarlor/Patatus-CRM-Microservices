@@ -59,7 +59,11 @@ public class AccountService implements IAccountService {
 
 
     public List<Long> getAccountsByIndustry(String industry) {
-        return accountRepository.getAccountsByIndustry(industry);
+        try {
+            return accountRepository.getAccountsByIndustry(Industry.valueOf(industry.toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(industry + " is not a valid Industry.");
+        }
     }
 
     @Override
@@ -93,14 +97,6 @@ public class AccountService implements IAccountService {
         return minEmployeeCount;
     }
 
-//    public List<Integer[]> findEmployeesByAccountOrdered() {
-//        List<Integer[]> employeesByAccountOrdered = accountRepository.findEmployeesByAccountOrdered();
-//        if (employeesByAccountOrdered.size() == 0){
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no accounts yet.");
-//        }
-//        return employeesByAccountOrdered;
-//    }
-
     public double findMedianEmployeeCount() {
         List<Integer[]> employeesByAccountOrdered = accountRepository.findEmployeesByAccountOrdered();
 
@@ -122,4 +118,5 @@ public class AccountService implements IAccountService {
         }
         return median;
     }
+
 }

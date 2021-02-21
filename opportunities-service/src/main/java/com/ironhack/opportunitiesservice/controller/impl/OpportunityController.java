@@ -7,32 +7,21 @@ import com.ironhack.opportunitiesservice.controller.interfaces.IOpportunityContr
 import com.ironhack.opportunitiesservice.enums.Industry;
 import com.ironhack.opportunitiesservice.enums.Status;
 import com.ironhack.opportunitiesservice.model.Opportunity;
-import com.ironhack.opportunitiesservice.repository.*;
 import com.ironhack.opportunitiesservice.service.interfaces.IOpportunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import com.ironhack.opportunitiesservice.controller.*;
-import com.ironhack.opportunitiesservice.service.impl.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
-
-import java.math.*;
-import java.util.*;
 
 @RestController
 public class OpportunityController implements IOpportunityController {
 
     @Autowired
     private IOpportunityService opportunityService;
-
-    @Autowired
-    private OpportunityRepository opportunityRepository;
 
     //===========================================
     //Get methods
@@ -42,7 +31,7 @@ public class OpportunityController implements IOpportunityController {
     //By country and status
     @GetMapping("/opportunities")
     @ResponseStatus(HttpStatus.OK)
-    public List<OpportunityDTO> getOpportunitiesBy(@RequestParam(name = "salesrep-id") Optional<Integer> salesRepId,
+    public List<OpportunityDTO> getOpportunitiesBy(@RequestParam(name = "salesrep-id") Optional<Long> salesRepId,
                                                    @RequestParam(name = "status") Optional<Status> status,
                                                    @RequestParam(name = "country") Optional<String> country,
                                                    @RequestParam(name = "city") Optional<String> city,
@@ -51,6 +40,8 @@ public class OpportunityController implements IOpportunityController {
             return opportunityService.getAllOpportunities();
         }else if(salesRepId.isPresent() && status.isEmpty() && country.isEmpty() && city.isEmpty() && industry.isEmpty()){
             return opportunityService.getOpportunitiesBySalesRep(salesRepId.get());
+        } else if(salesRepId.isPresent() && status.isPresent() && country.isEmpty() && city.isEmpty() && industry.isEmpty()){
+            return opportunityService.getOpportunitiesBySalesRepAndStatus(salesRepId.get(), status.get());
         }else if(salesRepId.isEmpty() && status.isEmpty() && country.isPresent() && city.isEmpty() && industry.isEmpty()){
             return opportunityService.getOpportunitiesByCountry(country.get());
         }else if(salesRepId.isEmpty() && status.isPresent() && country.isPresent() && city.isEmpty() && industry.isEmpty()){
@@ -69,7 +60,7 @@ public class OpportunityController implements IOpportunityController {
     }
 
     @GetMapping("/opportunity/{id}")
-    public OpportunityDTO getOpportunityDTOById(@PathVariable int id) {
+    public OpportunityDTO getOpportunityDTOById(@PathVariable Long id) {
         return opportunityService.getOpportunityById(id);
     }
 
@@ -89,19 +80,23 @@ public class OpportunityController implements IOpportunityController {
 
     //TODO: juntar las dos rutas en una
     @PatchMapping("/opportunity/{opportunityId}/status")
-     public void updateOpportunityStatus(@PathVariable int opportunityId, @RequestBody OpportunityStatusDTO opportunityStatusDTO) {
+     public void updateOpportunityStatus(@PathVariable Long opportunityId, @RequestBody OpportunityStatusDTO opportunityStatusDTO) {
         opportunityService.updateOpportunityStatus(opportunityId, opportunityStatusDTO);
     }
 
     @PatchMapping("/opportunity/{opportunityId}/account-id")
-     public void updateOpportunityAccountId(@PathVariable int opportunityId,@RequestBody AccountIdDTO accountIdDTO) {
+     public void updateOpportunityAccountId(@PathVariable Long opportunityId,@RequestBody AccountIdDTO accountIdDTO) {
         opportunityService.updateOpportunityAccountId(opportunityId, accountIdDTO);
      }
+
+    //===========================================
+    //Stats routes
+    //===========================================
 
     @GetMapping("/stats/mean/{data}")
     @ResponseStatus(HttpStatus.OK)
     public BigDecimal getMeanOpportunities(@PathVariable String data){
-        return opportunityService.getMean(data);
+        return opportunityService.getMeanOpportunities(data);
     }
 
     @GetMapping("/stats/max/opportunities")
@@ -136,16 +131,14 @@ public class OpportunityController implements IOpportunityController {
 
     @GetMapping("/opportunities/count/by-salesRep")
     @ResponseStatus(HttpStatus.OK)
-    public String findOpportunityCountBySalesRep(@PathVariable int salesRepId) {
-        List<Object[]> result = opportunityRepository.findOpportunityCountBySalesRep();
-        return printTwoResults(result);
+    public String findOpportunityCountBySalesRep() {
+        return opportunityService.findOpportunityCountBySalesRep();
     }
 
     @GetMapping("/opportunities/count/by-salesRep/{status}")
     @ResponseStatus(HttpStatus.OK)
     public String findOpportunityByStatusCountBySalesRep(@PathVariable Status status) {
-        List<Object[]> result = opportunityRepository.findOpportunityByStatusCountBySalesRep(status);
-        return printTwoResults(result);
+        return opportunityService.findOpportunityByStatusCountBySalesRep(status);
     }
 
     @GetMapping("/opportunities/count/by-industry")
@@ -182,15 +175,5 @@ public class OpportunityController implements IOpportunityController {
     @ResponseStatus(HttpStatus.OK)
     public String findOpportunityByStatusCountByCountry(@PathVariable Status status) {
         return opportunityService.findOpportunityByStatusCountByCountry(status);
-    }
-
-    // REPORTING:
-
-    public String printTwoResults(List<Object[]> result){
-        StringBuilder string = new StringBuilder();
-        for (Object[] row : result){
-            string.append(row[0].toString()).append(": ").append((row[1]).toString()).append("\n");
-        }
-        return string.toString();
     }
 }

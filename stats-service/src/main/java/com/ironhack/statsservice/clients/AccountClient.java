@@ -18,7 +18,6 @@ public interface AccountClient {
     @GetMapping("/stats/min/employee-count")
     List<Object[]> findMinEmployeeCount();
 
-//    Por qué devolveis aquí un array de integers, no os valdría con List<Integer>?
-    @GetMapping("/stats/ordered-list-of-employee-count")
-    List<Integer[]> findEmployeesByAccountOrdered();
+    @GetMapping("/stats/median/employee-count")
+    double findMedianEmployeeCount();
 }
