@@ -27,7 +27,7 @@ public class Opportunity {
     public Opportunity() {
     }
 
-    public Opportunity(int quantity, Long decisionMakerId, Status status, Product product, Long repOpportunityId, @javax.validation.constraints.NotNull @javax.validation.constraints.NotEmpty Long accountId) {
+    public Opportunity(int quantity, Long decisionMakerId, Status status, Product product, Long repOpportunityId, Long accountId) {
         setQuantity(quantity);
         setDecisionMakerId(decisionMakerId);
         setStatus(status);

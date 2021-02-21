@@ -1,21 +1,11 @@
 package com.ironhack.opportunitiesservice.repository;
 
-import com.ironhack.opportunitiesservice.enums.Status;
-import com.ironhack.opportunitiesservice.model.Opportunity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 import com.ironhack.opportunitiesservice.enums.*;
 import com.ironhack.opportunitiesservice.model.*;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.*;
 import org.springframework.stereotype.*;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
-import java.util.Stack;
 import java.math.*;
 import java.util.*;
 
@@ -36,43 +26,43 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
 
 
     //A count of all Opportunities by SalesRep
-    @Query("SELECT o.repOpportunityId, COUNT(o) FROM Opportunity o GROUP BY o")
+    @Query("SELECT repOpportunityId, COUNT(id) FROM Opportunity GROUP BY repOpportunityId")
     List<Object[]> findOpportunityCountBySalesRep();
 
     //A count of Opportunities by Status and Sales Rep
-    @Query("SELECT o.repOpportunityId, COUNT(o) FROM Opportunity o WHERE status = :status GROUP BY o")
+    @Query("SELECT repOpportunityId, COUNT(id) FROM Opportunity WHERE status = :status GROUP BY repOpportunityId")
     List<Object[]> findOpportunityByStatusCountBySalesRep(@Param("status") Enum status);
 
     // Ordered opportunities by account for the median
-    @Query(value="SELECT oo.count FROM (SELECT COUNT(o.account_id) FROM opportunity o GROUP BY a.id) AS oo ORDER BY count", nativeQuery = true)
+    @Query(value="SELECT o.count FROM (SELECT COUNT(*) AS count FROM opportunity GROUP BY account_id) AS o ORDER BY count", nativeQuery = true)
     List<Integer[]> findOpportunitiesByAccountOrdered();
 
     // Max opportunities by account
-    @Query(value="SELECT o.account_id ,COUNT(o) FROM opportunity o GROUP BY a.id ORDER BY count DESC LIMIT 1", nativeQuery = true)
+    @Query(value="SELECT account_id ,COUNT(*) AS count FROM opportunity GROUP BY account_id ORDER BY count DESC LIMIT 1", nativeQuery = true)
     List<Object[]> findMaxOpportunitiesByAccount();
 
     // Min opportunities by account
-    @Query(value="SELECT o.account_id ,COUNT(o) FROM opportunity o GROUP BY a.id ORDER BY count ASC LIMIT 1", nativeQuery = true)
+    @Query(value="SELECT account_id ,COUNT(*) AS count FROM opportunity GROUP BY account_id ORDER BY count ASC LIMIT 1", nativeQuery = true)
             List<Object[]> findMinOpportunitiesByAccount();
 
-            // Average opportunities by account
-            @Query(value="SELECT AVG(oo.count) FROM (SELECT COUNT(o) AS count FROM opportunity o GROUP BY o.id) AS oo", nativeQuery = true)
-            BigDecimal findAvgOpportunitiesByAccount();
+    // Average opportunities by account
+    @Query(value="SELECT AVG(o.count) FROM (SELECT COUNT(*) AS count FROM opportunity GROUP BY account_id) AS o", nativeQuery = true)
+    BigDecimal findAvgOpportunitiesByAccount();
 
 //    Average quantity:
-            @Query("SELECT AVG(o.quantity) FROM Opportunity o")
+            @Query("SELECT AVG(quantity) FROM Opportunity")
             BigDecimal findAverageQuantityFromOpportunities();
 
 //    Min quantity
-            @Query("SELECT MIN(o.quantity) FROM Opportunity o")
+            @Query("SELECT MIN(quantity) FROM Opportunity")
             Integer findMinQuantityFromOpportunities();
 
 //    Max quantity
-            @Query("SELECT MAX(o.quantity) FROM Opportunity o")
+            @Query("SELECT MAX(quantity) FROM Opportunity")
             Integer findMaxQuantityFromOpportunities();
 
 //    Median quantity
-            @Query("SELECT o.quantity FROM Opportunity o ORDER BY o.quantity")
+            @Query("SELECT quantity FROM Opportunity ORDER BY quantity")
             List<Integer[]> orderOpportunities();
 
 
