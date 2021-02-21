@@ -58,6 +58,6 @@ public interface IOpportunityService {
     int getMinQuantity();
     double getMedian(String data);
 
-    String findOpportunityCountBySalesRep(Long salesRepId);
+    String findOpportunityCountBySalesRep();
     String findOpportunityByStatusCountBySalesRep(Status status);
 }

@@ -370,7 +370,7 @@ public class OpportunityService implements IOpportunityService {
         }
     }
 
-    public String findOpportunityCountBySalesRep(Long salesRepId) {
+    public String findOpportunityCountBySalesRep() {
         List<Object[]> result = opportunityRepository.findOpportunityCountBySalesRep();
         return printTwoResults(result);
     }

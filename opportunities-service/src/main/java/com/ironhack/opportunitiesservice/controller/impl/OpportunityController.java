@@ -89,6 +89,9 @@ public class OpportunityController implements IOpportunityController {
         opportunityService.updateOpportunityAccountId(opportunityId, accountIdDTO);
      }
 
+    //===========================================
+    //Stats routes
+    //===========================================
 
     @GetMapping("/stats/mean/{data}")
     @ResponseStatus(HttpStatus.OK)
@@ -128,8 +131,8 @@ public class OpportunityController implements IOpportunityController {
 
     @GetMapping("/opportunities/count/by-salesRep")
     @ResponseStatus(HttpStatus.OK)
-    public String findOpportunityCountBySalesRep(@PathVariable Long salesRepId) {
-        return opportunityService.findOpportunityCountBySalesRep(salesRepId);
+    public String findOpportunityCountBySalesRep() {
+        return opportunityService.findOpportunityCountBySalesRep();
     }
 
     @GetMapping("/opportunities/count/by-salesRep/{status}")

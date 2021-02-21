@@ -44,5 +44,6 @@ public interface IOpportunityController {
     List<Object[]> getMinOpportunities();
     int getMinQuantity();
     double getMedian(String data);
-    public String findOpportunityCountBySalesRep(@PathVariable Long salesRepId);
+    public String findOpportunityCountBySalesRep();
+    String findOpportunityByStatusCountBySalesRep(Status status);
 }
