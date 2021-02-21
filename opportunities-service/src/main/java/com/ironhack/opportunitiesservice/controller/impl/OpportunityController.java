@@ -7,6 +7,7 @@ import com.ironhack.opportunitiesservice.controller.interfaces.IOpportunityContr
 import com.ironhack.opportunitiesservice.enums.Industry;
 import com.ironhack.opportunitiesservice.enums.Status;
 import com.ironhack.opportunitiesservice.model.Opportunity;
+import com.ironhack.opportunitiesservice.repository.*;
 import com.ironhack.opportunitiesservice.service.interfaces.IOpportunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,9 @@ public class OpportunityController implements IOpportunityController {
 
     @Autowired
     private IOpportunityService opportunityService;
+
+    @Autowired
+    private OpportunityRepository opportunityRepository;
 
     //===========================================
     //Get methods
@@ -128,5 +132,29 @@ public class OpportunityController implements IOpportunityController {
     @ResponseStatus(HttpStatus.OK)
     public double getMedian(@PathVariable String data) {
         return opportunityService.getMedian(data);
+    }
+
+    @GetMapping("/opportunities/count/by-salesRep")
+    @ResponseStatus(HttpStatus.OK)
+    public String findOpportunityCountBySalesRep(@PathVariable int salesRepId) {
+        List<Object[]> result = opportunityRepository.findOpportunityCountBySalesRep();
+        return printTwoResults(result);
+    }
+
+    @GetMapping("/opportunities/count/by-salesRep/{status}")
+    @ResponseStatus(HttpStatus.OK)
+    public String findOpportunityByStatusCountBySalesRep(@PathVariable Status status) {
+        List<Object[]> result = opportunityRepository.findOpportunityByStatusCountBySalesRep(status);
+        return printTwoResults(result);
+    }
+
+    // REPORTING:
+
+    public String printTwoResults(List<Object[]> result){
+        StringBuilder string = new StringBuilder();
+        for (Object[] row : result){
+            string.append(row[0].toString()).append(": ").append((row[1]).toString()).append("\n");
+        }
+        return string.toString();
     }
 }

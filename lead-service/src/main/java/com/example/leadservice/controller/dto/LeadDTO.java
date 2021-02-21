@@ -11,14 +11,16 @@ public class LeadDTO {
     private String phoneNumber;
     private String email;
     private String companyName;
+    private int salesRepId;
 
     // Constructor
-    public LeadDTO(Integer id, String name, String phoneNumber, String email, String companyName) {
+    public LeadDTO(Integer id, String name, String phoneNumber, String email, String companyName, int salesRepId) {
         setId(id);
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
         setCompanyName(companyName);
+        setSalesRepId(salesRepId);
     }
 
     public LeadDTO(Lead lead) {
@@ -27,7 +29,7 @@ public class LeadDTO {
         this.email = lead.getEmail();
         this.name = lead.getName();
         this.phoneNumber = lead.getPhoneNumber();
-
+        this.salesRepId = lead.getSalesRepId();
     }
 
     // -----------------Methods------------------
@@ -82,4 +84,11 @@ public class LeadDTO {
         this.companyName = companyName;
     }
 
+    public int getSalesRepId() {
+        return salesRepId;
+    }
+
+    public void setSalesRepId(int salesRepId) {
+        this.salesRepId = salesRepId;
+    }
 }

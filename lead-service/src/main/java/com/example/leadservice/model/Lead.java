@@ -19,13 +19,15 @@ public class Lead {
     private String phoneNumber;
     private String email;
     private String companyName;
+    private int salesRepId;
 
     // Constructor
-    public Lead(String name, String phoneNumber, String email, String companyName) {
+    public Lead(String name, String phoneNumber, String email, String companyName, int salesRepId) {
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
         setCompanyName(companyName);
+        setSalesRepId(salesRepId);
     }
 
     public Lead(){}
@@ -83,4 +85,11 @@ public class Lead {
         this.companyName = companyName;
     }
 
+    public int getSalesRepId() {
+        return salesRepId;
+    }
+
+    public void setSalesRepId(int salesRepId) {
+        this.salesRepId = salesRepId;
+    }
 }

@@ -3,6 +3,7 @@ package com.ironhack.opportunitiesservice.repository;
 import com.ironhack.opportunitiesservice.enums.*;
 import com.ironhack.opportunitiesservice.model.*;
 import org.springframework.data.jpa.repository.*;
+import org.springframework.data.repository.query.*;
 import org.springframework.stereotype.*;
 
 import java.math.*;
@@ -10,6 +11,14 @@ import java.util.*;
 
 @Repository
 public interface OpportunityRepository extends JpaRepository<Opportunity, Integer> {
+
+    //A count of all Opportunities by SalesRep
+    @Query("SELECT o.repOpportunityId, COUNT(o) FROM Opportunity o GROUP BY o")
+    List<Object[]> findOpportunityCountBySalesRep();
+
+    //A count of Opportunities by Status and Sales Rep
+    @Query("SELECT o.repOpportunityId, COUNT(o) FROM Opportunity o WHERE status = :status GROUP BY o")
+    List<Object[]> findOpportunityByStatusCountBySalesRep(@Param("status") Enum status);
 
     // Ordered opportunities by account for the median
     @Query(value="SELECT o.count FROM (SELECT COUNT(o.id) AS count FROM account a LEFT JOIN opportunity o ON a.id = o.account_id GROUP BY a.id) AS oo ORDER BY count", nativeQuery = true)

@@ -21,9 +21,9 @@
       <module name="config-server" target="1.5" />
       <module name="contact-service" target="1.5" />
       <module name="eureka-server" target="1.5" />
-      <module name="lead-service" target="1.5" />
+      <module name="lead-service" target="11" />
       <module name="opportunities-service" target="15" />
-      <module name="salesrep-service" target="1.5" />
+      <module name="salesrep-service" target="11" />
       <module name="stats-service" target="15" />
     </bytecodeTargetLevel>
   </component>

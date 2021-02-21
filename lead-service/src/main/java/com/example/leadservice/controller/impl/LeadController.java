@@ -2,6 +2,7 @@ package com.example.leadservice.controller.impl;
 
 import com.example.leadservice.controller.dto.LeadDTO;
 import com.example.leadservice.model.Lead;
+import com.example.leadservice.repository.*;
 import com.example.leadservice.services.impl.LeadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,9 @@ public class LeadController {
 
     @Autowired
     private LeadService leadService;
+
+    @Autowired
+    private LeadRepository leadRepository;
 
     @GetMapping("/leads")
     @ResponseStatus(HttpStatus.OK)
@@ -50,13 +54,20 @@ public class LeadController {
 
     }
 
+    @GetMapping("/leads/count/{salesRepId}")
+    @ResponseStatus(HttpStatus.OK)
+    public String findLeadCountBySalesRep() {
+        List<Object[]> result = leadRepository.findLeadCountBySalesRep();
+        return printTwoResults(result);
+    }
+
     @PostMapping("/lead")
     @ResponseStatus(HttpStatus.CREATED)
-    public LeadDTO createLead(@RequestParam String name,@RequestParam String phoneNumber,@RequestParam String email,@RequestParam String companyName) throws ResponseStatusException {
+    public LeadDTO createLead(@RequestParam String name,@RequestParam String phoneNumber,@RequestParam String email,@RequestParam String companyName, @RequestParam int salesRepId) throws ResponseStatusException {
 
         try {
 
-            return leadService.createLead(name, phoneNumber, email, companyName);
+            return leadService.createLead(name, phoneNumber, email, companyName, salesRepId);
 
         } catch (Exception exc) {
 
@@ -79,4 +90,13 @@ public class LeadController {
         }
     }
 
+    // REPORTING:
+
+    public String printTwoResults(List<Object[]> result){
+        StringBuilder string = new StringBuilder();
+        for (Object[] row : result){
+            string.append(row[0].toString()).append(": ").append((row[1]).toString()).append("\n");
+        }
+        return string.toString();
+    }
 }

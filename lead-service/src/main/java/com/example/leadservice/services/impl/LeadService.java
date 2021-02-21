@@ -51,11 +51,11 @@ public class LeadService {
 
     }
 
-    public LeadDTO createLead(String name, String phoneNumber, String email, String companyName) throws Exception {
+    public LeadDTO createLead(String name, String phoneNumber, String email, String companyName, int salesRepId) throws Exception {
 
         try {
 
-            return new LeadDTO(leadRepository.save(new Lead(name, phoneNumber, email, companyName)));
+            return new LeadDTO(leadRepository.save(new Lead(name, phoneNumber, email, companyName, salesRepId)));
 
         } catch (Exception exc) {
 
