@@ -59,7 +59,11 @@ public class AccountService implements IAccountService {
 
     @Override
     public List<Long> getAccountsByIndustry(String industry) {
-        return accountRepository.getAccountsByIndustry(industry);
+        try {
+            return accountRepository.getAccountsByIndustry(Industry.valueOf(industry.toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(industry + " is not a valid Industry.");
+        }
     }
 
     @Override

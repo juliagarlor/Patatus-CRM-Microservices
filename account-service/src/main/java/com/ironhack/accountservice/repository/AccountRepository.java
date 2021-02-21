@@ -24,7 +24,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     List<Long> getAccountsByCity(@Param("city") String city);
 
     @Query("SELECT id FROM Account WHERE industry = :industry")
-    List<Long> getAccountsByIndustry(@Param("industry") String industry);
+    List<Long> getAccountsByIndustry(@Param("industry") Enum industry);
 
     // Lists of cities and countries in String:
     @Query("SELECT city FROM Account GROUP BY city")
