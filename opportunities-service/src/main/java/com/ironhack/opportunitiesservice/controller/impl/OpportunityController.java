@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,4 +88,89 @@ public class OpportunityController implements IOpportunityController {
      public void updateOpportunityAccountId(@PathVariable Long opportunityId,@RequestBody AccountIdDTO accountIdDTO) {
         opportunityService.updateOpportunityAccountId(opportunityId, accountIdDTO);
      }
+
+
+    @GetMapping("/stats/mean/{data}")
+    @ResponseStatus(HttpStatus.OK)
+    public BigDecimal getMeanOpportunities(@PathVariable String data){
+        return opportunityService.getMeanOpportunities(data);
+    }
+
+    @GetMapping("/stats/max/opportunities")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getMaxOpportunities() {
+        return opportunityService.getMaxOpportunities();
+    }
+
+    @GetMapping("/stats/max/quantity")
+    @ResponseStatus(HttpStatus.OK)
+    public int getMaxQuantity() {
+        return opportunityService.getMaxQuantity();
+    }
+
+    @GetMapping("/stats/min/opportunities")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getMinOpportunities() {
+        return opportunityService.getMinOpportunities();
+    }
+
+    @GetMapping("/stats/min/quantity")
+    @ResponseStatus(HttpStatus.OK)
+    public int getMinQuantity() {
+        return opportunityService.getMinQuantity();
+    }
+
+    @GetMapping("/stats/median/{data}")
+    @ResponseStatus(HttpStatus.OK)
+    public double getMedian(@PathVariable String data) {
+        return opportunityService.getMedian(data);
+    }
+
+    @GetMapping("/opportunities/count/by-salesRep")
+    @ResponseStatus(HttpStatus.OK)
+    public String findOpportunityCountBySalesRep(@PathVariable int salesRepId) {
+        return opportunityService.findOpportunityCountBySalesRep(salesRepId);
+    }
+
+    @GetMapping("/opportunities/count/by-salesRep/{status}")
+    @ResponseStatus(HttpStatus.OK)
+    public String findOpportunityByStatusCountBySalesRep(@PathVariable Status status) {
+        return opportunityService.findOpportunityByStatusCountBySalesRep(status);
+    }
+
+    @GetMapping("/opportunities/count/by-industry")
+    @ResponseStatus(HttpStatus.OK)
+    public String findOpportunityCountByIndustry() {
+        return opportunityService.findOpportunityCountByIndustry();
+    }
+
+    @GetMapping("/opportunities/count/by-industry/{status}")
+    @ResponseStatus(HttpStatus.OK)
+    public String findOpportunityByStatusCountByIndustry(@PathVariable Status status) {
+        return opportunityService.findOpportunityByStatusCountByIndustry(status);
+    }
+
+    @GetMapping("/opportunities/count/by-city/{city}")
+    @ResponseStatus(HttpStatus.OK)
+    public String findOpportunityCountByCity() {
+        return opportunityService.findOpportunityCountByCity();
+    }
+
+    @GetMapping("/opportunities/count/by-city/{status}")
+    @ResponseStatus(HttpStatus.OK)
+    public String findOpportunityByStatusCountByCity(@PathVariable Status status) {
+        return opportunityService.findOpportunityByStatusCountByCity(status);
+    }
+
+    @GetMapping("/opportunities/count/by-country")
+    @ResponseStatus(HttpStatus.OK)
+    public String findOpportunityCountByCountry() {
+        return opportunityService.findOpportunityCountByCountry();
+    }
+
+    @GetMapping("/opportunities/count/by-country/{status}")
+    @ResponseStatus(HttpStatus.OK)
+    public String findOpportunityByStatusCountByCountry(@PathVariable Status status) {
+        return opportunityService.findOpportunityByStatusCountByCountry(status);
+    }
 }

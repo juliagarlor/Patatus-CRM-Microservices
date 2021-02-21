@@ -21,4 +21,9 @@ public interface AccountClient {
     @GetMapping("/accounts/industry/{industry}")
     List<Long> getAccountByIndustry(@PathVariable Industry industry);
 
+
+    @GetMapping("/cities")
+    List<String> getCities();
+    @GetMapping("/countries")
+    List<String> getCountries();
 }

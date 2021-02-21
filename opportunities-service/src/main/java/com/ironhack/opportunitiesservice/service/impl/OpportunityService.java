@@ -10,8 +10,12 @@ import com.ironhack.opportunitiesservice.service.interfaces.IOpportunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -232,4 +236,169 @@ public class OpportunityService implements IOpportunityService {
         opportunity.setAccountId(accountIdDTO.getId());
         opportunityRepository.save(opportunity);
     }
+
+    //===========================================
+    //||              FOR STATS                ||
+    //===========================================
+
+    public String findOpportunityCountByIndustry(){
+        String output1 = "Produce: " + getOpportunitiesByIndustry(Industry.PRODUCE).size() + " opportunities";
+        String output2 = "\ne-Commerce: " + getOpportunitiesByIndustry(Industry.ECOMMERCE).size() + " opportunities";
+        String output3 = "\nManufacturing: " + getOpportunitiesByIndustry(Industry.MANUFACTURING).size() + " opportunities";
+        String output4 = "\nMedical: " + getOpportunitiesByIndustry(Industry.MEDICAL).size() + " opportunities";
+        String output5 = "\nOther: " + getOpportunitiesByIndustry(Industry.OTHER).size() + " opportunities";
+
+        return output1 + output2 + output3 + output4 + output5;
+    }
+
+    public String findOpportunityByStatusCountByIndustry(Status status){
+        String output1 = "Produce: " + getOpportunitiesByIndustryAndStatus(Industry.PRODUCE, status).size() + " opportunities";
+        String output2 = "\ne-Commerce: " + getOpportunitiesByIndustryAndStatus(Industry.ECOMMERCE, status).size() + " opportunities";
+        String output3 = "\nManufacturing: " + getOpportunitiesByIndustryAndStatus(Industry.MANUFACTURING, status).size() + " opportunities";
+        String output4 = "\nMedical: " + getOpportunitiesByIndustryAndStatus(Industry.MEDICAL, status).size() + " opportunities";
+        String output5 = "\nOther: " + getOpportunitiesByIndustryAndStatus(Industry.OTHER, status).size() + " opportunities";
+
+        return output1 + output2 + output3 + output4 + output5;
+    }
+
+    public String findOpportunityCountByCity() {
+        List<String> cities = accountClient.getCities();
+        String output = "";
+        for (String c : cities){
+            output += "\n" + c + ": " + getOpportunitiesByCity(c).size() + " opportunities";
+        }
+
+        return output;
+    }
+
+    public String findOpportunityByStatusCountByCity(Status status) {
+        List<String> cities = accountClient.getCities();
+        String output = "";
+        for (String c : cities){
+            output += "\n" + c + ": " + getOpportunitiesByCityAndStatus(c, status).size() + " opportunities";
+        }
+
+        return output;
+    }
+
+    public String findOpportunityCountByCountry() {
+        List<String> countries = accountClient.getCountries();
+        String output = "";
+        for (String c : countries){
+            output += "\n" + c + ": " + getOpportunitiesByCountry(c).size() + " opportunities";
+        }
+
+        return output;
+    }
+
+    public String findOpportunityByStatusCountByCountry(Status status) {
+        List<String> countries = accountClient.getCountries();
+        String output = "";
+        for (String c : countries){
+            output += "\n" + c + ": " + getOpportunitiesByCountryAndStatus(c, status).size() + " opportunities";
+        }
+
+        return output;
+    }
+
+    public BigDecimal getMeanOpportunities(String data) {
+        switch (data.toLowerCase()){
+            case "quantity":
+                return opportunityRepository.findAverageQuantityFromOpportunities();
+            case "opportunities":
+                BigDecimal output = opportunityRepository.findAvgOpportunitiesByAccount();
+
+                if (output == null){
+                    return BigDecimal.ZERO;
+                }
+                return output;
+            default:
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please, introduce a valid data parameter: " +
+                        "quantity or opportunities");
+        }
+    }
+
+    public List<Object[]> getMaxOpportunities() {
+        List<Object[]> output = opportunityRepository.findMaxOpportunitiesByAccount();
+
+        if (output.size() == 0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no opportunities yet.");
+        }
+        return output;
+    }
+
+    public int getMaxQuantity(){
+        return opportunityRepository.findMaxQuantityFromOpportunities();
+    }
+
+    public List<Object[]> getMinOpportunities() {
+        List<Object[]> output = opportunityRepository.findMinOpportunitiesByAccount();
+
+        if (output.size() == 0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no opportunities yet.");
+        }
+        return output;
+    }
+
+    public int getMinQuantity(){
+        return opportunityRepository.findMinQuantityFromOpportunities();
+    }
+
+    public double getMedian(String data) {
+        switch (data.toLowerCase()){
+            case "quantity":
+                List<Integer[]> orderedList = opportunityRepository.orderOpportunities();
+
+                if (orderedList.size() == 0){
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no opportunities yet.");
+                }
+
+                return findMedian(orderedList);
+            case "opportunities":
+                orderedList = opportunityRepository.findOpportunitiesByAccountOrdered();
+
+                if (orderedList.size() == 0){
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no opportunities yet.");
+                }
+
+                return findMedian(orderedList);
+            default:
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Please, introduce a valid data parameter: " +
+                        "quantity or opportunities");
+        }
+    }
+
+    public String findOpportunityCountBySalesRep(int salesRepId) {
+        List<Object[]> result = opportunityRepository.findOpportunityCountBySalesRep();
+        return printTwoResults(result);
+    }
+
+    public String findOpportunityByStatusCountBySalesRep(Status status) {
+        List<Object[]> result = opportunityRepository.findOpportunityByStatusCountBySalesRep(status);
+        return printTwoResults(result);
+    }
+
+
+    // AUXILIAR METHODS:
+
+    public String printTwoResults(List<Object[]> result){
+        StringBuilder string = new StringBuilder();
+        for (Object[] row : result){
+            string.append(row[0].toString()).append(": ").append((row[1]).toString()).append("\n");
+        }
+        return string.toString();
+    }
+    public double findMedian(List<Integer[]> objects){
+        double median;
+        int medianPosition = objects.size()/2;
+        if(objects.size() % 2 != 0 ){
+            median = objects.get(medianPosition)[0];
+        } else {
+            double firstHalf = (double) objects.get((objects.size()/2)-1)[0];
+            double secondHalf = (double) objects.get(medianPosition)[0];
+            median = (firstHalf + secondHalf)/2;
+        }
+        return median;
+    }
+
 }
