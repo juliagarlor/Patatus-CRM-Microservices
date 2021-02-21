@@ -37,6 +37,24 @@ public class AccountController implements IAccountController {
     }
 
 
+
+    @GetMapping("/accounts/country/{country}")
+    public List<Long> getAccountsByCountry(@PathVariable String country) {
+        return accountService.getAccountsByCountry(country);
+    }
+
+    @GetMapping("/accounts/city/{city}")
+    public List<Long> getAccountsByCity(@PathVariable String city) {
+        return accountService.getAccountsByCity(city);
+    }
+
+    @GetMapping("/accounts/industry/{industry}")
+    public List<Long> getAccountsByIndustry(@PathVariable String industry) {
+        return accountService.getAccountsByIndustry(industry);
+    }
+
+
+
     // Routes for stats:
 
     @GetMapping("/stats/mean/employee-count")

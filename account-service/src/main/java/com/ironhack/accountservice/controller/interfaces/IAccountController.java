@@ -12,6 +12,10 @@ public interface IAccountController {
     List<Account> getAllAccounts();
     Account getAccountById(Long id);
 
+    List<Long> getAccountsByCountry(String country);
+    List<Long> getAccountsByCity(String city);
+    List<Long> getAccountsByIndustry(String industry);
+
     // Routes for the stats:
 
     BigDecimal findMeanEmployeeCount();

@@ -47,6 +47,29 @@ public class AccountService implements IAccountService {
         }
     }
 
+
+
+    public List<Long> getAccountsByCountry(String country) {
+        return accountRepository.getAccountsByCountry(country);
+    }
+
+
+    public List<Long> getAccountsByCity(String city) {
+        return accountRepository.getAccountsByCity(city);
+    }
+
+
+    public List<Long> getAccountsByIndustry(String industry) {
+        try {
+            return accountRepository.getAccountsByIndustry(Industry.valueOf(industry.toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(industry + " is not a valid Industry.");
+        }
+    }
+
+
+
+
     public BigDecimal findMeanEmployeeCount() {
         BigDecimal meanEmployeeCount = accountRepository.findMeanEmployeeCount();
         return meanEmployeeCount == null ? BigDecimal.ZERO : meanEmployeeCount;
