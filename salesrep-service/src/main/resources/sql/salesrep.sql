@@ -3,7 +3,7 @@ create schema salesrep_crm;
 use salesrep_crm;
 
 create table sales_rep(
-	id int auto_increment,
+	id bigint auto_increment,
     name varchar(255),
     primary key(id)
 );
