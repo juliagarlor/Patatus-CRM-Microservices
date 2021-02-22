@@ -153,7 +153,7 @@ public class OpportunityController implements IOpportunityController {
         return opportunityService.findOpportunityByStatusCountByIndustry(status);
     }
 
-    @GetMapping("/opportunities/count/by-city/{city}")
+    @GetMapping("/opportunities/count/by-city")
     @ResponseStatus(HttpStatus.OK)
     public String findOpportunityCountByCity() {
         return opportunityService.findOpportunityCountByCity();

@@ -17,7 +17,7 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     //method to get an opportunity list with an specific sales rep and an specific status
     List<Opportunity> findByRepOpportunityIdAndStatus(Long id, Status status);
     //method to get an opportunity by accountId
-    Optional<Opportunity> findByAccountId(Long id);
+    List<Opportunity> findByAccountId(Long id);
 
 
 

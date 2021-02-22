@@ -7,13 +7,15 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface IAccountService {
-    Account postAccount(AccountDTO accountDTO);
-    List<Account> getAllAccounts();
+    AccountDTO postAccount(AccountDTO accountDTO);
+    List<AccountDTO> getAllAccounts();
     Account getAccountById(Long id);
 
     List<Long> getAccountsByCountry(String country);
     List<Long> getAccountsByCity(String city);
     List<Long> getAccountsByIndustry(String industry);
+
+    void deleteAccounts();
 
     // Routes for the stats:
 

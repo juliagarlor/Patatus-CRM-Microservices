@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AccountService implements IAccountService {
@@ -20,7 +19,7 @@ public class AccountService implements IAccountService {
     @Autowired
     AccountRepository accountRepository;
 
-    public Account postAccount(AccountDTO accountDTO) {
+    public AccountDTO postAccount(AccountDTO accountDTO) {
         Account account = new Account();
         try {
             account.setIndustry(Industry.valueOf(accountDTO.getIndustry().toUpperCase()));
@@ -31,11 +30,19 @@ public class AccountService implements IAccountService {
         account.setCity(accountDTO.getCity());
         account.setCountry(accountDTO.getCountry());
 
-        return accountRepository.save(account);
+        accountRepository.save(account);
+        return accountDTO;
     }
 
-    public List<Account> getAllAccounts() {
-        return accountRepository.findAll();
+    public List<AccountDTO> getAllAccounts() {
+        List<Account> accounts = accountRepository.findAll();
+        List<AccountDTO> output = new ArrayList<>();
+
+        for (Account a : accounts){
+            output.add(new AccountDTO(a.getId(), a.getIndustry().toString(), a.getEmployeeCount(), a.getCity(),
+                    a.getCountry()));
+        }
+        return output;
     }
 
     public Account getAccountById(Long id) {
@@ -66,12 +73,14 @@ public class AccountService implements IAccountService {
         }
     }
 
-    @Override
+    public void deleteAccounts(){
+        accountRepository.deleteAll();
+    }
+
     public List<String> getCities() {
         return accountRepository.getAllCities();
     }
 
-    @Override
     public List<String> getCountries() {
         return accountRepository.getAllCountries();
     }

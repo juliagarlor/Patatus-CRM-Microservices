@@ -2,6 +2,7 @@ package com.ironhack.opportunitiesservice.controller.impl;
 
 import com.fasterxml.jackson.databind.*;
 import com.ironhack.opportunitiesservice.client.*;
+import com.ironhack.opportunitiesservice.controller.dto.*;
 import com.ironhack.opportunitiesservice.enums.*;
 import com.ironhack.opportunitiesservice.model.*;
 import com.ironhack.opportunitiesservice.repository.*;
@@ -31,17 +32,24 @@ class OpportunityControllerTest {
     @Autowired
     private OpportunityRepository opportunityRepository;
 
+
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
+//        Creating some accounts
+        AccountDTO account1 = new AccountDTO("ECOMMERCE", 10, "Madrid", "Essspaña");
+        accountClient.postAccount(account1);
+        AccountDTO account2 = new AccountDTO("ECOMMERCE", 20, "Far West", "DisneyLand");
+        accountClient.postAccount(account2);
+
 //        Run account service and add some accounts before these tests
         Opportunity opportunity1 = new Opportunity(12, 1L, Status.OPEN, Product.HYBRID,
-                1L, 1L);
+                1L, accountClient.getAllAccounts().get(0).getId());
         Opportunity opportunity2 = new Opportunity(13, 2L, Status.CLOSED_LOST, Product.BOX,
-                2L, 1L);
+                2L, accountClient.getAllAccounts().get(0).getId());
         Opportunity opportunity3 = new Opportunity(14, 1L, Status.OPEN, Product.BOX,
-                1L, 2L);
+                1L, accountClient.getAllAccounts().get(1).getId());
 
         opportunityRepository.saveAll(List.of(opportunity1, opportunity2, opportunity3));
     }
@@ -49,6 +57,7 @@ class OpportunityControllerTest {
     @AfterEach
     void tearDown() {
         opportunityRepository.deleteAll();
+        accountClient.deleteAccounts();
     }
 
     @Test
@@ -107,26 +116,42 @@ class OpportunityControllerTest {
     }
 
     @Test
-    void findOpportunityCountByIndustry() {
+    void findOpportunityCountByIndustry() throws Exception {
+        MvcResult result = mockMvc.perform(get("/opportunities/count/by-industry")).andReturn();
+        assertTrue(result.getResponse().getContentAsString().contains("Produce: 0 opportunities"));
+        assertTrue(result.getResponse().getContentAsString().contains("e-Commerce: 3 opportunities"));
     }
 
     @Test
-    void findOpportunityByStatusCountByIndustry() {
+    void findOpportunityByStatusCountByIndustry() throws Exception {
+        MvcResult result = mockMvc.perform(get("/opportunities/count/by-industry/CLOSED_LOST")).andReturn();
+        assertTrue(result.getResponse().getContentAsString().contains("Produce: 0 opportunities"));
+        assertTrue(result.getResponse().getContentAsString().contains("e-Commerce: 1 opportunities"));
     }
 
     @Test
-    void findOpportunityCountByCity() {
+    void findOpportunityCountByCity() throws Exception {
+        MvcResult result = mockMvc.perform(get("/opportunities/count/by-city")).andReturn();
+        assertTrue(result.getResponse().getContentAsString().contains("Madrid: 2 opportunities"));
+        assertTrue(result.getResponse().getContentAsString().contains("Far West: 1 opportunities"));
     }
 
     @Test
-    void findOpportunityByStatusCountByCity() {
+    void findOpportunityByStatusCountByCity() throws Exception {
+        MvcResult result = mockMvc.perform(get("/opportunities/count/by-city/CLOSED_LOST")).andReturn();
+        assertTrue(result.getResponse().getContentAsString().contains("Madrid: 1 opportunities"));
     }
 
     @Test
-    void findOpportunityCountByCountry() {
+    void findOpportunityCountByCountry() throws Exception {
+        MvcResult result = mockMvc.perform(get("/opportunities/count/by-country")).andReturn();
+        assertTrue(result.getResponse().getContentAsString().contains("Essspaña: 2 opportunities"));
+        assertTrue(result.getResponse().getContentAsString().contains("DisneyLand: 1 opportunities"));
     }
 
     @Test
-    void findOpportunityByStatusCountByCountry() {
+    void findOpportunityByStatusCountByCountry() throws Exception {
+        MvcResult result = mockMvc.perform(get("/opportunities/count/by-country/CLOSED_LOST")).andReturn();
+        assertTrue(result.getResponse().getContentAsString().contains("Essspaña: 1 opportunities"));
     }
 }

@@ -18,15 +18,17 @@ public class AccountController implements IAccountController {
     @Autowired
     IAccountService accountService;
 
+    //    todo, te cambio para que devuelva un dto y poder pasarselo a opportunities para los tests
     @PostMapping("/account")
     @ResponseStatus(HttpStatus.CREATED)
-    public Account postAccount(@RequestBody @Valid AccountDTO accountDTO) {
+    public AccountDTO postAccount(@RequestBody @Valid AccountDTO accountDTO) {
         return accountService.postAccount(accountDTO);
     }
 
+//    todo, te cambio para que devuelva un dto
     @GetMapping("/accounts")
     @ResponseStatus(HttpStatus.OK)
-    public List<Account> getAllAccounts() {
+    public List<AccountDTO> getAllAccounts() {
         return accountService.getAllAccounts();
     }
 
@@ -49,6 +51,13 @@ public class AccountController implements IAccountController {
     @GetMapping("/accounts/industry/{industry}")
     public List<Long> getAccountsByIndustry(@PathVariable String industry) {
         return accountService.getAccountsByIndustry(industry);
+    }
+
+//    TODO: julia: Perdón por el intrusismo, pero lo necesito para los tests
+    @DeleteMapping("/accounts")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteAccounts(){
+        accountService.deleteAccounts();
     }
 
 
