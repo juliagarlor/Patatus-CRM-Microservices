@@ -68,13 +68,17 @@ public class OpportunityService implements IOpportunityService {
         return opportunityDTOList;
     }
 
-    public List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(Long salesRepId, Status status) {
+    public List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(Long salesRepId, String status) {
+
+        Status status1 = checkValidStatus(status);
+
         if(opportunityRepository.findByRepOpportunityId(salesRepId).get(0) == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Any opportunity with a sales rep with id " + salesRepId + " was found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Any opportunity with a sales rep with id " +
+                    salesRepId + " was found");
         }
         List<OpportunityDTO> opportunityDTOList = new ArrayList<>();
 
-        for(Opportunity opportunity: opportunityRepository.findByRepOpportunityIdAndStatus(salesRepId, status)){
+        for(Opportunity opportunity: opportunityRepository.findByRepOpportunityIdAndStatus(salesRepId, status1)){
             OpportunityDTO  opportunityDTO = new OpportunityDTO(opportunity.getId(), opportunity.getQuantity(),
                     opportunity.getDecisionMakerId(), opportunity.getStatus(),
                     opportunity.getProduct(), opportunity.getRepOpportunityId(),
@@ -92,7 +96,8 @@ public class OpportunityService implements IOpportunityService {
         return returnByAccountID(countryDTOList);
     }
 
-    public List<OpportunityDTO> getOpportunitiesByCountryAndStatus(String country, Status status) {
+    public List<OpportunityDTO> getOpportunitiesByCountryAndStatus(String country, String status) {
+        checkValidStatus(status);
 
         //insert a list with the accounts by countries
         List<Long> countryDTOList = accountClient.getAccountByCountry(country);
@@ -107,23 +112,27 @@ public class OpportunityService implements IOpportunityService {
         return returnByAccountID(cityDTOList);
     }
 
-    public List<OpportunityDTO> getOpportunitiesByCityAndStatus(String city, Status status) {
+    public List<OpportunityDTO> getOpportunitiesByCityAndStatus(String city, String status) {
+        checkValidStatus(status);
         //insert a list with the accounts by countries
         List<Long> cityDTOList = accountClient.getAccountByCity(city);
 
         return returnByAccountIDAndStatus(cityDTOList, status);
     }
 
-    public List<OpportunityDTO> getOpportunitiesByIndustry(Industry industry) {
+    public List<OpportunityDTO> getOpportunitiesByIndustry(String industry) {
+        checkValidIndustry(industry);
         //insert a list with the accounts by countries
-        List<Long> industryDTOList = accountClient.getAccountByIndustry(industry.toString());
+        List<Long> industryDTOList = accountClient.getAccountByIndustry(industry);
 
         return returnByAccountID(industryDTOList);
     }
 
-    public List<OpportunityDTO> getOpportunitiesByIndustryAndStatus(Industry industry, Status status) {
+    public List<OpportunityDTO> getOpportunitiesByIndustryAndStatus(String industry, String status) {
+        checkValidStatus(status);
+        checkValidIndustry(industry);
         //insert a list with the accounts by countries
-        List<Long> industryDTOList = accountClient.getAccountByIndustry(industry.toString());
+        List<Long> industryDTOList = accountClient.getAccountByIndustry(industry);
 
         return returnByAccountIDAndStatus(industryDTOList, status);
     }
@@ -134,6 +143,7 @@ public class OpportunityService implements IOpportunityService {
 
     public Opportunity createOpportunity(OpportunityDTO opportunityDTO) {
 
+        checkValidStatus(opportunityDTO.getStatus().toString());
         Opportunity opportunity = new Opportunity( opportunityDTO.getQuantity(), opportunityDTO.getDecisionMakerId(),
                 opportunityDTO.getStatus(), opportunityDTO.getProduct(), opportunityDTO.getRepOpportunityId(), opportunityDTO.getAccountId());
 
@@ -149,6 +159,7 @@ public class OpportunityService implements IOpportunityService {
         if(opportunityRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "opportunity with id " +id + " not found");
         }
+        checkValidStatus(opportunityStatusDTO.getStatus().toString());
 
         Opportunity opportunity =  opportunityRepository.findById(id).get();
         opportunity.setStatus(opportunityStatusDTO.getStatus());
@@ -171,21 +182,22 @@ public class OpportunityService implements IOpportunityService {
     //===========================================
 
     public String findOpportunityCountByIndustry(){
-        String output1 = "Produce: " + getOpportunitiesByIndustry(Industry.PRODUCE).size() + " opportunities";
-        String output2 = "\ne-Commerce: " + getOpportunitiesByIndustry(Industry.ECOMMERCE).size() + " opportunities";
-        String output3 = "\nManufacturing: " + getOpportunitiesByIndustry(Industry.MANUFACTURING).size() + " opportunities";
-        String output4 = "\nMedical: " + getOpportunitiesByIndustry(Industry.MEDICAL).size() + " opportunities";
-        String output5 = "\nOther: " + getOpportunitiesByIndustry(Industry.OTHER).size() + " opportunities";
+        String output1 = "Produce: " + getOpportunitiesByIndustry("PRODUCE").size() + " opportunities";
+        String output2 = "\ne-Commerce: " + getOpportunitiesByIndustry("ECOMMERCE").size() + " opportunities";
+        String output3 = "\nManufacturing: " + getOpportunitiesByIndustry("MANUFACTURING").size() + " opportunities";
+        String output4 = "\nMedical: " + getOpportunitiesByIndustry("MEDICAL").size() + " opportunities";
+        String output5 = "\nOther: " + getOpportunitiesByIndustry("OTHER").size() + " opportunities";
 
         return output1 + output2 + output3 + output4 + output5;
     }
 
-    public String findOpportunityByStatusCountByIndustry(Status status){
-        String output1 = "Produce: " + getOpportunitiesByIndustryAndStatus(Industry.PRODUCE, status).size() + " opportunities";
-        String output2 = "\ne-Commerce: " + getOpportunitiesByIndustryAndStatus(Industry.ECOMMERCE, status).size() + " opportunities";
-        String output3 = "\nManufacturing: " + getOpportunitiesByIndustryAndStatus(Industry.MANUFACTURING, status).size() + " opportunities";
-        String output4 = "\nMedical: " + getOpportunitiesByIndustryAndStatus(Industry.MEDICAL, status).size() + " opportunities";
-        String output5 = "\nOther: " + getOpportunitiesByIndustryAndStatus(Industry.OTHER, status).size() + " opportunities";
+    public String findOpportunityByStatusCountByIndustry(String status){
+        checkValidStatus(status);
+        String output1 = "Produce: " + getOpportunitiesByIndustryAndStatus("PRODUCE", status).size() + " opportunities";
+        String output2 = "\ne-Commerce: " + getOpportunitiesByIndustryAndStatus("ECOMMERCE", status).size() + " opportunities";
+        String output3 = "\nManufacturing: " + getOpportunitiesByIndustryAndStatus("MANUFACTURING", status).size() + " opportunities";
+        String output4 = "\nMedical: " + getOpportunitiesByIndustryAndStatus("MEDICAL", status).size() + " opportunities";
+        String output5 = "\nOther: " + getOpportunitiesByIndustryAndStatus("OTHER", status).size() + " opportunities";
 
         return output1 + output2 + output3 + output4 + output5;
     }
@@ -200,11 +212,12 @@ public class OpportunityService implements IOpportunityService {
         return output;
     }
 
-    public String findOpportunityByStatusCountByCity(Status status) {
+    public String findOpportunityByStatusCountByCity(String status) {
+        Status status1 = checkValidStatus(status);
         List<String> cities = accountClient.getCities();
         String output = "";
         for (String c : cities){
-            output += "\n" + c + ": " + getOpportunitiesByCityAndStatus(c, status).size() + " opportunities";
+            output += "\n" + c + ": " + getOpportunitiesByCityAndStatus(c, status1.toString()).size() + " opportunities";
         }
 
         return output;
@@ -220,7 +233,8 @@ public class OpportunityService implements IOpportunityService {
         return output;
     }
 
-    public String findOpportunityByStatusCountByCountry(Status status) {
+    public String findOpportunityByStatusCountByCountry(String status) {
+        checkValidStatus(status);
         List<String> countries = accountClient.getCountries();
         String output = "";
         for (String c : countries){
@@ -302,8 +316,9 @@ public class OpportunityService implements IOpportunityService {
         return printTwoResults(result);
     }
 
-    public String findOpportunityByStatusCountBySalesRep(Status status) {
-        List<Object[]> result = opportunityRepository.findOpportunityByStatusCountBySalesRep(status);
+    public String findOpportunityByStatusCountBySalesRep(String status) {
+        Status status1 = checkValidStatus(status);
+        List<Object[]> result = opportunityRepository.findOpportunityByStatusCountBySalesRep(status1);
         return printTwoResults(result);
     }
 
@@ -348,7 +363,7 @@ public class OpportunityService implements IOpportunityService {
         return opportunityDTOList;
     }
 
-    public List<OpportunityDTO> returnByAccountIDAndStatus(List<Long> accounts, Status status){
+    public List<OpportunityDTO> returnByAccountIDAndStatus(List<Long> accounts, String status){
         //Create a list of OpportunityDTO to store the result
         List<OpportunityDTO> opportunityDTOList = new ArrayList<>();
 
@@ -356,7 +371,7 @@ public class OpportunityService implements IOpportunityService {
             List<Opportunity> opportunities = opportunityRepository.findByAccountId(accountId);
 
             for (Opportunity o: opportunities){
-                if (o.getStatus().equals(status)){
+                if (o.getStatus().toString().equals(status)){
                     OpportunityDTO opportunityDTO = new OpportunityDTO(o.getId(), o.getQuantity(),
                             o.getDecisionMakerId(), o.getStatus(), o.getProduct(),
                             o.getRepOpportunityId(),o.getAccountId());
@@ -365,6 +380,22 @@ public class OpportunityService implements IOpportunityService {
             }
         }
         return opportunityDTOList;
+    }
+
+    public Status checkValidStatus(String status){
+        try {
+            return Status.valueOf(status.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(status + " is not a valid Status.");
+        }
+    }
+
+    public void checkValidIndustry(String industry){
+        try {
+            Industry.valueOf(industry.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(industry + " is not a valid Status.");
+        }
     }
 
 }

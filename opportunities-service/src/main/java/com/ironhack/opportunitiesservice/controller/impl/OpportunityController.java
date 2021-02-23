@@ -32,10 +32,10 @@ public class OpportunityController implements IOpportunityController {
     @GetMapping("/opportunities")
     @ResponseStatus(HttpStatus.OK)
     public List<OpportunityDTO> getOpportunitiesBy(@RequestParam(name = "salesrep-id") Optional<Long> salesRepId,
-                                                   @RequestParam(name = "status") Optional<Status> status,
+                                                   @RequestParam(name = "status") Optional<String> status,
                                                    @RequestParam(name = "country") Optional<String> country,
                                                    @RequestParam(name = "city") Optional<String> city,
-                                                   @RequestParam(name = "industry") Optional<Industry> industry) {
+                                                   @RequestParam(name = "industry") Optional<String> industry) {
         if(salesRepId.isEmpty() && status.isEmpty() && country.isEmpty() && city.isEmpty() && industry.isEmpty()){
             return opportunityService.getAllOpportunities();
         }else if(salesRepId.isPresent() && status.isEmpty() && country.isEmpty() && city.isEmpty() && industry.isEmpty()){
@@ -137,7 +137,7 @@ public class OpportunityController implements IOpportunityController {
 
     @GetMapping("/opportunities/count/by-salesRep/{status}")
     @ResponseStatus(HttpStatus.OK)
-    public String findOpportunityByStatusCountBySalesRep(@PathVariable Status status) {
+    public String findOpportunityByStatusCountBySalesRep(@PathVariable String status) {
         return opportunityService.findOpportunityByStatusCountBySalesRep(status);
     }
 
@@ -149,7 +149,7 @@ public class OpportunityController implements IOpportunityController {
 
     @GetMapping("/opportunities/count/by-industry/{status}")
     @ResponseStatus(HttpStatus.OK)
-    public String findOpportunityByStatusCountByIndustry(@PathVariable Status status) {
+    public String findOpportunityByStatusCountByIndustry(@PathVariable String status) {
         return opportunityService.findOpportunityByStatusCountByIndustry(status);
     }
 
@@ -161,7 +161,7 @@ public class OpportunityController implements IOpportunityController {
 
     @GetMapping("/opportunities/count/by-city/{status}")
     @ResponseStatus(HttpStatus.OK)
-    public String findOpportunityByStatusCountByCity(@PathVariable Status status) {
+    public String findOpportunityByStatusCountByCity(@PathVariable String status) {
         return opportunityService.findOpportunityByStatusCountByCity(status);
     }
 
@@ -173,7 +173,7 @@ public class OpportunityController implements IOpportunityController {
 
     @GetMapping("/opportunities/count/by-country/{status}")
     @ResponseStatus(HttpStatus.OK)
-    public String findOpportunityByStatusCountByCountry(@PathVariable Status status) {
+    public String findOpportunityByStatusCountByCountry(@PathVariable String status) {
         return opportunityService.findOpportunityByStatusCountByCountry(status);
     }
 }

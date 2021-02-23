@@ -19,9 +19,9 @@ import java.util.Optional;
 public interface IOpportunityController {
 
     //Get method: get a list with all the opportunities
-    List<OpportunityDTO> getOpportunitiesBy(Optional<Long> salesRepId, Optional<Status> status,
+    List<OpportunityDTO> getOpportunitiesBy(Optional<Long> salesRepId, Optional<String> status,
                                             Optional<String> country, Optional<String> city,
-                                            Optional<Industry> industry);
+                                            Optional<String> industry);
     //Get method: get a opportunityDTO by id
     OpportunityDTO getOpportunityDTOById(Long id);
     //Post method: create a new opportunity
@@ -33,11 +33,11 @@ public interface IOpportunityController {
 
 
     String findOpportunityCountByIndustry();
-    String findOpportunityByStatusCountByIndustry(Status status);
+    String findOpportunityByStatusCountByIndustry(String status);
     String findOpportunityCountByCity();
-    String findOpportunityByStatusCountByCity(Status status);
+    String findOpportunityByStatusCountByCity(String status);
     String findOpportunityCountByCountry();
-    String findOpportunityByStatusCountByCountry(Status status);
+    String findOpportunityByStatusCountByCountry(String status);
     BigDecimal getMeanOpportunities(String data);
     List<Object[]> getMaxOpportunities();
     int getMaxQuantity();
@@ -45,5 +45,5 @@ public interface IOpportunityController {
     int getMinQuantity();
     double getMedian(String data);
     public String findOpportunityCountBySalesRep();
-    String findOpportunityByStatusCountBySalesRep(Status status);
+    String findOpportunityByStatusCountBySalesRep(String status);
 }

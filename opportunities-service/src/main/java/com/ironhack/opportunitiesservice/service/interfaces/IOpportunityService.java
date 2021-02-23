@@ -25,19 +25,19 @@ public interface IOpportunityService {
     //Get method: get an opportunity list by sales rep
     List<OpportunityDTO> getOpportunitiesBySalesRep(Long salesRepId);
     //Get method: get an opportunity list by sales rep and status
-    List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(Long salesRepId, Status status);
+    List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(Long salesRepId, String status);
     //Get method:get an opportunity list by country
     List<OpportunityDTO> getOpportunitiesByCountry(String country);
     //Get method:get an opportunity list by country and status
-    List<OpportunityDTO> getOpportunitiesByCountryAndStatus(String country, Status status);
+    List<OpportunityDTO> getOpportunitiesByCountryAndStatus(String country, String status);
     //Get method:get an opportunity list by city
     List<OpportunityDTO> getOpportunitiesByCity(String city);
     //Get method:get an opportunity list by city and status
-    List<OpportunityDTO> getOpportunitiesByCityAndStatus(String city, Status status);
+    List<OpportunityDTO> getOpportunitiesByCityAndStatus(String city, String status);
     //Get method: get and opportunity list by industry
-    List<OpportunityDTO> getOpportunitiesByIndustry(Industry industry);
+    List<OpportunityDTO> getOpportunitiesByIndustry(String industry);
     //Get method: get and opportunity list by industry and status
-    List<OpportunityDTO> getOpportunitiesByIndustryAndStatus(Industry industry, Status status);
+    List<OpportunityDTO> getOpportunitiesByIndustryAndStatus(String industry, String status);
     //Post method: create a new Opportunity
     Opportunity createOpportunity(OpportunityDTO opportunityDTO);
     //Patch method: modify the status of the opportunity
@@ -46,11 +46,11 @@ public interface IOpportunityService {
     void updateOpportunityAccountId(Long id, AccountIdDTO accountIdDTO);
 
     String findOpportunityCountByIndustry();
-    String findOpportunityByStatusCountByIndustry(Status status);
+    String findOpportunityByStatusCountByIndustry(String status);
     String findOpportunityCountByCity();
-    String findOpportunityByStatusCountByCity(Status status);
+    String findOpportunityByStatusCountByCity(String status);
     String findOpportunityCountByCountry();
-    String findOpportunityByStatusCountByCountry(Status status);
+    String findOpportunityByStatusCountByCountry(String status);
     BigDecimal getMeanOpportunities(String data);
     List<Object[]> getMaxOpportunities();
     int getMaxQuantity();
@@ -59,5 +59,5 @@ public interface IOpportunityService {
     double getMedian(String data);
 
     String findOpportunityCountBySalesRep();
-    String findOpportunityByStatusCountBySalesRep(Status status);
+    String findOpportunityByStatusCountBySalesRep(String status);
 }
