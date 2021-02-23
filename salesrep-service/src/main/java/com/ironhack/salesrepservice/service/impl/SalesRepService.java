@@ -9,12 +9,16 @@ import com.ironhack.salesrepservice.enums.Status;
 import com.ironhack.salesrepservice.model.SalesRep;
 import com.ironhack.salesrepservice.service.interfaces.ISalesRepService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SalesRepService implements ISalesRepService {
@@ -25,6 +29,8 @@ public class SalesRepService implements ISalesRepService {
     private com.ironhack.salesrepservice.client.LeadClient leadClient;
     @Autowired
     private OpportunityClient opportunityClient;
+
+    private final CircuitBreakerFactory circuitBreakerFactory = new Resilience4JCircuitBreakerFactory();
 
     //===========================================
     //Get methods
@@ -42,38 +48,52 @@ public class SalesRepService implements ISalesRepService {
         return salesRepDTOS;
     }
 
+    @Override
+    public Long getSalesRepId(Long id) {
+        if(salesRepRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
+        }
+        return id;
+    }
+
     public List<LeadDTO> getLeadsBySalesRepId(Long id) {
+
+        CircuitBreaker leadCircuitBreaker = circuitBreakerFactory.create("leadService-dev");
 
         if(salesRepRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
         }
 
-        List<LeadDTO> leadDTOList = leadClient.getAllLeads();
+        List<LeadDTO> leadDTOList = leadCircuitBreaker.run(() -> leadClient.getAllLeads(), throwable -> leadFallback());
         SalesRep salesRep = salesRepRepository.findById(id).get();
 
         List<LeadDTO> newLeadDTOList = new ArrayList<>();
 
         for(LeadDTO leadDTO: leadDTOList){
-            if (salesRep.getId().equals(leadDTO.getSalesRepId())){
+            if (salesRep.getId() ==(leadDTO.getSalesRepId())){
                 newLeadDTOList.add(leadDTO);
             }
         }
         return newLeadDTOList;
     }
 
+
+
     public Integer getCountOfLeadsBySalesRepId(Long id){
+
+        CircuitBreaker leadCircuitBreaker = circuitBreakerFactory.create("leadService-dev");
 
         if(salesRepRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
         }
 
-        List<LeadDTO> leadDTOList = leadClient.getAllLeads();
+        List<LeadDTO> leadDTOList = leadCircuitBreaker.run(() -> leadClient.getAllLeads(), throwable -> leadFallback());
         SalesRep salesRep = salesRepRepository.findById(id).get();
 
         Integer count = 0;
 
         for(LeadDTO leadDTO: leadDTOList){
-            if (salesRep.getId().equals(leadDTO.getSalesRepId())){
+            if (salesRep.getId() ==(leadDTO.getSalesRepId())){
                 count += 1;
             }
         }
@@ -82,14 +102,20 @@ public class SalesRepService implements ISalesRepService {
 
     public List<OpportunityDTO> getOpportunitiesBySalesRepId(Long id) {
 
+        CircuitBreaker opportunityCircuitBreaker = circuitBreakerFactory.create("opportunityService-dev");
+
         if(salesRepRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
         }
 
-        return opportunityClient.getOpportunitiesBySalesRep(id);
+        return opportunityCircuitBreaker.run(() -> opportunityClient.getOpportunitiesBySalesRep(id), throwable -> opportunityFallback());
     }
 
+
+
     public Integer getCountOfOpportunitiesBySalesRepId(Long id){
+
+        CircuitBreaker opportunityCircuitBreaker = circuitBreakerFactory.create("opportunityService-dev");
 
         if(salesRepRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
@@ -97,20 +123,27 @@ public class SalesRepService implements ISalesRepService {
 
         Integer count = 0;
 
-        for (OpportunityDTO opportunityDTO: opportunityClient.getOpportunitiesBySalesRep(id)){
+        for (OpportunityDTO opportunityDTO: opportunityCircuitBreaker.run(() -> opportunityClient.getOpportunitiesBySalesRep(id), throwable -> opportunityFallback())){
             count+= 1;
         }
 
         return count;
     }
 
-    public List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(Long id, Status status) {
+    public List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(Long id, String status) {
+
+        CircuitBreaker opportunityCircuitBreaker = circuitBreakerFactory.create("opportunityService-dev");
 
         if(salesRepRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
         }
+        try {
+            Status.valueOf(status.toUpperCase());  // Validation of Status enum.
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(status + " is not a valid Status.");
+        }
 
-        return opportunityClient.getOpportunitiesBySalesRepAndStatus(id, status);
+        return opportunityCircuitBreaker.run(() -> opportunityClient.getOpportunitiesBySalesRepAndStatus(id, status), throwable -> opportunityFallback());
     }
 
     //=========================================================
@@ -123,6 +156,18 @@ public class SalesRepService implements ISalesRepService {
         salesRepRepository.save(salesRep);
 
         return salesRep;
+    }
+
+
+    //=========================================================
+    //Fallback Methods
+    //=========================================================
+
+    private List<LeadDTO> leadFallback() {
+        throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Lead Service is down...");
+    }
+    private List<OpportunityDTO> opportunityFallback() {
+        throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Opportunity Service is down...");
     }
 
 }

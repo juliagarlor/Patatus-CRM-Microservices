@@ -12,6 +12,8 @@ public interface ISalesRepController {
 
     List<SalesRepDTO> findAllSalesRep();
 
+    Long getSalesRepId(Long id);
+
     List<LeadDTO> getLeadsBySalesRepId(Long id);
 
     //Get method: get the number of leads by sales rep
@@ -24,7 +26,7 @@ public interface ISalesRepController {
     Integer getCountOfOpportunitiesBySalesRepId(Long id);
 
     //Get method: get a list with the opportunities of a sales rep, ordered by status, closed-won or closed-lost
-    List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(Long id, Status status);
+    List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(Long id, String status);
 
 
     //Post method: create a new sales rep

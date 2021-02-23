@@ -11,5 +11,5 @@ public interface ILeadService {
     List<Lead> findBySalesrepId(Long salesrepId);
     Lead createLead(LeadDTO leadDTO);
     void deleteLead(Long id);
-    String findLeadCountBySalesRep();
+    String findLeadCountBySalesRepId();
 }

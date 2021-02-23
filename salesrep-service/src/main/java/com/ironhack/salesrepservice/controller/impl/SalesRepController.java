@@ -29,6 +29,11 @@ public class SalesRepController implements ISalesRepController {
         return salesRepService.findAll();
     }
 
+    @GetMapping("/salesrep/{id}/id")
+    public Long getSalesRepId(@PathVariable Long id) {
+        return salesRepService.getSalesRepId(id);
+    }
+
     @GetMapping("/salesreps/{sales_id}/leads")
     @ResponseStatus(HttpStatus.OK)
     public List<LeadDTO> getLeadsBySalesRepId(@PathVariable Long id) {
@@ -55,7 +60,7 @@ public class SalesRepController implements ISalesRepController {
     //TODO: o dejarlo asi, o meter en la ruta de pillar las oportunidades por sales rep y hacer unos cuantos if
     @GetMapping("/salesreps/{sales_id}/opportunities/{status}")
     @ResponseStatus(HttpStatus.OK)
-    public List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(@PathVariable Long id, @PathVariable Status status) {
+    public List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(@PathVariable Long id, @PathVariable String status) {
         return salesRepService.getOpportunitiesBySalesRepAndStatus(id, status);
     }
 

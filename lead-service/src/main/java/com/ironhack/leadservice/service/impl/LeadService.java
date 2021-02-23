@@ -1,5 +1,6 @@
 package com.ironhack.leadservice.service.impl;
 
+import com.ironhack.leadservice.client.SalesrepClient;
 import com.ironhack.leadservice.dto.LeadDTO;
 import com.ironhack.leadservice.model.Lead;
 import com.ironhack.leadservice.repository.LeadRepository;
@@ -16,6 +17,8 @@ import java.util.Optional;
 public class LeadService implements ILeadService {
     @Autowired
     private LeadRepository leadRepository;
+    @Autowired
+    private SalesrepClient salesrepClient;
 
     public List<Lead> findAll() {
         List<Lead> leads = leadRepository.findAll();
@@ -38,11 +41,15 @@ public class LeadService implements ILeadService {
 
     public Lead createLead(LeadDTO leadDTO) {
         Lead lead = new Lead();
+        try {
+            lead.setSalesrepId(salesrepClient.getSalesRepId(leadDTO.getSalesrepId()));
+        } catch (ResponseStatusException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no salesrip with ID: " + leadDTO.getSalesrepId());
+        }
         lead.setName(leadDTO.getName());
         lead.setPhoneNumber(leadDTO.getPhoneNumber());
         lead.setEmail(leadDTO.getEmail());
         lead.setCompanyName(leadDTO.getCompanyName());
-        lead.setSalesrepId(leadDTO.getSalesrepId());
 
         return leadRepository.save(lead);
     }
@@ -52,8 +59,8 @@ public class LeadService implements ILeadService {
         leadRepository.delete(lead);
     }
 
-    public String findLeadCountBySalesRep() {
-        return printTwoResults(leadRepository.findLeadCountBySalesrep());
+    public String findLeadCountBySalesRepId() {
+        return printTwoResults(leadRepository.findLeadCountBySalesrepId());
     }
 
 

@@ -37,18 +37,20 @@ public class LeadController implements ILeadController {
     }
 
     @PostMapping("/lead")
+    @ResponseStatus(HttpStatus.CREATED)
     public Lead createLead(@RequestBody @Valid LeadDTO leadDTO) {
         return leadService.createLead(leadDTO);
     }
 
     @DeleteMapping("/lead/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteLead(@PathVariable Long id) {
         leadService.deleteLead(id);
     }
 
     @GetMapping("/leads/count/bysalesrep")
     @ResponseStatus(HttpStatus.OK)
-    public String findLeadCountBySalesRep() {
-        return leadService.findLeadCountBySalesRep();
+    public String findLeadCountBySalesRepId() {
+        return leadService.findLeadCountBySalesRepId();
     }
 }

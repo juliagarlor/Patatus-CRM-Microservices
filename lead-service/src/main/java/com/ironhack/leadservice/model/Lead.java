@@ -1,12 +1,10 @@
 package com.ironhack.leadservice.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "leads")
 public class Lead {
 
     // Properties
@@ -17,10 +15,13 @@ public class Lead {
     private String phoneNumber;
     private String email;
     private String companyName;
+    @Column(name = "salesrep_id")
     private Long salesrepId;
 
 
     // Constructor
+    public Lead(){
+    }
     public Lead(String name, String phoneNumber, String email, String companyName, Long salesrepId) {
         setName(name);
         setPhoneNumber(phoneNumber);
@@ -29,31 +30,9 @@ public class Lead {
         setSalesrepId(salesrepId);
     }
 
-//    public Lead(LeadDTO lead){
-//        setName(lead.getName());
-//        setPhoneNumber(lead.getPhoneNumber());
-//        setEmail(lead.getEmail());
-//        setCompanyName(lead.getCompanyName());
-//        setRepLead(lead.getRepLead());
-//    }
 
-    public Lead(){}
-
-    // -----------------Methods------------------
-
-    // Override of the toString() method to display the Leads in a more friendly way.
-    @Override
-    public String toString() {
-        return "ID-" + id +
-                " | name: " + name +
-                " | phoneNumber: " + phoneNumber +
-                " | email: " + email +
-                " | companyName: " + companyName;
-    }
 
     //Getters & Setters
-
-
     public Long getId() {
         return id;
     }
