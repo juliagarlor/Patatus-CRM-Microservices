@@ -7,6 +7,8 @@ import com.ironhack.opportunitiesservice.model.*;
 import com.ironhack.opportunitiesservice.repository.*;
 import com.ironhack.opportunitiesservice.service.interfaces.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.cloud.circuitbreaker.resilience4j.*;
+import org.springframework.cloud.client.circuitbreaker.*;
 import org.springframework.http.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.server.*;
@@ -22,6 +24,7 @@ public class OpportunityService implements IOpportunityService {
     @Autowired
     private AccountClient accountClient;
 
+    private final CircuitBreakerFactory circuitBreakerFactory = new Resilience4JCircuitBreakerFactory();
 
     //===========================================
     //Get methods
@@ -89,41 +92,54 @@ public class OpportunityService implements IOpportunityService {
     }
 
     public List<OpportunityDTO> getOpportunitiesByCountry(String country) {
+        CircuitBreaker accountCircuitBreaker = circuitBreakerFactory.create("accountService-dev");
 
         //insert a list with the accounts by countries
-        List<Long> countryDTOList = accountClient.getAccountByCountry(country);
+        List<Long> countryDTOList = accountCircuitBreaker.run(() -> accountClient.getAccountByCountry(country),
+                throwable -> accountFallback());
 
         return returnByAccountID(countryDTOList);
     }
 
     public List<OpportunityDTO> getOpportunitiesByCountryAndStatus(String country, String status) {
         checkValidStatus(status);
+        CircuitBreaker accountCircuitBreaker = circuitBreakerFactory.create("accountService-dev");
 
         //insert a list with the accounts by countries
-        List<Long> countryDTOList = accountClient.getAccountByCountry(country);
+        List<Long> countryDTOList = accountCircuitBreaker.run(() -> accountClient.getAccountByCountry(country),
+                throwable -> accountFallback());
 
         return returnByAccountIDAndStatus(countryDTOList, status);
     }
 
     public List<OpportunityDTO> getOpportunitiesByCity(String city) {
-        //insert a list with the accounts by countries
-        List<Long> cityDTOList = accountClient.getAccountByCity(city);
+        CircuitBreaker accountCircuitBreaker = circuitBreakerFactory.create("accountService-dev");
+
+        //insert a list with the accounts by cities
+        List<Long> cityDTOList = accountCircuitBreaker.run(() -> accountClient.getAccountByCity(city),
+                throwable -> accountFallback());
 
         return returnByAccountID(cityDTOList);
     }
 
     public List<OpportunityDTO> getOpportunitiesByCityAndStatus(String city, String status) {
         checkValidStatus(status);
-        //insert a list with the accounts by countries
-        List<Long> cityDTOList = accountClient.getAccountByCity(city);
+        CircuitBreaker accountCircuitBreaker = circuitBreakerFactory.create("accountService-dev");
+
+        //insert a list with the accounts by cities
+        List<Long> cityDTOList = accountCircuitBreaker.run(() -> accountClient.getAccountByCity(city),
+                throwable -> accountFallback());
 
         return returnByAccountIDAndStatus(cityDTOList, status);
     }
 
     public List<OpportunityDTO> getOpportunitiesByIndustry(String industry) {
         checkValidIndustry(industry);
-        //insert a list with the accounts by countries
-        List<Long> industryDTOList = accountClient.getAccountByIndustry(industry);
+        CircuitBreaker accountCircuitBreaker = circuitBreakerFactory.create("accountService-dev");
+
+        //insert a list with the accounts by industry
+        List<Long> industryDTOList = accountCircuitBreaker.run(() -> accountClient.getAccountByIndustry(industry),
+                throwable -> accountFallback());
 
         return returnByAccountID(industryDTOList);
     }
@@ -131,8 +147,11 @@ public class OpportunityService implements IOpportunityService {
     public List<OpportunityDTO> getOpportunitiesByIndustryAndStatus(String industry, String status) {
         checkValidStatus(status);
         checkValidIndustry(industry);
-        //insert a list with the accounts by countries
-        List<Long> industryDTOList = accountClient.getAccountByIndustry(industry);
+        CircuitBreaker accountCircuitBreaker = circuitBreakerFactory.create("accountService-dev");
+
+        //insert a list with the accounts by industry
+        List<Long> industryDTOList = accountCircuitBreaker.run(() -> accountClient.getAccountByIndustry(industry),
+                throwable -> accountFallback());
 
         return returnByAccountIDAndStatus(industryDTOList, status);
     }
@@ -145,7 +164,8 @@ public class OpportunityService implements IOpportunityService {
 
         checkValidStatus(opportunityDTO.getStatus().toString());
         Opportunity opportunity = new Opportunity( opportunityDTO.getQuantity(), opportunityDTO.getDecisionMakerId(),
-                opportunityDTO.getStatus(), opportunityDTO.getProduct(), opportunityDTO.getRepOpportunityId(), opportunityDTO.getAccountId());
+                opportunityDTO.getStatus(), opportunityDTO.getProduct(), opportunityDTO.getRepOpportunityId(),
+                opportunityDTO.getAccountId());
 
 
         return opportunityRepository.save(opportunity);
@@ -203,7 +223,9 @@ public class OpportunityService implements IOpportunityService {
     }
 
     public String findOpportunityCountByCity() {
-        List<String> cities = accountClient.getCities();
+        CircuitBreaker accountCircuitBreaker = circuitBreakerFactory.create("accountService-dev");
+        List<String> cities = accountCircuitBreaker.run(() -> accountClient.getCities(),
+                throwable -> accountStringFallback());
         String output = "Holi";
         for (String c : cities){
             output += "\n" + c + ": " + getOpportunitiesByCity(c).size() + " opportunities";
@@ -214,7 +236,9 @@ public class OpportunityService implements IOpportunityService {
 
     public String findOpportunityByStatusCountByCity(String status) {
         Status status1 = checkValidStatus(status);
-        List<String> cities = accountClient.getCities();
+        CircuitBreaker accountCircuitBreaker = circuitBreakerFactory.create("accountService-dev");
+        List<String> cities = accountCircuitBreaker.run(() -> accountClient.getCities(),
+                throwable -> accountStringFallback());
         String output = "";
         for (String c : cities){
             output += "\n" + c + ": " + getOpportunitiesByCityAndStatus(c, status1.toString()).size() + " opportunities";
@@ -224,7 +248,9 @@ public class OpportunityService implements IOpportunityService {
     }
 
     public String findOpportunityCountByCountry() {
-        List<String> countries = accountClient.getCountries();
+        CircuitBreaker accountCircuitBreaker = circuitBreakerFactory.create("accountService-dev");
+        List<String> countries = accountCircuitBreaker.run(() -> accountClient.getCountries(),
+                throwable -> accountStringFallback());
         String output = "";
         for (String c : countries){
             output += "\n" + c + ": " + getOpportunitiesByCountry(c).size() + " opportunities";
@@ -235,7 +261,9 @@ public class OpportunityService implements IOpportunityService {
 
     public String findOpportunityByStatusCountByCountry(String status) {
         checkValidStatus(status);
-        List<String> countries = accountClient.getCountries();
+        CircuitBreaker accountCircuitBreaker = circuitBreakerFactory.create("accountService-dev");
+        List<String> countries = accountCircuitBreaker.run(() -> accountClient.getCountries(),
+                throwable -> accountStringFallback());
         String output = "";
         for (String c : countries){
             output += "\n" + c + ": " + getOpportunitiesByCountryAndStatus(c, status).size() + " opportunities";
@@ -398,4 +426,11 @@ public class OpportunityService implements IOpportunityService {
         }
     }
 
+    public List<Long> accountFallback(){
+        throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Account Service is down...");
+    }
+
+    public List<String> accountStringFallback(){
+        throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Account Service is down...");
+    }
 }
