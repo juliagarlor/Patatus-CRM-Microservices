@@ -70,7 +70,7 @@ public class OpportunityController implements IOpportunityController {
 
     @PostMapping("/opportunity")
     @ResponseStatus(HttpStatus.CREATED)
-    public Opportunity createOpportunity(OpportunityDTO opportunityDTO) {
+    public Opportunity createOpportunity(@RequestBody OpportunityDTO opportunityDTO) {
         return opportunityService.createOpportunity(opportunityDTO);
     }
 
@@ -80,11 +80,13 @@ public class OpportunityController implements IOpportunityController {
 
     //TODO: juntar las dos rutas en una
     @PatchMapping("/opportunity/{opportunityId}/status")
+    @ResponseStatus(HttpStatus.ACCEPTED)
      public void updateOpportunityStatus(@PathVariable Long opportunityId, @RequestBody OpportunityStatusDTO opportunityStatusDTO) {
         opportunityService.updateOpportunityStatus(opportunityId, opportunityStatusDTO);
     }
 
     @PatchMapping("/opportunity/{opportunityId}/account-id")
+    @ResponseStatus(HttpStatus.ACCEPTED)
      public void updateOpportunityAccountId(@PathVariable Long opportunityId,@RequestBody AccountIdDTO accountIdDTO) {
         opportunityService.updateOpportunityAccountId(opportunityId, accountIdDTO);
      }
