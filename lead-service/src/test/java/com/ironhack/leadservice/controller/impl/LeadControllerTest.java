@@ -99,7 +99,7 @@ class LeadControllerTest {
     @Test
     void deleteLead() throws Exception {
         List<Lead> leads = leadRepository.findAll();    // To avoid auto generate id problems.
-        mockMvc.perform(delete("/lead/"+leads.get(0).getId())).andExpect(status().isNoContent());
+        mockMvc.perform(delete("/lead/"+leads.get(0).getId())).andExpect(status().isNoContent()).andReturn();
 
         leads = leadRepository.findAll();
         assertEquals(2, leads.size());

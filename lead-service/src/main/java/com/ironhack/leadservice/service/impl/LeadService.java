@@ -25,10 +25,11 @@ public class LeadService implements ILeadService {
         return leads;
     }
 
-    public Lead findById(Long id) {
+    public LeadDTO findById(Long id) {
         Optional<Lead> lead = leadRepository.findById(id);
         if (lead.isPresent()) {
-            return lead.get();
+
+            return new LeadDTO(lead.get().getId(), lead.get().getName(), lead.get().getPhoneNumber(), lead.get().getEmail(), lead.get().getCompanyName(), lead.get().getSalesrepId());
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No lead with id " + id + " present.");
         }
@@ -55,8 +56,13 @@ public class LeadService implements ILeadService {
     }
 
     public void deleteLead(Long id) {
-        Lead lead = findById(id);
-        leadRepository.delete(lead);
+
+        Optional<Lead> lead = leadRepository.findById(id);
+        if (lead.isPresent()) {
+            leadRepository.delete(lead.get());
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No lead with id " + id + " present.");
+        }
     }
 
     public String findLeadCountBySalesRepId() {

@@ -34,8 +34,13 @@ public class AccountController implements IAccountController {
 
     @GetMapping("/account/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Account getAccountById(@PathVariable() Long id) {
+    public Account getAccountById(@PathVariable Long id) {
         return accountService.getAccountById(id);
+    }
+    //todo: este metodo sirve para comprobar que account existe en contact. hay que meterlo en un servicio
+    @GetMapping("/account/{id}/id")
+    public Long getAccountId(@PathVariable Long id){
+        return accountService.getAccountById(id).getId();
     }
 
     @GetMapping("/accounts/country/{country}")
@@ -59,7 +64,6 @@ public class AccountController implements IAccountController {
     public void deleteAccounts(){
         accountService.deleteAccounts();
     }
-
 
 
     // Routes for stats:

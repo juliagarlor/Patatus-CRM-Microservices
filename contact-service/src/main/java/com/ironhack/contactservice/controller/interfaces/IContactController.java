@@ -9,7 +9,7 @@ public interface IContactController {
     //Get method: get a contact by id
     ContactDTO getContactDTOById(Long id);
     //Post method: create a contact
-    Contact createContact(Long id);
+    Contact createContact(Long leadId, Long AccountId);
     //Patch method: update a contact account_id
     void updateContactAccountId(Long id, AccountIdDTO accountIdDTO);
 }
