@@ -33,7 +33,7 @@ public class StatsController implements IStatsController {
 //    opportunities by salesrep and status
     @GetMapping("/opportunities/count/by-salesRep/{status}")
     @ResponseStatus(HttpStatus.OK)
-    public String findOpportunityByStatusCountBySalesRep(@PathVariable Status status) {
+    public String findOpportunityByStatusCountBySalesRep(@PathVariable String status) {
         return iStatsService.findOpportunityByStatusCountBySalesRep(status);
     }
 
@@ -47,7 +47,7 @@ public class StatsController implements IStatsController {
 //    opportunities by country and status
     @GetMapping("/opportunities/count/by-country/{status}")
     @ResponseStatus(HttpStatus.OK)
-    public String findOpportunityByStatusCountByCountry(@PathVariable Status status) {
+    public String findOpportunityByStatusCountByCountry(@PathVariable String status) {
         return iStatsService.findOpportunityByStatusCountByCountry(status);
     }
 
@@ -61,7 +61,7 @@ public class StatsController implements IStatsController {
 //    opportunities by city and status
     @GetMapping("/opportunities/count/by-city/{status}")
     @ResponseStatus(HttpStatus.OK)
-    public String findOpportunityByStatusCountByCity(@PathVariable Status status) {
+    public String findOpportunityByStatusCountByCity(@PathVariable String status) {
         return iStatsService.findOpportunityByStatusCountByCity(status);
     }
 
@@ -75,7 +75,7 @@ public class StatsController implements IStatsController {
 //    opportunities by industry and status
     @GetMapping("/opportunities/count/by-industry/{status}")
     @ResponseStatus(HttpStatus.OK)
-    public String findOpportunityByStatusCountByIndustry(@PathVariable Status status) {
+    public String findOpportunityByStatusCountByIndustry(@PathVariable String status) {
         return iStatsService.findOpportunityByStatusCountByIndustry(status);
     }
 

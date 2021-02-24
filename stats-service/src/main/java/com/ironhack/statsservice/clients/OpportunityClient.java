@@ -32,23 +32,23 @@ public interface OpportunityClient {
     String findOpportunityCountBySalesRep();
 
     @GetMapping("/opportunities/count/by-salesRep/{status}")
-    String findOpportunityByStatusCountBySalesRep(@PathVariable Status status);
+    String findOpportunityByStatusCountBySalesRep(@PathVariable String status);
 
     @GetMapping("/opportunities/count/by-industry")
     String findOpportunityCountByIndustry();
 
     @GetMapping("/opportunities/count/by-industry/{status}")
-    String findOpportunityByStatusCountByIndustry(@PathVariable Status status);
+    String findOpportunityByStatusCountByIndustry(@PathVariable String status);
 
     @GetMapping("/opportunities/count/by-city/{city}")
     String findOpportunityCountByCity();
 
     @GetMapping("/opportunities/count/by-city/{status}")
-    String findOpportunityByStatusCountByCity(@PathVariable Status status);
+    String findOpportunityByStatusCountByCity(@PathVariable String status);
 
     @GetMapping("/opportunities/count/by-country")
     String findOpportunityCountByCountry();
 
     @GetMapping("/opportunities/count/by-country/{status}")
-    String findOpportunityByStatusCountByCountry(@PathVariable Status status);
+    String findOpportunityByStatusCountByCountry(@PathVariable String status);
 }

@@ -8,13 +8,13 @@ import java.util.*;
 public interface IStatsService {
     String findLeadCountBySalesRep();
     String findOpportunityCountBySalesRep();
-    String findOpportunityByStatusCountBySalesRep(Status status);
+    String findOpportunityByStatusCountBySalesRep(String status);
     String findOpportunityCountByCountry();
-    String findOpportunityByStatusCountByCountry(Status status);
+    String findOpportunityByStatusCountByCountry(String status);
     String findOpportunityCountByCity();
-    String findOpportunityByStatusCountByCity(Status status);
+    String findOpportunityByStatusCountByCity(String status);
     String findOpportunityCountByIndustry();
-    String findOpportunityByStatusCountByIndustry(Status status);
+    String findOpportunityByStatusCountByIndustry(String status);
     BigDecimal findMeanEmployeeCount();
     double findMedianEmployeeCount();
     List<Object[]> findMaxEmployeeCount();
