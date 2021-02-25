@@ -33,14 +33,14 @@ public class SalesRepController implements ISalesRepController {
     public Long getSalesRepId(@PathVariable Long id) {
         return salesRepService.getSalesRepId(id);
     }
-    //TODO: no tira pero tampoco vale, porque ya esta en lead
+
     //get the leads of a sales rep
     @GetMapping("/salesreps/{sales_id}/leads")
     @ResponseStatus(HttpStatus.OK)
     public List<LeadDTO> getLeadsBySalesRepId(@PathVariable("sales_id") Long id) {
         return salesRepService.getLeadsBySalesRepId(id);
     }
-    //TODO: no tira pero tampoco vale, porque ya esta en lead
+
     @GetMapping("/salesreps/{sales_id}/leads/count")
     @ResponseStatus(HttpStatus.OK)
     public Integer getCountOfLeadsBySalesRepId(@PathVariable("sales_id") Long id) {

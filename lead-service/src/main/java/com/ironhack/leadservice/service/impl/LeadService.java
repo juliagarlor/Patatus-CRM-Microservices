@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,9 +36,21 @@ public class LeadService implements ILeadService {
         }
     }
 
-    public List<Lead> findBySalesrepId(Long salesrepId) {
+    public List<LeadDTO> findBySalesrepId(Long salesrepId) {
         List<Lead> leads = leadRepository.findBySalesrepId(salesrepId);
-        return leads;
+        List<LeadDTO> leadDTOS = new ArrayList<>();
+        for (Lead lead: leads) {
+            LeadDTO leadDTO = new LeadDTO();
+            leadDTO.setId(lead.getId());
+            leadDTO.setName(lead.getName());
+            leadDTO.setPhoneNumber(lead.getPhoneNumber());
+            leadDTO.setEmail(lead.getEmail());
+            leadDTO.setCompanyName(lead.getCompanyName());
+            leadDTO.setSalesrepId(lead.getSalesrepId());
+            leadDTOS.add(leadDTO);
+        }
+
+        return leadDTOS;
     }
 
     public Lead createLead(LeadDTO leadDTO) {
