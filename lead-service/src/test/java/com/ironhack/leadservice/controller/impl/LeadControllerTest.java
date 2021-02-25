@@ -53,8 +53,6 @@ class LeadControllerTest {
         leadRepository.deleteAll();
     }
 
-//    TODO: por alguna razon esto me da problemas al guardar los leads en el repositorio
-
     @Test
     void findAll() throws Exception {
         MvcResult result = mockMvc.perform(get("/leads")).andReturn();

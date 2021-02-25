@@ -64,7 +64,7 @@ public class SalesRepService implements ISalesRepService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
         }
 
-        List<LeadDTO> leadDTOList = leadCircuitBreaker.run(() -> leadClient.getAllLeads(), throwable -> leadFallback());
+        List<LeadDTO> leadDTOList = leadCircuitBreaker.run(() -> leadClient.findBySalesrepId(id), throwable -> leadFallback());
         SalesRep salesRep = salesRepRepository.findById(id).get();
 
         List<LeadDTO> newLeadDTOList = new ArrayList<>();

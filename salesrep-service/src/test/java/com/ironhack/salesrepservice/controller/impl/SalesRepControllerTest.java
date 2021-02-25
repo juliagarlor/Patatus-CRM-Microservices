@@ -63,6 +63,11 @@ class SalesRepControllerTest {
 
     @Test
     void getLeadsBySalesRepId() throws Exception {
+        MvcResult result = mockMvc.perform(get("/salesreps/1/leads")).andReturn();
+        System.out.println("resultao: " + result.getResponse().getContentAsString());
+        assertTrue(result.getResponse().getContentAsString().contains("Pepe Pig"));
+        assertTrue(result.getResponse().getContentAsString().contains("Pupa Pig"));
+        assertFalse(result.getResponse().getContentAsString().contains("Pepa Pig"));
     }
 
     @Test

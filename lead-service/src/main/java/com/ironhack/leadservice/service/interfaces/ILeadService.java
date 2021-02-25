@@ -8,7 +8,7 @@ import java.util.List;
 public interface ILeadService {
     List<Lead> findAll();
     LeadDTO findById(Long id);
-    List<Lead> findBySalesrepId(Long salesrepId);
+    List<LeadDTO> findBySalesrepId(Long salesrepId);
     Lead createLead(LeadDTO leadDTO);
     void deleteLead(Long id);
     String findLeadCountBySalesRepId();

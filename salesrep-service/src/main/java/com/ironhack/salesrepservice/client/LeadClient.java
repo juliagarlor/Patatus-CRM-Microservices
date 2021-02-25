@@ -13,4 +13,7 @@ public interface LeadClient {
     @GetMapping("/leads")
     List<LeadDTO> getAllLeads();
 
+    @GetMapping("/leads/bysalesrep/{id}")
+    List<LeadDTO> findBySalesrepId(Long salesrepId);
+
 }

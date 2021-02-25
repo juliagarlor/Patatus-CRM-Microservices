@@ -32,7 +32,7 @@ public class LeadController implements ILeadController {
     //Get  all the leads of a sales rep
     @GetMapping("/leads/bysalesrep/{salesrepId}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Lead> findBySalesrepId(@PathVariable Long salesrepId) {
+    public List<LeadDTO> findBySalesrepId(@PathVariable Long salesrepId) {
         return leadService.findBySalesrepId(salesrepId);
     }
     //TODO: cuando le mandas un salesrepId incorrecto, no funciona. eso esta bien, pero no devuelve el error correcto. lo mismo hace falta un circuit breaker
