@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "bd1de778-069d-422a-851a-7bb88a88a51b",
+		"name": "contactService-dev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get contact by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8082/contact/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"contact",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create a contact",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n    \"name\": \"Hegegus\",\n    \"phoneNumber\": \"647233123\",\n    \"email\": \"hegegus_el_barbaro@hotmail.com\",\n    \"companyName\": \"Aguila coja en el sofa\"\n \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8082/contact/lead/1/account/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"contact",
+						"lead",
+						"1",
+						"account",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update account id",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"accountId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8082/contact/6/account-id",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"contact",
+						"6",
+						"account-id"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

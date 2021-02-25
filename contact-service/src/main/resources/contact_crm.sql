@@ -4,7 +4,7 @@ use contact_crm;
 
 
 create table contact(
-id int auto_increment,
+id bigint auto_increment,
 name varchar(255),
 phone_number varchar(255),
 email varchar(255),

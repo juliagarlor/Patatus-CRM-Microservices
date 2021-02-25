@@ -12,9 +12,9 @@ import java.util.Optional;
 public interface LeadClient {
 
     @GetMapping("/lead/{id}")
-    Optional<LeadDTO> getLeadDTOById(@PathVariable Long id);
+    LeadDTO getLeadDTOById(@PathVariable Long id);
 
     @DeleteMapping("/lead/{id}")
-    void deleteLead(Long id);
+    void deleteLead(@PathVariable Long id);
 
 }

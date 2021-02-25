@@ -8,5 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface AccountClient {
 
     @GetMapping("/account/{id}/id")
-    Long getAccountId(@PathVariable Long id);
+    Long getAccountId (@PathVariable Long id);
+
 }

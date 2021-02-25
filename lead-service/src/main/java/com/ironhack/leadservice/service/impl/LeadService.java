@@ -6,6 +6,10 @@ import com.ironhack.leadservice.model.Lead;
 import com.ironhack.leadservice.repository.LeadRepository;
 import com.ironhack.leadservice.service.interfaces.ILeadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,6 +24,9 @@ public class LeadService implements ILeadService {
     private LeadRepository leadRepository;
     @Autowired
     private SalesrepClient salesrepClient;
+
+
+    private final CircuitBreakerFactory circuitBreakerFactory = new Resilience4JCircuitBreakerFactory();
 
     public List<LeadDTO> findAll() {
         List<Lead> leads = leadRepository.findAll();
@@ -66,6 +73,10 @@ public class LeadService implements ILeadService {
         lead.setCompanyName(leadDTO.getCompanyName());
         leadRepository.save(lead);
         return leadDTO;
+    }
+
+    private Long salesRepFallback() {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "salesRepService-dev down");
     }
 
     public void deleteLead(Long id) {
