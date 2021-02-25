@@ -13,7 +13,7 @@ public class Contact {
     private String email;
     private String companyName;
 
-    private @javax.validation.constraints.NotNull Long accountId;
+    private /*@javax.validation.constraints.NotNull*/ Long accountId;
 
 
     // Constructors:
@@ -27,7 +27,7 @@ public class Contact {
         setCompanyName(companyName);
     }
 
-    public Contact(String name, String phoneNumber, String email, String companyName, @javax.validation.constraints.NotNull Long accountId) {
+    public Contact(String name, String phoneNumber, String email, String companyName,/* @javax.validation.constraints.NotNull */Long accountId) {
         setName(name);
         setPhoneNumber(phoneNumber);
         setEmail(email);
@@ -93,11 +93,11 @@ public class Contact {
         this.id = id;
     }
 
-    public @javax.validation.constraints.NotNull Long getAccountId() {
+    public /*@javax.validation.constraints.NotNull*/ Long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(@javax.validation.constraints.NotNull Long accountId) {
+    public void setAccountId(/*@javax.validation.constraints.NotNull*/ Long accountId) {
         this.accountId = accountId;
     }
 }

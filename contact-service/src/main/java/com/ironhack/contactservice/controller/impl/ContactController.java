@@ -20,7 +20,7 @@ public class ContactController implements IContactController {
     //===========================================
     //Get methods
     //===========================================
-
+    //Get a contact by id
     @GetMapping("/contact/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ContactDTO getContactDTOById(@PathVariable Long id) {
@@ -30,11 +30,11 @@ public class ContactController implements IContactController {
     //===========================================
     //Post methods
     //===========================================
-
-    @PostMapping("/contact/{id}")
+    //create a contact with the id of a lead
+    @PostMapping("/contact/lead/{leadId}/account/{accountId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Contact createContact(@PathVariable Long id) {
-        return contactService.createContact(id);
+    public Contact createContact(@PathVariable Long leadId, @PathVariable Long accountId) {
+        return contactService.createContact(leadId, accountId);
     }
 
     //===========================================

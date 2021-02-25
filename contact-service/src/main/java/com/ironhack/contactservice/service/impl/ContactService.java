@@ -1,5 +1,6 @@
 package com.ironhack.contactservice.service.impl;
 
+import com.ironhack.contactservice.client.AccountClient;
 import com.ironhack.contactservice.client.LeadClient;
 import com.ironhack.contactservice.controller.dto.AccountIdDTO;
 import com.ironhack.contactservice.controller.dto.ContactDTO;
@@ -19,6 +20,8 @@ public class ContactService implements IContactService {
     private ContactRepository contactRepository;
     @Autowired
     private LeadClient leadClient;
+    @Autowired
+    private AccountClient accountClient;
 
 
     //===========================================
@@ -42,12 +45,20 @@ public class ContactService implements IContactService {
     //===========================================
     //Post methods
     //===========================================
-    public Contact createContact(Long id) {
+    public Contact createContact(Long leadId, Long accountId) {
 
         //Get a leadDTO from microservice lead, to create a new contact with the data
-        LeadDTO leadDTO = leadClient.getLeadDTOById(id);
+        if(leadClient.getLeadDTOById(leadId).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lead with id " + leadId + " not found");
+        }//else if (accountClient.getAccountId(accountId) == null) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account with id " + accountId + " not found");
+//        }
 
-        Contact contact = new Contact(leadDTO.getName(),leadDTO.getPhoneNumber(),leadDTO.getEmail(),leadDTO.getCompanyName());
+        LeadDTO leadDTO = leadClient.getLeadDTOById(leadId).get();
+
+        Contact contact = new Contact(leadDTO.getName(),leadDTO.getPhoneNumber(),leadDTO.getEmail(),leadDTO.getCompanyName(), accountId);
+
+        leadClient.deleteLead(leadId);
 
         return contactRepository.save(contact);
     }

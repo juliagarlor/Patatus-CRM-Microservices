@@ -14,7 +14,7 @@ public interface AccountClient {
 
     //This method return an account
     @GetMapping("/account/{accountId}")
-    AccountDTO getAccountById(@PathVariable int accountId);
+    AccountDTO getAccountById(@PathVariable Long accountId);
     @GetMapping("/accounts/country/{country}")
     List<Long> getAccountByCountry(@PathVariable String country);
     @GetMapping("/accounts/city/{city}")
