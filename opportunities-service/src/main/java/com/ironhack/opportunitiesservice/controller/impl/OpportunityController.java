@@ -74,10 +74,9 @@ public class OpportunityController implements IOpportunityController {
     }
 
     //===========================================
-    //Post methods
+    //Patch methods
     //===========================================
 
-    //TODO: juntar las dos rutas en una
     @PatchMapping("/opportunity/{opportunityId}/status")
     @ResponseStatus(HttpStatus.ACCEPTED)
      public void updateOpportunityStatus(@PathVariable Long opportunityId, @RequestBody OpportunityStatusDTO opportunityStatusDTO) {
