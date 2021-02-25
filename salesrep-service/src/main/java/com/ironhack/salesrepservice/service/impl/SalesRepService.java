@@ -51,7 +51,7 @@ public class SalesRepService implements ISalesRepService {
     @Override
     public Long getSalesRepId(Long id) {
         if(salesRepRepository.findById(id).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "sales rep with id " + id + " not found");
         }
         return id;
     }

@@ -6,6 +6,10 @@ import com.ironhack.leadservice.model.Lead;
 import com.ironhack.leadservice.repository.LeadRepository;
 import com.ironhack.leadservice.service.interfaces.ILeadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,6 +24,9 @@ public class LeadService implements ILeadService {
     private LeadRepository leadRepository;
     @Autowired
     private SalesrepClient salesrepClient;
+
+    private final CircuitBreakerFactory circuitBreakerFactory = new Resilience4JCircuitBreakerFactory();
+
 
     public List<Lead> findAll() {
         List<Lead> leads = leadRepository.findAll();
@@ -53,11 +60,14 @@ public class LeadService implements ILeadService {
         return leadDTOS;
     }
 
-    //todo: meter un circuit breaker aqui. devolver un mensaje si no consigue el sales rep
     public Lead createLead(LeadDTO leadDTO) {
+
+        CircuitBreaker salesRepCircuitBreaker = circuitBreakerFactory.create("salesRepService-dev");
+        Long salesRepId = salesRepCircuitBreaker.run(() -> salesrepClient.getSalesRepId(leadDTO.getSalesrepId()), throwable -> salesRepFallback());
+
         Lead lead = new Lead();
         try {
-            lead.setSalesrepId(salesrepClient.getSalesRepId(leadDTO.getSalesrepId()));
+            lead.setSalesrepId(salesrepClient.getSalesRepId(salesRepId));
         } catch (ResponseStatusException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no salesrip with ID: " + leadDTO.getSalesrepId());
         }
@@ -67,6 +77,10 @@ public class LeadService implements ILeadService {
         lead.setCompanyName(leadDTO.getCompanyName());
 
         return leadRepository.save(lead);
+    }
+
+    private Long salesRepFallback() {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "salesRepService-dev down");
     }
 
     public void deleteLead(Long id) {
