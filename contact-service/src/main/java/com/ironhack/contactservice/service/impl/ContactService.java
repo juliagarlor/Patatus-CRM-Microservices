@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
 @Service
 public class ContactService implements IContactService {
 
@@ -48,13 +50,13 @@ public class ContactService implements IContactService {
     public Contact createContact(Long leadId, Long accountId) {
 
         //Get a leadDTO from microservice lead, to create a new contact with the data
-        if(leadClient.getLeadDTOById(leadId).isEmpty()) {
+        if(Optional.of(leadClient.getLeadDTOById(leadId)).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lead with id " + leadId + " not found");
-        }//else if (accountClient.getAccountId(accountId) == null) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account with id " + accountId + " not found");
-//        }
+        }else if (accountClient.getAccountId(accountId) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account with id " + accountId + " not found");
+        }
 
-        LeadDTO leadDTO = leadClient.getLeadDTOById(leadId).get();
+        LeadDTO leadDTO = leadClient.getLeadDTOById(leadId);
 
         Contact contact = new Contact(leadDTO.getName(),leadDTO.getPhoneNumber(),leadDTO.getEmail(),leadDTO.getCompanyName(), accountId);
 
