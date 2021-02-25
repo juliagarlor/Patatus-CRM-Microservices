@@ -37,7 +37,7 @@ public class AccountController implements IAccountController {
     public Account getAccountById(@PathVariable Long id) {
         return accountService.getAccountById(id);
     }
-    //todo: este metodo sirve para comprobar que account existe en contact. hay que meterlo en un servicio
+    //este metodo sirve para comprobar que account existe en contact. hay que meterlo en un servicio
     @GetMapping("/account/{id}/id")
     public Long getAccountId(@PathVariable Long id){
         return accountService.getAccountById(id).getId();

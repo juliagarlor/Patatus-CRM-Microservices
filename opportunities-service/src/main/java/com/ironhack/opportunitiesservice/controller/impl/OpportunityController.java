@@ -6,6 +6,7 @@ import com.ironhack.opportunitiesservice.controller.dto.OpportunityStatusDTO;
 import com.ironhack.opportunitiesservice.controller.interfaces.IOpportunityController;
 import com.ironhack.opportunitiesservice.model.Opportunity;
 
+import com.ironhack.opportunitiesservice.service.interfaces.IOpportunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ import java.util.Optional;
 public class OpportunityController implements IOpportunityController {
 
     @Autowired
-    private IOpportunityController opportunityService;
+    private IOpportunityService opportunityService;
 
     //===========================================
     //Get methods

@@ -53,6 +53,7 @@ public class LeadService implements ILeadService {
         return leadDTOS;
     }
 
+    //todo: meter un circuit breaker aqui. devolver un mensaje si no consigue el sales rep
     public Lead createLead(LeadDTO leadDTO) {
         Lead lead = new Lead();
         try {
