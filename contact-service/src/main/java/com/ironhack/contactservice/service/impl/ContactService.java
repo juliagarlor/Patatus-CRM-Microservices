@@ -59,7 +59,6 @@ public class ContactService implements IContactService {
         CircuitBreaker leadCircuitBreaker = circuitBreakerFactory.create("leadService-dev");
         CircuitBreaker accountCircuitBreaker = circuitBreakerFactory.create("accountService-dev");
 
-        Optional<LeadDTO> leadDTO = leadCircuitBreaker.run(() -> leadClient.getLeadDTOById(leadId), throwable -> leadFallback());
 
         //Get a leadDTO from microservice lead, to create a new contact with the data
         if(Optional.of(leadClient.getLeadDTOById(leadId)).isEmpty()) {
@@ -67,10 +66,11 @@ public class ContactService implements IContactService {
         }else if (accountClient.getAccountId(accountId) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account with id " + accountId + " not found");
         }
-        }
+        LeadDTO leadDTO = leadCircuitBreaker.run(() -> leadClient.getLeadDTOById(leadId), throwable -> leadFallback());
+
         accountCircuitBreaker.run(() -> accountClient.getAccountId(accountId), throwable -> accountFallback());
 
-        LeadDTO leadDTO = leadClient.getLeadDTOById(leadId);
+        leadDTO = leadClient.getLeadDTOById(leadId);
 
         Contact contact = new Contact(leadDTO.getName(),leadDTO.getPhoneNumber(),leadDTO.getEmail(),leadDTO.getCompanyName(), accountId);
 
@@ -97,7 +97,7 @@ public class ContactService implements IContactService {
         throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Account Service is down...");
     }
 
-    private Optional<LeadDTO> leadFallback() {
+    private LeadDTO leadFallback() {
         throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Lead Service is down...");
     }
 }
