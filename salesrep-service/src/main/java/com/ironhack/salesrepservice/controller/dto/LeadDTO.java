@@ -27,12 +27,15 @@ public class LeadDTO {
     private String companyName;
     @NotNull
     @NotEmpty
-    private int salesRepId;
+    private Long salesRepId;
 
     public LeadDTO() {
     }
 
-    public LeadDTO(@NotNull @NotEmpty Long id, @NotNull @NotEmpty String name, @NotNull @NotEmpty @Pattern(regexp = "^\\s*(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)\\s*$", message = "insert a correct phone number") String phoneNumber, @NotNull @NotEmpty @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "insert a correct email") String email, @NotNull @NotEmpty String companyName, @NotNull @NotEmpty int salesRepId) {
+    public LeadDTO(@NotNull @NotEmpty Long id, @NotNull @NotEmpty String name,
+                   @NotNull @NotEmpty @Pattern(regexp = "^\\s*(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)\\s*$", message = "insert a correct phone number") String phoneNumber,
+                   @NotNull @NotEmpty @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "insert a correct email") String email,
+                   @NotNull @NotEmpty String companyName, @NotNull @NotEmpty Long salesRepId) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -81,11 +84,11 @@ public class LeadDTO {
         this.companyName = companyName;
     }
 
-    public int getSalesRepId() {
+    public Long getSalesRepId() {
         return salesRepId;
     }
 
-    public void setSalesRepId(int salesRepId) {
+    public void setSalesRepId(Long salesRepId) {
         this.salesRepId = salesRepId;
     }
 }

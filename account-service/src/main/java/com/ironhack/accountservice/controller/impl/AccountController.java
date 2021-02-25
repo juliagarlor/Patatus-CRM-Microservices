@@ -18,14 +18,12 @@ public class AccountController implements IAccountController {
     @Autowired
     IAccountService accountService;
 
-    //    todo, te cambio para que devuelva un dto y poder pasarselo a opportunities para los tests
     @PostMapping("/account")
     @ResponseStatus(HttpStatus.CREATED)
     public AccountDTO postAccount(@RequestBody @Valid AccountDTO accountDTO) {
         return accountService.postAccount(accountDTO);
     }
 
-//    todo, te cambio para que devuelva un dto
     @GetMapping("/accounts")
     @ResponseStatus(HttpStatus.OK)
     public List<AccountDTO> getAllAccounts() {
@@ -37,7 +35,7 @@ public class AccountController implements IAccountController {
     public Account getAccountById(@PathVariable Long id) {
         return accountService.getAccountById(id);
     }
-    //todo: este metodo sirve para comprobar que account existe en contact. hay que meterlo en un servicio
+
     @GetMapping("/account/{id}/id")
     public Long getAccountId(@PathVariable Long id){
         return accountService.getAccountById(id).getId();
@@ -58,7 +56,6 @@ public class AccountController implements IAccountController {
         return accountService.getAccountsByIndustry(industry);
     }
 
-//    TODO: julia: Perdón por el intrusismo, pero lo necesito para los tests
     @DeleteMapping("/accounts")
     @ResponseStatus(HttpStatus.OK)
     public void deleteAccounts(){

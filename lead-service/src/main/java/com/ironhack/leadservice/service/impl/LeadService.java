@@ -21,9 +21,13 @@ public class LeadService implements ILeadService {
     @Autowired
     private SalesrepClient salesrepClient;
 
-    public List<Lead> findAll() {
+    public List<LeadDTO> findAll() {
         List<Lead> leads = leadRepository.findAll();
-        return leads;
+        List<LeadDTO> output = new ArrayList<>();
+        for(Lead l:leads){
+            output.add(new LeadDTO(l));
+        }
+        return output;
     }
 
     public LeadDTO findById(Long id) {
@@ -53,19 +57,15 @@ public class LeadService implements ILeadService {
         return leadDTOS;
     }
 
-    public Lead createLead(LeadDTO leadDTO) {
+    public LeadDTO createLead(LeadDTO leadDTO) {
         Lead lead = new Lead();
-        try {
-            lead.setSalesrepId(salesrepClient.getSalesRepId(leadDTO.getSalesrepId()));
-        } catch (ResponseStatusException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no salesrip with ID: " + leadDTO.getSalesrepId());
-        }
+        lead.setSalesrepId(salesrepClient.getSalesRepId(leadDTO.getSalesrepId()));
         lead.setName(leadDTO.getName());
         lead.setPhoneNumber(leadDTO.getPhoneNumber());
         lead.setEmail(leadDTO.getEmail());
         lead.setCompanyName(leadDTO.getCompanyName());
-
-        return leadRepository.save(lead);
+        leadRepository.save(lead);
+        return leadDTO;
     }
 
     public void deleteLead(Long id) {
@@ -86,7 +86,7 @@ public class LeadService implements ILeadService {
     public String printTwoResults(List<Object[]> result){
         StringBuilder string = new StringBuilder();
         for (Object[] row : result){
-            string.append(row[0].toString()).append(": ").append((row[1]).toString()).append("\n");
+            string.append("Salesrep ID " + row[0].toString()).append(": ").append((row[1]).toString()).append("\n");
         }
         return string.toString();
     }

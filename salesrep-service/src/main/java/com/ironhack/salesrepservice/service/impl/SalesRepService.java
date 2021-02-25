@@ -48,102 +48,11 @@ public class SalesRepService implements ISalesRepService {
         return salesRepDTOS;
     }
 
-    @Override
     public Long getSalesRepId(Long id) {
         if(salesRepRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
         }
         return id;
-    }
-
-    public List<LeadDTO> getLeadsBySalesRepId(Long id) {
-
-        CircuitBreaker leadCircuitBreaker = circuitBreakerFactory.create("leadService-dev");
-
-        if(salesRepRepository.findById(id).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
-        }
-
-        List<LeadDTO> leadDTOList = leadCircuitBreaker.run(() -> leadClient.findBySalesrepId(id), throwable -> leadFallback());
-        SalesRep salesRep = salesRepRepository.findById(id).get();
-
-        List<LeadDTO> newLeadDTOList = new ArrayList<>();
-
-        for(LeadDTO leadDTO: leadDTOList){
-            if (salesRep.getId() ==(leadDTO.getSalesRepId())){
-                newLeadDTOList.add(leadDTO);
-            }
-        }
-        return newLeadDTOList;
-    }
-
-
-
-    public Integer getCountOfLeadsBySalesRepId(Long id){
-
-        CircuitBreaker leadCircuitBreaker = circuitBreakerFactory.create("leadService-dev");
-
-        if(salesRepRepository.findById(id).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
-        }
-
-        List<LeadDTO> leadDTOList = leadCircuitBreaker.run(() -> leadClient.getAllLeads(), throwable -> leadFallback());
-        SalesRep salesRep = salesRepRepository.findById(id).get();
-
-        Integer count = 0;
-
-        for(LeadDTO leadDTO: leadDTOList){
-            if (salesRep.getId() ==(leadDTO.getSalesRepId())){
-                count += 1;
-            }
-        }
-        return count;
-    }
-
-    public List<OpportunityDTO> getOpportunitiesBySalesRepId(Long id) {
-
-        CircuitBreaker opportunityCircuitBreaker = circuitBreakerFactory.create("opportunityService-dev");
-
-        if(salesRepRepository.findById(id).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
-        }
-
-        return opportunityCircuitBreaker.run(() -> opportunityClient.getOpportunitiesBySalesRep(id), throwable -> opportunityFallback());
-    }
-
-
-
-    public Integer getCountOfOpportunitiesBySalesRepId(Long id){
-
-        CircuitBreaker opportunityCircuitBreaker = circuitBreakerFactory.create("opportunityService-dev");
-
-        if(salesRepRepository.findById(id).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
-        }
-
-        Integer count = 0;
-
-        for (OpportunityDTO opportunityDTO: opportunityCircuitBreaker.run(() -> opportunityClient.getOpportunitiesBySalesRep(id), throwable -> opportunityFallback())){
-            count+= 1;
-        }
-
-        return count;
-    }
-
-    public List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(Long id, String status) {
-
-        CircuitBreaker opportunityCircuitBreaker = circuitBreakerFactory.create("opportunityService-dev");
-
-        if(salesRepRepository.findById(id).isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "sales rep with id " + id + " not found");
-        }
-        try {
-            Status.valueOf(status.toUpperCase());  // Validation of Status enum.
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(status + " is not a valid Status.");
-        }
-
-        return opportunityCircuitBreaker.run(() -> opportunityClient.getOpportunitiesBySalesRepAndStatus(id, status), throwable -> opportunityFallback());
     }
 
     //=========================================================

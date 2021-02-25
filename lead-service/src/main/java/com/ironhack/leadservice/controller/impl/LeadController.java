@@ -20,7 +20,7 @@ public class LeadController implements ILeadController {
     //Get all leads
     @GetMapping("/leads")
     @ResponseStatus(HttpStatus.OK)
-    public List<Lead> findAll() {
+    public List<LeadDTO> findAll() {
         return leadService.findAll();
     }
     //Get lead by id
@@ -35,11 +35,10 @@ public class LeadController implements ILeadController {
     public List<LeadDTO> findBySalesrepId(@PathVariable Long salesrepId) {
         return leadService.findBySalesrepId(salesrepId);
     }
-    //TODO: cuando le mandas un salesrepId incorrecto, no funciona. eso esta bien, pero no devuelve el error correcto. lo mismo hace falta un circuit breaker
     //Create a lead
     @PostMapping("/lead")
     @ResponseStatus(HttpStatus.CREATED)
-    public Lead createLead(@RequestBody @Valid LeadDTO leadDTO) {
+    public LeadDTO createLead(@RequestBody @Valid LeadDTO leadDTO) {
         return leadService.createLead(leadDTO);
     }
     //Delete a lead

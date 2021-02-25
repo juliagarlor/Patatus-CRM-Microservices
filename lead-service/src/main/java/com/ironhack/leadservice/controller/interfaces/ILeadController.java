@@ -6,10 +6,10 @@ import com.ironhack.leadservice.model.Lead;
 import java.util.List;
 
 public interface ILeadController {
-    List<Lead> findAll();
+    List<LeadDTO> findAll();
     LeadDTO findById(Long id);
     List<LeadDTO> findBySalesrepId(Long salesrepId);
-    Lead createLead(LeadDTO leadDTO);
+    LeadDTO createLead(LeadDTO leadDTO);
     void deleteLead(Long leadId);
     String findLeadCountBySalesRepId();
 }

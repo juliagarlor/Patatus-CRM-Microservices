@@ -1,6 +1,8 @@
 package com.ironhack.leadservice.dto;
 
 
+import com.ironhack.leadservice.model.*;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -33,6 +35,10 @@ public class LeadDTO {
     public LeadDTO(Long id, @NotEmpty(message = "Name can't be empty.") String name, @Pattern(regexp = "^\\s*(?:\\+?(\\d{1,3}))?([-. (]*(\\d{3})[-. )]*)?((\\d{3})[-. ]*(\\d{2,4})(?:[-.x ]*(\\d+))?)\\s*$", message = "Insert a valid Phone number.") String phoneNumber, @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Insert a valid Email.") String email, @NotEmpty(message = "Company name can't be empty.") String companyName, @NotNull(message = "Salesrep ID can't be null.") Long salesrepId) {
         this(name, phoneNumber, email, companyName, salesrepId);
         setId(id);
+    }
+
+    public LeadDTO(Lead lead){
+        this(lead.getId(), lead.getName(), lead.getPhoneNumber(), lead.getEmail(), lead.getCompanyName(), lead.getSalesrepId());
     }
 
     // Getters & Setters

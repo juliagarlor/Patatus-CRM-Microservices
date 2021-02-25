@@ -22,7 +22,6 @@ public class ContactDTO {
     @NotNull
     private String companyName;
 
-    //TODO: este id tendria que asignarse automaticamente de alguna forma, cuando se crea un account. se me ocurre un patch o algo
     private Long accountId;
 
     public ContactDTO() {
