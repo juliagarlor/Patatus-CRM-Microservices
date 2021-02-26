@@ -55,12 +55,10 @@ public class AccountService implements IAccountService {
         }
     }
 
-    @Override
     public List<Long> getAccountsByCountry(String country) {
         return accountRepository.getAccountsByCountry(country);
     }
 
-    @Override
     public List<Long> getAccountsByCity(String city) {
         return accountRepository.getAccountsByCity(city);
     }

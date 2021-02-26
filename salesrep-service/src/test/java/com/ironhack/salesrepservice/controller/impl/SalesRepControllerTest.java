@@ -2,7 +2,8 @@ package com.ironhack.salesrepservice.controller.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ironhack.salesrepservice.Repository.SalesRepRepository;
-import com.ironhack.salesrepservice.controller.dto.SalesRepDTO;
+import com.ironhack.salesrepservice.client.*;
+import com.ironhack.salesrepservice.controller.dto.*;
 import com.ironhack.salesrepservice.model.SalesRep;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +30,9 @@ class SalesRepControllerTest {
     private WebApplicationContext webApplicationContext;
     @Autowired
     private SalesRepRepository salesRepRepository;
+
+    @Autowired
+    private LeadClient leadClient;
 
     private MockMvc mockMvc;
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -59,31 +63,6 @@ class SalesRepControllerTest {
         SalesRep salesRep = salesRepRepository.findAll().get(0); // To avoid auto increment problems.
         MvcResult result = mockMvc.perform(get("/salesrep/" + salesRep.getId()  + "/id")).andReturn();
         assertTrue(result.getResponse().getContentAsString().contains(salesRep.getId().toString()));
-    }
-
-    @Test
-    void getLeadsBySalesRepId() throws Exception {
-        MvcResult result = mockMvc.perform(get("/salesreps/1/leads")).andReturn();
-        System.out.println("resultao: " + result.getResponse().getContentAsString());
-        assertTrue(result.getResponse().getContentAsString().contains("Pepe Pig"));
-        assertTrue(result.getResponse().getContentAsString().contains("Pupa Pig"));
-        assertFalse(result.getResponse().getContentAsString().contains("Pepa Pig"));
-    }
-
-    @Test
-    void getCountOfLeadsBySalesRepId() throws Exception {
-    }
-
-    @Test
-    void getOpportunitiesBySalesRepId() throws Exception {
-    }
-
-    @Test
-    void getCountOfOpportunitiesBySalesRepId() throws Exception {
-    }
-
-    @Test
-    void getOpportunitiesBySalesRepAndStatus() throws Exception {
     }
 
     @Test

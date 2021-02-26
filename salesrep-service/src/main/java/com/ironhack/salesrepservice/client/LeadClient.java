@@ -2,8 +2,10 @@ package com.ironhack.salesrepservice.client;
 
 import com.ironhack.salesrepservice.controller.dto.LeadDTO;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.*;
 import java.util.List;
 
 @FeignClient("leadService-dev")
@@ -14,6 +16,12 @@ public interface LeadClient {
     List<LeadDTO> getAllLeads();
 
     @GetMapping("/leads/bysalesrep/{id}")
-    List<LeadDTO> findBySalesrepId(Long salesrepId);
+    List<LeadDTO> findBySalesrepId(@PathVariable Long id);
+
+    @PostMapping("/lead")
+    LeadDTO createLead(@RequestBody LeadDTO leadDTO);
+
+    @DeleteMapping("/lead/{id}")
+    void deleteLead(@PathVariable Long id);
 
 }

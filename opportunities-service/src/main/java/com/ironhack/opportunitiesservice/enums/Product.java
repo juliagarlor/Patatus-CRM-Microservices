@@ -4,6 +4,7 @@ public enum Product {
 
     HYBRID,
     FLATBED,
-    BOX;
+    BOX,
+    OTHER
 
 }

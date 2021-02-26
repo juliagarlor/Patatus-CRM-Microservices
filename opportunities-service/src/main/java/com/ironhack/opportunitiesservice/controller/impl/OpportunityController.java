@@ -6,7 +6,7 @@ import com.ironhack.opportunitiesservice.controller.dto.OpportunityStatusDTO;
 import com.ironhack.opportunitiesservice.controller.interfaces.IOpportunityController;
 import com.ironhack.opportunitiesservice.model.Opportunity;
 
-import com.ironhack.opportunitiesservice.service.interfaces.IOpportunityService;
+import com.ironhack.opportunitiesservice.service.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -74,9 +74,10 @@ public class OpportunityController implements IOpportunityController {
     }
 
     //===========================================
-    //Patch methods
+    //Post methods
     //===========================================
 
+    //TODO: juntar las dos rutas en una
     @PatchMapping("/opportunity/{opportunityId}/status")
     @ResponseStatus(HttpStatus.ACCEPTED)
      public void updateOpportunityStatus(@PathVariable Long opportunityId, @RequestBody OpportunityStatusDTO opportunityStatusDTO) {

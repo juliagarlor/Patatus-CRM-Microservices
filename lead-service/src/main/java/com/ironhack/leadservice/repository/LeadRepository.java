@@ -4,6 +4,7 @@ package com.ironhack.leadservice.repository;
 import com.ironhack.leadservice.model.Lead;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,7 +12,8 @@ import java.util.List;
 @Repository
 public interface LeadRepository extends JpaRepository<Lead, Long> {
 
-    List<Lead> findBySalesrepId(Long id);
+    @Query("SELECT l FROM Lead l WHERE salesrepId = :id")
+    List<Lead> findBySalesrepId(@Param("id") Long id);
 
     @Query("SELECT salesrepId, COUNT(id) FROM Lead GROUP BY salesrepId")
     List<Object[]> findLeadCountBySalesrepId();
