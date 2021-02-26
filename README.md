@@ -105,7 +105,7 @@ GET | localhost:8083/opportunities/count/by-country | Count opportunities by cou
 
 
 ## Microservices diagram and their interrelationships
-![Class Diagram](doc/CRMMicroservices.png)
+![Class Diagram](https://github.com/juliagarlor/Patatus-CRM-Microservices/blob/master/CRMMicroservices.png)
 
 > TEAM: `Antonio Navarro, Carolina Siguiri, Julia Garcia, Rubén Navarro, Aliany Crespo` 
 
