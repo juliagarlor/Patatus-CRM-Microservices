@@ -9,18 +9,15 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SalesRepRepository extends JpaRepository<SalesRep, Integer> {
-
-
-
-
+public interface SalesRepRepository extends JpaRepository<SalesRep, Long> {
+//
 //    //A count of Leads by SalesRep
 //    @Query("SELECT s.name,COUNT(l) FROM Lead l INNER JOIN l.repLead s GROUP BY s")
 //    List<Object[]> findLeadCountBySalesRep();
 //
-//    //@Query(value="SELECT s.name,COUNT(*) FROM leads l INNER JOIN sales_rep s ON l.rep_lead_id=s.id  GROUP BY s.name",nativeQuery = true)
-//    //public List<Object[]> findLeadCountBySalesRep();
-//
+//    @Query(value="SELECT s.name,COUNT(*) FROM leads l INNER JOIN sales_rep s ON l.rep_lead_id=s.id  GROUP BY s.name",nativeQuery = true)
+//    List<Object[]> findLeadCountBySalesRep();
+
 //    //A count of all Opportunities by SalesRep
 //    @Query("SELECT s.name,COUNT(o) FROM SalesRep s LEFT JOIN s.repOpportunity o GROUP BY s")
 //    List<Object[]> findOpportunityCountBySalesRep();

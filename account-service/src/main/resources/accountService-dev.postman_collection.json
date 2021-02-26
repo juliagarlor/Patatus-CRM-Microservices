@@ -1,0 +1,308 @@
+{
+	"info": {
+		"_postman_id": "50f65622-9d19-4ea1-945f-d0269ceeab90",
+		"name": "accountService-dev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "post",
+			"item": [
+				{
+					"name": "create an account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"industry\": \"PRODUCE\",\n        \"employeeCount\": 3,\n        \"city\": \"Eisenach\",\n        \"country\": \"Germany\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8084/account",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"account"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "get",
+			"item": [
+				{
+					"name": "routes for stats",
+					"item": [
+						{
+							"name": "localhost:8084/cities",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8084/cities",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"cities"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "countries",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8084/countries",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"countries"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "mean employee count",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8084/stats/mean/employee-count",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"stats",
+										"mean",
+										"employee-count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "max",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8084/stats/max/employee-count",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"stats",
+										"max",
+										"employee-count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "min",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8084/stats/min/employee-count",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"stats",
+										"min",
+										"employee-count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "median",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8084/stats/median/employee-count",
+									"host": [
+										"localhost"
+									],
+									"port": "8084",
+									"path": [
+										"stats",
+										"median",
+										"employee-count"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "get account by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8084/account/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"account",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get account id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8084/account/2/id",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"account",
+								"2",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get accounts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8084/accounts",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "id of accouts by country",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8084/accounts/country/germany",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"accounts",
+								"country",
+								"germany"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "id of accouts by city",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8084/accounts/city/Helsinki",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"accounts",
+								"city",
+								"Helsinki"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "id of accouts by industry",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8084/accounts/industry/PRODUCE",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"accounts",
+								"industry",
+								"PRODUCE"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

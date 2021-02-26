@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "5d188583-f850-4915-a1b1-955f9c1fef4f",
+		"name": "leadService-dev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get",
+			"item": [
+				{
+					"name": "get all leads",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/leads",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"leads"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all lead by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/lead/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lead",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all the leads of a sales rep",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/leads/bysalesrep/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"leads",
+								"bysalesrep",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count list by sales rep",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/leads/count/bysalesrep",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"leads",
+								"count",
+								"bysalesrep"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "post",
+			"item": [
+				{
+					"name": "create a lead",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \n        \"name\": \"Prueba Postman\",\n        \"phoneNumber\": \"000000077\",\n        \"email\": \"pepepig@cerdos.com\",\n        \"companyName\": \"Cerditos oINC.\",\n        \"salesrepId\": 1\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/lead",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lead"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "delete",
+			"item": [
+				{
+					"name": "delete a lead",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/lead/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"lead",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

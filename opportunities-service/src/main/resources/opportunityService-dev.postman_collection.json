@@ -1,0 +1,706 @@
+{
+	"info": {
+		"_postman_id": "ba6ded30-e06d-4607-90bd-a432c8b7b576",
+		"name": "opportunityService-dev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get",
+			"item": [
+				{
+					"name": "get all opportunities",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/opportunities",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a list with opportunities by sales rep",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/opportunities?salesrep-id=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunities"
+							],
+							"query": [
+								{
+									"key": "salesrep-id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a list with opportunities by sales rep and status",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/opportunities?salesrep-id=1&status=open",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunities"
+							],
+							"query": [
+								{
+									"key": "salesrep-id",
+									"value": "1"
+								},
+								{
+									"key": "status",
+									"value": "open"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "opportunities by country",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/opportunities?country=spain",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunities"
+							],
+							"query": [
+								{
+									"key": "country",
+									"value": "spain"
+								},
+								{
+									"key": "status",
+									"value": "OPEN",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "opportunities by city",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/opportunities?city=Oviedo",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunities"
+							],
+							"query": [
+								{
+									"key": "city",
+									"value": "Oviedo"
+								},
+								{
+									"key": "status",
+									"value": "OPEN",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "opportunities by industry",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/opportunities?status=OPEN&industry=MEDICAL",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunities"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "OPEN"
+								},
+								{
+									"key": "industry",
+									"value": "MEDICAL"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all opportunity by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/opportunity/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunity",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "post",
+			"item": [
+				{
+					"name": "get all opportunity by id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \n    \"quantity\": 12,\n    \"decisionMakerId\": 1,\n    \"status\": \"OPEN\",\n    \"product\": \"HYBRID\",\n    \"repOpportunityId\": 3,\n    \"accountId\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/opportunity",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunity"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "patch",
+			"item": [
+				{
+					"name": "update status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"CLOSED_WON\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/opportunity/3/status",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunity",
+								"3",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update Account id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"accountId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/opportunity/3/account-id",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunity",
+								"3",
+								"account-id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "stat routes",
+			"item": [
+				{
+					"name": "send mean data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "mean of quantity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/stats/mean/quantity",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"stats",
+								"mean",
+								"quantity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mean of opportunities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/stats/mean/opportunities",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"stats",
+								"mean",
+								"opportunities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "max of opportunities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/stats/max/opportunities",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"stats",
+								"max",
+								"opportunities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "max quantity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/stats/max/quantity",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"stats",
+								"max",
+								"quantity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "min quantity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/stats/min/quantity",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"stats",
+								"min",
+								"quantity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "min opportunities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/stats/min/opportunities",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"stats",
+								"min",
+								"opportunities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "median quantity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/stats/median/quantity",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"stats",
+								"median",
+								"quantity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "median quantity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/stats/median/opportunities",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"stats",
+								"median",
+								"opportunities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "opportunities by sales rep",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/opportunities/count/by-salesRep",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunities",
+								"count",
+								"by-salesRep"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "opportunities by sales rep and status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/opportunities/count/by-salesRep/OPEN",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunities",
+								"count",
+								"by-salesRep",
+								"OPEN"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "opportunities by industry and status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/opportunities/count/by-industry/OPEN",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunities",
+								"count",
+								"by-industry",
+								"OPEN"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "opportunities by industry",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/opportunities/count/by-industry",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunities",
+								"count",
+								"by-industry"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "opportunities by city",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/opportunities/count/by-city",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunities",
+								"count",
+								"by-city"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "opportunities by city and status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/opportunities/count/by-city/OPEN",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunities",
+								"count",
+								"by-city",
+								"OPEN"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "opportunities by country and status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/opportunities/count/by-country/OPEN",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunities",
+								"count",
+								"by-country",
+								"OPEN"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "opportunities by country",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/opportunities/count/by-country",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"opportunities",
+								"count",
+								"by-country"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

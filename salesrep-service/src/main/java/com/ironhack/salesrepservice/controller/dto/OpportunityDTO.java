@@ -13,7 +13,7 @@ public class OpportunityDTO {
 
     @NotNull
     @NotEmpty
-    private int id;
+    private Long id;
     @NotNull
     @NotEmpty
     private int quantity;
@@ -32,7 +32,7 @@ public class OpportunityDTO {
     public OpportunityDTO() {
     }
 
-    public OpportunityDTO(@NotNull @NotEmpty int id, @NotNull @NotEmpty int quantity, @NotNull @NotEmpty ContactDTO decisionMaker, @NotNull @NotEmpty Status status, @NotNull @NotEmpty Product product) {
+    public OpportunityDTO(@NotNull @NotEmpty Long id, @NotNull @NotEmpty int quantity, @NotNull @NotEmpty ContactDTO decisionMaker, @NotNull @NotEmpty Status status, @NotNull @NotEmpty Product product) {
         setId(id);
         setQuantity(quantity);
         setDecisionMaker(decisionMaker);
@@ -40,11 +40,11 @@ public class OpportunityDTO {
         setProduct(product);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

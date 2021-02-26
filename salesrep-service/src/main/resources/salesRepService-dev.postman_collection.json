@@ -1,0 +1,84 @@
+{
+	"info": {
+		"_postman_id": "4dbf4785-1d1d-4a13-820d-770d9d2b12ff",
+		"name": "salesRepService-dev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get routes",
+			"item": [
+				{
+					"name": "get all sales reps",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/salesreps",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"salesreps"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get sales reps id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/salesrep/1/id",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"salesrep",
+								"1",
+								"id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "post",
+			"item": [
+				{
+					"name": "create salesrep",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": 1,\n        \"name\": \"Batman\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/salesrep",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"salesrep"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

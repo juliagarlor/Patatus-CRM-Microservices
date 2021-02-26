@@ -1,7 +1,10 @@
 package com.ironhack.salesrepservice.controller.impl;
 
+import com.ironhack.salesrepservice.controller.dto.LeadDTO;
+import com.ironhack.salesrepservice.controller.dto.OpportunityDTO;
 import com.ironhack.salesrepservice.controller.dto.SalesRepDTO;
 import com.ironhack.salesrepservice.controller.interfaces.ISalesRepController;
+import com.ironhack.salesrepservice.enums.Status;
 import com.ironhack.salesrepservice.model.SalesRep;
 import com.ironhack.salesrepservice.service.interfaces.ISalesRepService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +22,17 @@ public class SalesRepController implements ISalesRepController {
     //===========================================
     //Get methods
     //===========================================
-
+    //get a list with all the salesreps
     @GetMapping("/salesreps")
     @ResponseStatus(HttpStatus.OK)
     public List<SalesRepDTO> findAllSalesRep() {
         return salesRepService.findAll();
     }
-
-
+    //return the id of a sales rep. is used to check if a sales rep exist at the moment of creating an account
+    @GetMapping("/salesrep/{id}/id")
+    public Long getSalesRepId(@PathVariable Long id) {
+        return salesRepService.getSalesRepId(id);
+    }
 
     //===========================================
     //Post methods

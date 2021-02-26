@@ -13,11 +13,11 @@ public interface OpportunityClient {
 
     //This method return a list with the opportunities of a specific sales rep
     @GetMapping("/opportunities")
-    List<OpportunityDTO> getOpportunitiesBySalesRep(@RequestParam(name="salesrep-id") int salesrepId);
+    List<OpportunityDTO> getOpportunitiesBySalesRep(@RequestParam(name="salesrep-id") Long salesrepId);
 
     //This method return a list with the opportunities of an specific sales rep and status
     @GetMapping("/opportunities")
-    List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(@RequestParam(name="salesrep-id") int salesrepId, @RequestParam(name="status") Status status);
+    List<OpportunityDTO> getOpportunitiesBySalesRepAndStatus(@RequestParam(name="salesrep-id") Long salesrepId, @RequestParam(name="status") String status);
 
 
 }

@@ -1,18 +1,17 @@
-drop schema salesrep_crm;
-create schema salesrep_crm;
-use salesrep_crm;
+DROP SCHEMA IF EXISTS salesrep_crm;
+CREATE SCHEMA salesrep_crm;
+USE salesrep_crm;
 
-create table sales_rep(
-	id int auto_increment,
-    name varchar(255),
-    primary key(id)
+CREATE TABLE sales_rep(
+	id BIGINT AUTO_INCREMENT NOT NULL,
+    name VARCHAR(255),
+    PRIMARY KEY(id)
 );
 
-insert into sales_rep (name) values 
-('Aliani'),
-('Carolina'),
-('Ruben'),
-('Julia'),
-('Antonio');
-
-select * from sales_rep;
+INSERT INTO sales_rep (name) VALUES
+	('Aliany'),
+	('Carolina'),
+	('Rubén'),
+	('Julia'),
+	('Antonio')
+;
