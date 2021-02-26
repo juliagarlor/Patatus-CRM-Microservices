@@ -66,8 +66,6 @@ POST | localhost:8083/opportunity | Get all opportunity by id|
 PATCH | localhost:8083/opportunity/3/status | Update status |
 PATCH | localhost:8083/opportunity/3/account-id | Update Account id|
 
-Markdown is a lightweight markup language based on the formatting conventions
-that people naturally use in email.
 
 ### Statistics Service
 REST | Route | name  |
